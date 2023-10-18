@@ -19,14 +19,18 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -41,6 +45,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.ssafyb109.bangrang.R
 import com.ssafyb109.bangrang.ui.theme.logocolor
+import java.lang.Math.cos
+import java.lang.Math.sin
 
 @Composable
 fun TopBar(navController: NavHostController) {
@@ -55,7 +61,7 @@ fun TopBar(navController: NavHostController) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(42.dp),
+                    .height(52.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -89,7 +95,7 @@ fun TopBar(navController: NavHostController) {
 
 @Composable
 fun BottomBar(navController: NavHostController) {
-    val currentDestination = navController.currentBackStackEntryAsState().value?.destination?.route
+    val isMenuExpanded = remember { mutableStateOf(false) }
 
     Box(
         modifier = Modifier
@@ -109,50 +115,75 @@ fun BottomBar(navController: NavHostController) {
             horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            BottomBarButton("행사") {
-                navController.navigate("EventPage")
+            BottomBarButton("홈") {
+                navController.navigate("Home")
             }
-            BottomBarButton("찜") {
-                navController.navigate("FavoritePage")
-            }
-            if (currentDestination == "Home") {
-                HighlightedBottomBarButton(icon = Icons.Default.LocationOn, color = logocolor) {
-                    navController.navigate("MapPage")
+            if (isMenuExpanded.value) {
+                ExpandingCenterMenu { selectedLabel ->
+                    isMenuExpanded.value = false
+                    when (selectedLabel) {
+                        "행사" -> navController.navigate("EventPage")
+                        "찜" -> navController.navigate("FavoritePage")
+                        "랭킹" -> navController.navigate("RankPage")
+                        "My방랑" -> navController.navigate("MyPage")
+                    }
                 }
-            } else {
-                HighlightedBottomBarButton(icon = Icons.Default.Home, color = logocolor) {
-                    navController.navigate("Home")
-                }
             }
-            BottomBarButton("랭킹") {
-                navController.navigate("RankPage")
-            }
-            BottomBarButton("My방랑") {
-                navController.navigate("MyPage")
+            BottomBarButton("지도") {
+                navController.navigate("MapPage")
             }
         }
     }
 }
 
 @Composable
-fun HighlightedBottomBarButton(icon: ImageVector, color: Color, onClick: () -> Unit) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
+fun CentralButton(isExpanded: Boolean, onClick: () -> Unit) {
+    Box(
         modifier = Modifier
-            .clickable(onClick = onClick)
-            .widthIn(min = 84.dp, max = 100.dp)
-            .offset(y = (-16).dp)  // 위쪽으로 오프셋
+            .size(60.dp)
+            .background(if (isExpanded) logocolor else Color.Transparent, CircleShape)
+            .padding(8.dp)
+            .clickable(onClick = onClick),
+        contentAlignment = Alignment.Center
     ) {
-        Box(
-            modifier = Modifier
-                .size(72.dp)
-                .background(color = color, shape = CircleShape)
-                .align(Alignment.CenterHorizontally)
-                .padding(8.dp),
-            contentAlignment = Alignment.Center
-        ) {
-            Icon(imageVector = icon, contentDescription = null, tint = Color.White, modifier = Modifier.size(40.dp))
+        Icon(
+            imageVector = Icons.Default.Add,
+            contentDescription = null,
+            tint = if (isExpanded) Color.White else Color.Black
+        )
+    }
+}
+
+@Composable
+fun ExpandingCenterMenu(onItemSelected: (String) -> Unit) {
+    val items = listOf("행사", "찜", "랭킹", "My방랑")
+    val icons = mapOf(
+        "행사" to Icons.Default.ShoppingCart,
+        "찜" to Icons.Default.Favorite,
+        "랭킹" to Icons.Default.Star,
+        "My방랑" to Icons.Default.Person
+    )
+
+    val distance = 70f  // 반원의 반경
+
+    // Bottom offset 추가
+    Box(
+        modifier = Modifier
+            .size(160.dp)
+            .background(logocolor, CircleShape)
+            .offset(y = (-160).dp),  // 원이 바텀바를 넘어서 나오도록 offset을 추가
+    ) {
+        for (i in items.indices) {
+            val angle = (i * (360f / items.size)) + 45f // 원을 4등분 하기 위한 각도 설정 (+45f는 시작 각도 조절)
+            val offsetX = kotlin.math.cos(Math.toRadians(angle.toDouble())).toFloat() * distance
+            val offsetY = kotlin.math.sin(Math.toRadians(angle.toDouble())).toFloat() * distance
+
+            IconButton(
+                onClick = { onItemSelected(items[i]) },
+                modifier = Modifier.offset(x = offsetX.dp, y = -offsetY.dp)
+            ) {
+                Icon(imageVector = icons[items[i]]!!, contentDescription = null, tint = Color.White)
+            }
         }
     }
 }
@@ -168,13 +199,9 @@ fun BottomBarButton(label: String, onClick: () -> Unit) {
             .widthIn(min = 64.dp, max = 80.dp)
     ) {
         val icon = when (label) {
-            "행사" -> Icons.Default.ShoppingCart
-            "찜" -> Icons.Default.Star
-            "메인" -> Icons.Default.Home
+            "홈" -> Icons.Default.Home
             "지도" -> Icons.Default.LocationOn
-            "랭킹" -> Icons.Default.Star
-            "My방랑" -> Icons.Default.Person
-            else -> Icons.Default.Home
+            else -> Icons.Default.Home  // 기본값, 이 부분은 필요에 따라 변경 가능합니다.
         }
 
         Icon(
