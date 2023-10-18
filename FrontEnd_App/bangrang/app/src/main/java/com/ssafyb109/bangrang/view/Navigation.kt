@@ -1,5 +1,7 @@
+
 package com.ssafyb109.bangrang.view
 
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -15,6 +17,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -24,6 +27,7 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Icon
@@ -34,19 +38,17 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.currentBackStackEntryAsState
 import com.ssafyb109.bangrang.R
 import com.ssafyb109.bangrang.ui.theme.logocolor
-import java.lang.Math.cos
-import java.lang.Math.sin
 
 @Composable
 fun TopBar(navController: NavHostController) {
@@ -61,18 +63,18 @@ fun TopBar(navController: NavHostController) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(52.dp),
+                    .height(80.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 val interactionSource = remember { MutableInteractionSource() }
-                Box(modifier = Modifier.padding(top = 24.dp, start = 12.dp)) {
+                Box(modifier = Modifier.padding(top = 12.dp, start = 12.dp)) {
                     Image(
-                        painter = painterResource(id = R.drawable.logo),
+                        painter = painterResource(id = R.drawable.app_logo),
                         contentDescription = null,
                         Modifier
-                            .padding(start = 120.dp)
-                            .scale(1.5f)
+                            .padding(start = 140.dp)
+                            .scale(1f)
                             .clickable(
                                 interactionSource = interactionSource,
                                 indication = null,
@@ -97,92 +99,132 @@ fun TopBar(navController: NavHostController) {
 fun BottomBar(navController: NavHostController) {
     val isMenuExpanded = remember { mutableStateOf(false) }
 
+    // 열렸을 때
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color.White, shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))
-            .height(72.dp)
+            .background(Color.Transparent)
+            .offset(y = (+150).dp),
+        contentAlignment = Alignment.Center
     ) {
-        // 그림자 추가를 위한 Box
+        if (isMenuExpanded.value) {
+            ExpandingCenterMenu() { selectedLabel ->
+                isMenuExpanded.value = false
+                when (selectedLabel) {
+                    "마이룸" -> navController.navigate("MyPage")
+                    "랭킹" -> navController.navigate("RankPage")
+                    "찜" -> navController.navigate("FavoritePage")
+                    "행사" -> navController.navigate("EventPage")
+                }
+            }
+        }
+    }
+
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(0.2.dp)
-                .shadow(elevation = 0.2.dp, shape = RectangleShape)
-        )
-        Row(
-            modifier = Modifier.fillMaxSize(),
-            horizontalArrangement = Arrangement.SpaceAround,
-            verticalAlignment = Alignment.CenterVertically
+                .background(Color.White, shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))
+                .height(72.dp)
         ) {
-            BottomBarButton("홈") {
-                navController.navigate("Home")
-            }
-            if (isMenuExpanded.value) {
-                ExpandingCenterMenu { selectedLabel ->
-                    isMenuExpanded.value = false
-                    when (selectedLabel) {
-                        "행사" -> navController.navigate("EventPage")
-                        "찜" -> navController.navigate("FavoritePage")
-                        "랭킹" -> navController.navigate("RankPage")
-                        "My방랑" -> navController.navigate("MyPage")
-                    }
+            // 그림자 추가를 위한 Box
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(0.4.dp)
+                    .shadow(elevation = 0.4.dp, shape = RectangleShape)
+            )
+            Row(
+                modifier = Modifier.fillMaxSize(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Spacer(modifier = Modifier.width(32.dp))
+
+                BottomBarButton("홈") {
+                    navController.navigate("Home")
                 }
+
+                CentralButton() {
+                    isMenuExpanded.value = !isMenuExpanded.value
+                }
+
+                BottomBarButton("지도") {
+                    navController.navigate("MapPage")
+                }
+                Spacer(modifier = Modifier.width(32.dp))
             }
-            BottomBarButton("지도") {
-                navController.navigate("MapPage")
-            }
-        }
     }
 }
 
 @Composable
-fun CentralButton(isExpanded: Boolean, onClick: () -> Unit) {
+fun CentralButton(onClick: () -> Unit) {
     Box(
         modifier = Modifier
-            .size(60.dp)
-            .background(if (isExpanded) logocolor else Color.Transparent, CircleShape)
+            .size(120.dp)
             .padding(8.dp)
-            .clickable(onClick = onClick),
+            .offset(y = (-30).dp),
         contentAlignment = Alignment.Center
     ) {
-        Icon(
-            imageVector = Icons.Default.Add,
+        Image(
+            painter = painterResource(id = R.drawable.centralbutton),
             contentDescription = null,
-            tint = if (isExpanded) Color.White else Color.Black
+            modifier = Modifier
+                .scale(2f)
+                .clip(CircleShape)
+                .clickable(onClick = onClick)
         )
     }
 }
 
 @Composable
 fun ExpandingCenterMenu(onItemSelected: (String) -> Unit) {
-    val items = listOf("행사", "찜", "랭킹", "My방랑")
+    val items = listOf("마이룸", "랭킹", "찜" , "행사" )
     val icons = mapOf(
-        "행사" to Icons.Default.ShoppingCart,
-        "찜" to Icons.Default.Favorite,
+        "마이룸" to Icons.Default.Person,
         "랭킹" to Icons.Default.Star,
-        "My방랑" to Icons.Default.Person
+        "찜" to Icons.Default.Favorite,
+        "행사" to Icons.Default.ShoppingCart,
     )
 
-    val distance = 70f  // 반원의 반경
+    val distance = 100f  // 아이콘 간의 원 넓이
 
-    // Bottom offset 추가
     Box(
         modifier = Modifier
-            .size(160.dp)
-            .background(logocolor, CircleShape)
-            .offset(y = (-160).dp),  // 원이 바텀바를 넘어서 나오도록 offset을 추가
+            .size(300.dp)
     ) {
+        Canvas(modifier = Modifier.matchParentSize()) {
+            drawCircle(color = logocolor, radius = size.minDimension / 2f)
+        }
+        val startDegree = 18f
+        val totalDegrees = 144f
+        val degreesBetweenIcons = totalDegrees / (items.size - 1)
         for (i in items.indices) {
-            val angle = (i * (360f / items.size)) + 45f // 원을 4등분 하기 위한 각도 설정 (+45f는 시작 각도 조절)
+            val angle = startDegree + i * degreesBetweenIcons
             val offsetX = kotlin.math.cos(Math.toRadians(angle.toDouble())).toFloat() * distance
             val offsetY = kotlin.math.sin(Math.toRadians(angle.toDouble())).toFloat() * distance
 
-            IconButton(
-                onClick = { onItemSelected(items[i]) },
-                modifier = Modifier.offset(x = offsetX.dp, y = -offsetY.dp)
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                    .offset(x = (offsetX + 120).dp, y = (-offsetY + 100).dp)
             ) {
-                Icon(imageVector = icons[items[i]]!!, contentDescription = null, tint = Color.White)
+                IconButton(
+                    onClick = { onItemSelected(items[i]) },
+                    modifier = Modifier.size(60.dp)
+                ) {
+                    Icon(
+                        imageVector = icons[items[i]]!!,
+                        contentDescription = null,
+                        tint = Color.White,
+                        modifier = Modifier.size(35.dp) // 아이콘 크기
+                    )
+                }
+                Text(
+                    text = items[i],
+                    color = Color.White,
+                    modifier = Modifier
+                        .offset(x = 0.dp, y = (-8).dp)
+                )
             }
         }
     }

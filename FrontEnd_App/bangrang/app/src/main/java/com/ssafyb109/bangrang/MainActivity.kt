@@ -101,7 +101,7 @@ fun AppNavigation(navController: NavHostController) {
         "Permission"
     }
 
-    Surface(modifier = Modifier.fillMaxSize(), color = customBackgroundColor) {
+    Surface(modifier = Modifier.fillMaxSize()) {
         Column {
             val currentDestination =
                 navController.currentBackStackEntryAsState().value?.destination?.route
