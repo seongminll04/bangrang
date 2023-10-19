@@ -13,4 +13,9 @@ RUN ./gradlew bootJar
 FROM openjdk:17-jdk
 COPY --from=builder build/libs/*.jar app.jar
 
-ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom","-Duser.timezone=Asia/Seoul", "-jar", "/app.jar"]
+ARG SERVER_MODE
+RUN echo "$SERVER_MODE"
+ENV SERVER_MODE=$SERVER_MODE
+
+ENTRYPOINT ["java", "-Dspring.profiles.active=${SERVER_MODE}","-Duser.timezone=Asia/Seoul", "-jar", "/app.jar"]
+
