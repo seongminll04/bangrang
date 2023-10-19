@@ -1,21 +1,3 @@
 FROM openjdk:17-jdk as builder
-
-RUN microdnf install findutils
-
-COPY gradlew .
-COPY gradle gradle
-COPY build.gradle .
-COPY settings.gradle .
-COPY src src
-RUN chmod +x ./gradlew
-RUN ./gradlew bootJar
-
-FROM openjdk:17-jdk
-COPY --from=builder build/libs/*.jar app.jar
-
-ARG SERVER_MODE
-RUN echo "$SERVER_MODE"
-ENV SERVER_MODE=$SERVER_MODE
-
-ENTRYPOINT ["java", "-Dspring.profiles.active=${SERVER_MODE}","-Duser.timezone=Asia/Seoul", "-jar", "/app.jar"]
-
+COPY build/libs/*.jar app.jar
+ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom","-Duser.timezone=Asia/Seoul", "-jar", "/app.jar"]
