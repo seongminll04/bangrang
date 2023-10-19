@@ -1,4 +1,7 @@
 FROM openjdk:17-jdk as builder
+
+RUN microdnf install findutils
+
 COPY gradlew .
 COPY gradle gradle
 COPY build.gradle .
