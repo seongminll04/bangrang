@@ -1,5 +1,6 @@
 package com.ssafyb109.bangrang
 
+import com.ssafyb109.bangrang.view.ProfileChangePage
 import com.ssafyb109.bangrang.view.FullScreenImagePage
 import android.Manifest
 import com.ssafyb109.bangrang.view.EventPage
@@ -143,6 +144,7 @@ fun AppNavigation(
                     composable("FavoritePage") { FavoritePage(navController, userViewModel) }
                     composable("RankPage") { RankPage(navController, userViewModel) }
                     composable("MyPage") { MyPage(navController, userViewModel,context, sharedPreferencesUtil) }
+                    composable("ProfileChangePage") { ProfileChangePage(navController, userViewModel,context, sharedPreferencesUtil) }
 
                     composable("FullScreenImagePage/{imageUrl}") { backStackEntry ->
                         val encodedImageUrl = backStackEntry.arguments?.getString("imageUrl")
