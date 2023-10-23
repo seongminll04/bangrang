@@ -142,7 +142,7 @@ fun SignUpPage(
 
             Button(onClick = {
                 if (NicknameValid(nickname.value)) {
-                    userViewModel.registerNickname(nickname.value)
+                    userViewModel.checkNicknameAvailability(nickname.value)
                 } else {
                     showNicknameFailDialog.value = true
                 }

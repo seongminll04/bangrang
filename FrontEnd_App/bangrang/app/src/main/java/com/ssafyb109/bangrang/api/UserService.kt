@@ -22,19 +22,19 @@ interface UserService {
     // 닉네임 중복확인
     @GET("api/user/nicknameCheck/{nickname}")
     suspend fun nicknameCheck(
-        @Path("nickName") nickName : String
+        @Path("nickname") nickname : String
     ): Void
 
     // 닉네임 등록하기
     @POST("api/user/{nickname}")
     suspend fun resistNickname(
-        @Path("nickName") nickName : String
+        @Path("nickname") nickname : String
     ): Void
 
     // 닉네임 수정하기
     @PUT("api/user/{nickname}")
     suspend fun modifyNickname(
-        @Path("nickName") nickName : String
+        @Path("nickname") nickname : String
     ): Void
 
     // 회원 탈퇴
@@ -58,6 +58,23 @@ interface UserService {
     @GET("api/user/stamp")
     suspend fun userStamp(
     ): Response<StampResponseDTO>
+
+    // 친구 추가
+    @POST("api/user/friend/{nickname}")
+    suspend fun resistFriend(
+        @Path("nickname") nickname : String
+    ): Void
+
+    // 친구 삭제
+    @DELETE("api/user/friend/{nickname}")
+    suspend fun deleteFriend(
+        @Path("nickname") nickName : String
+    ): Void
+
+    // 알람 설정
+    @DELETE("api/user/alarm")
+    suspend fun userAlarm(
+    ): Void
 
 }
 
