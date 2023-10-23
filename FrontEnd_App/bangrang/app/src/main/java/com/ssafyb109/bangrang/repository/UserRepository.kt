@@ -46,7 +46,7 @@ class UserRepository @Inject constructor(
     // 닉네임 중복 체크
     suspend fun checkNicknameAvailability(nickName: String): Boolean {
         return try {
-            userService.nickNameCheck(nickName)
+            userService.nicknameCheck(nickName)
             true
         } catch (e: Exception) {
             lastError = handleNetworkException(e)
@@ -57,7 +57,7 @@ class UserRepository @Inject constructor(
     // 닉네임 등록
     suspend fun registerNickname(nickName: String): Boolean {
         return try {
-            userService.userNickName(nickName)
+            userService.resistNickname(nickName)
             true
         } catch (e: Exception) {
             lastError = handleNetworkException(e)
