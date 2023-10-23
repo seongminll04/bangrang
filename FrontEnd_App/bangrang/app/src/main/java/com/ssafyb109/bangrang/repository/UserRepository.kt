@@ -1,5 +1,6 @@
 package com.ssafyb109.bangrang.repository
 
+import com.ssafyb109.bangrang.api.AlarmRequestDTO
 import com.ssafyb109.bangrang.api.LoginRequestDTO
 import com.ssafyb109.bangrang.api.StampResponseDTO
 import com.ssafyb109.bangrang.api.UserService
@@ -55,6 +56,18 @@ class UserRepository @Inject constructor(
     suspend fun registerNickname(nickName: String): Boolean {
         return try {
             userService.resistNickname(nickName)
+            true
+        } catch (e: Exception) {
+            lastError = handleNetworkException(e)
+            false
+        }
+    }
+
+    // 유저 알람 설정
+    suspend fun setAlarm(select: Boolean): Boolean {
+        val request = AlarmRequestDTO(select)
+        return try {
+            userService.setAlarm(request)
             true
         } catch (e: Exception) {
             lastError = handleNetworkException(e)
@@ -120,17 +133,6 @@ class UserRepository @Inject constructor(
     suspend fun deleteFriend(nickName: String): Boolean {
         return try {
             userService.deleteFriend(nickName)
-            true
-        } catch (e: Exception) {
-            lastError = handleNetworkException(e)
-            false
-        }
-    }
-
-    // 알람 설정
-    suspend fun setAlarm(): Boolean {
-        return try {
-            userService.userAlarm()
             true
         } catch (e: Exception) {
             lastError = handleNetworkException(e)

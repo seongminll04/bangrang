@@ -8,6 +8,7 @@ import com.ssafyb109.bangrang.api.StampDetail
 import com.ssafyb109.bangrang.api.StampResponseDTO
 import com.ssafyb109.bangrang.repository.ResultType
 import com.ssafyb109.bangrang.repository.UserRepository
+import com.ssafyb109.bangrang.sharedpreferences.SharedPreferencesUtil
 import com.ssafyb109.bangrang.view.utill.getAddressFromLocation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -21,7 +22,8 @@ import javax.inject.Inject
 @HiltViewModel
 class UserViewModel @Inject constructor(
     private val repository: UserRepository,
-    @ApplicationContext private val context: Context
+    @ApplicationContext private val context: Context,
+    private val sharedPreferencesUtil: SharedPreferencesUtil
 ) : ViewModel() {
 
     // 로그인 응답
@@ -65,7 +67,7 @@ class UserViewModel @Inject constructor(
     val deleteFriendResponse: StateFlow<Boolean?> = _deleteFriendResponse
 
     // 알람 설정 응답
-    private val _alarmSettingResponse = MutableStateFlow<Boolean?>(null)
+    private val _alarmSettingResponse = MutableStateFlow(sharedPreferencesUtil.getUserAlarm())
     val alarmSettingResponse: StateFlow<Boolean?> = _alarmSettingResponse
 
     // 에러
@@ -128,6 +130,22 @@ class UserViewModel @Inject constructor(
         }
     }
 
+    // 유저 알람 설정
+    fun setAlarm(select:Boolean) {
+        viewModelScope.launch {
+            val response = repository.setAlarm(select)
+            if(select){
+                _alarmSettingResponse.value = response
+            }
+            else{
+                _alarmSettingResponse.value = !response
+            }
+            if (!response) {
+                _errorMessage.emit(repository.lastError ?: "알 수 없는 에러")
+            }
+        }
+    }
+
     // 닉네임 수정
     fun modifyNickname(nickName: String) {
         viewModelScope.launch {
@@ -151,7 +169,7 @@ class UserViewModel @Inject constructor(
     }
 
     // 로그아웃
-    fun logoutUser() {
+    fun logout() {
         viewModelScope.launch {
             val response = repository.logoutUser()
             _logoutResponse.value = response
@@ -204,17 +222,6 @@ class UserViewModel @Inject constructor(
         viewModelScope.launch {
             val response = repository.deleteFriend(nickName)
             _deleteFriendResponse.value = response
-            if (!response) {
-                _errorMessage.emit(repository.lastError ?: "알 수 없는 에러")
-            }
-        }
-    }
-
-    // 알람 설정
-    fun setAlarm() {
-        viewModelScope.launch {
-            val response = repository.setAlarm()
-            _alarmSettingResponse.value = response
             if (!response) {
                 _errorMessage.emit(repository.lastError ?: "알 수 없는 에러")
             }

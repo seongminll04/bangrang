@@ -6,6 +6,7 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Part
@@ -31,6 +32,13 @@ interface UserService {
         @Path("nickname") nickname : String
     ): Void
 
+    // 유저 알람 설정
+    @POST("api/user/alarm")
+    suspend fun setAlarm(
+        @Body request: AlarmRequestDTO
+    ): Void
+
+
     // 닉네임 수정하기
     @PUT("api/user/{nickname}")
     suspend fun modifyNickname(
@@ -48,7 +56,7 @@ interface UserService {
     ): Void
 
     // 프로필 이미지 수정
-    @PUT("api/user/profileImg")
+    @PATCH("api/user/profileImg")
     suspend fun modifyUserImg(
         @Part image: MultipartBody.Part
     ): String
@@ -69,11 +77,6 @@ interface UserService {
     @DELETE("api/user/friend/{nickname}")
     suspend fun deleteFriend(
         @Path("nickname") nickName : String
-    ): Void
-
-    // 알람 설정
-    @DELETE("api/user/alarm")
-    suspend fun userAlarm(
     ): Void
 
 }
@@ -106,4 +109,10 @@ data class StampResponseDTO(
     val totalNum : Long,
     val totalType : Long,
     val stamps: List<StampDetail>
+)
+
+// 알람설정 요청 DTO
+// 알람설정 응답 DTO = Void
+data class AlarmRequestDTO(
+    val alarmSet : Boolean
 )
