@@ -190,7 +190,7 @@ fun ProfileChangePage(
                 fontWeight = FontWeight.Bold
             )
 
-            Spacer(modifier = Modifier.width(120.dp))
+            Spacer(modifier = Modifier.width(128.dp))
 
             // 선택한 이미지 텍스트
             Text(
@@ -289,7 +289,7 @@ fun ProfileChangePage(
                 enabled = selectedBitmap != null
             )
 
-            Spacer(modifier = Modifier.width(40.dp))
+            Spacer(modifier = Modifier.width(52.dp))
 
             SelectButton(onClick = { navController.navigate("MyPage") }, text = "취소")
         }

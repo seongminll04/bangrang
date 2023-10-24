@@ -38,8 +38,9 @@ import com.ssafyb109.bangrang.view.AlarmPage
 import com.ssafyb109.bangrang.view.BottomBar
 import com.ssafyb109.bangrang.view.CollectionPage
 import com.ssafyb109.bangrang.view.EventDetailPage
-import com.ssafyb109.bangrang.view.FavoritePage
 import com.ssafyb109.bangrang.view.HomePage
+import com.ssafyb109.bangrang.view.InquiryPage
+import com.ssafyb109.bangrang.view.InquiryResistPage
 import com.ssafyb109.bangrang.view.LoginPage
 import com.ssafyb109.bangrang.view.MapPage
 import com.ssafyb109.bangrang.view.MyPage
@@ -141,10 +142,14 @@ fun AppNavigation(
                     }
                     composable("StampPage") { StampPage(navController, userViewModel) }
                     composable("CollectionPage") { CollectionPage(navController, userViewModel) }
-                    composable("FavoritePage") { FavoritePage(navController, userViewModel) }
                     composable("RankPage") { RankPage(navController, userViewModel) }
                     composable("MyPage") { MyPage(navController, userViewModel,context, sharedPreferencesUtil) }
                     composable("ProfileChangePage") { ProfileChangePage(navController, userViewModel,context, sharedPreferencesUtil) }
+                    composable("InquiryPage") { InquiryPage(navController) }
+                    composable("InquiryResistPage/{index}") { backStackEntry ->
+                        val eventIdx = backStackEntry.arguments?.getString("index")
+                        InquiryResistPage(navController,userViewModel, sharedPreferencesUtil, eventIdx!!)
+                    }
 
                     composable("FullScreenImagePage/{imageUrl}") { backStackEntry ->
                         val encodedImageUrl = backStackEntry.arguments?.getString("imageUrl")

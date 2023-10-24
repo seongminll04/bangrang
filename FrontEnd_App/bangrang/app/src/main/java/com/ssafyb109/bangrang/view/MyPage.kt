@@ -1,5 +1,6 @@
 package com.ssafyb109.bangrang.view
 
+import com.ssafyb109.bangrang.view.utill.StampSet
 import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -161,11 +162,13 @@ fun MyPage(
 
                     Text(text = "안녕하세요!", fontWeight = FontWeight.Bold, fontSize = 20.sp)
                     Text(text = "박해종 방랑자님", fontWeight = FontWeight.Bold, fontSize = 20.sp)
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(text = "정복 현황 : 10%", fontSize = 16.sp)
                 }
             }
         }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        StampSet(navController)
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -192,6 +195,19 @@ fun MyPage(
         SettingItem("회원 탈퇴") {
             showWithdrawDialog = true
         }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(text = "문의사항", fontWeight = FontWeight.Bold, fontSize = 20.sp, color = textGray)
+
+        Spacer(modifier = Modifier.height(8.dp))
+        Divider(color = Color.Gray, thickness = 1.dp)
+
+        SettingItem("1:1 문의") {
+            navController.navigate("InquiryPage")
+        }
+
+        Spacer(modifier = Modifier.height(24.dp))
 
         // 로그아웃 확인 다이얼로그
         if (showLogoutDialog) {
@@ -227,10 +243,10 @@ fun MyPage(
                 title = { Text("닉네임 변경") },
                 text = {
                     Column {
+                        Text(text = "새 닉네임")
                         TextField(
                             value = newNickname,
                             onValueChange = { newNickname = it },
-                            label = { Text("새 닉네임") }
                         )
                         Spacer(modifier = Modifier.height(16.dp))
                         Row(
