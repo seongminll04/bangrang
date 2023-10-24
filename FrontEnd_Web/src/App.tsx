@@ -2,11 +2,13 @@ import React from 'react';
 import { Route, Routes, useLocation } from "react-router-dom";
 
 import './App.css';
-import Home from './pages/home';
-import Intro from './pages/intro';
-import ManageHome from './pages/managehome';
+
 import Navbar from './components/navbar';
-import RequestManager from './pages/requestmanager';
+
+import IntroHome from './pages/introhome';
+import ManageHome from './pages/managehome';
+import Login from './pages/login';
+import NotFound from './pages/notfound';
 
 function App() {
   const location = useLocation();
@@ -14,10 +16,12 @@ function App() {
     <div className="App">
       <Navbar />      
       <Routes location={location}>
-        <Route path="/" element={<Home />} />
-        <Route path="/intro" element={<Intro />} />
-        <Route path="/requestmanager" element={<RequestManager />} />
+        <Route path="/" element={<IntroHome />} />
         <Route path="/manage" element={<ManageHome />} />
+        <Route path="/login" element={<Login />} />
+
+        {/* 없는 페이지 출력 */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
   );
