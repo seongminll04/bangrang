@@ -15,6 +15,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@DiscriminatorValue("web")
 public class WebMember extends Member{
 
     @Column(name = "web_member_id", unique = true)
@@ -33,11 +34,10 @@ public class WebMember extends Member{
     @Column(name = "web_member_auth_file")
     private String authFile;
 
+//    @OneToMany(mappedBy = "webMember")
+//    private List<Comment> comments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "webMember")
-    private List<Comment> comments = new ArrayList<>();
-
-    @OneToMany(mappedBy = "webMember")
-    private List<Event> events = new ArrayList<>();
+//    @OneToMany(mappedBy = "webMember")
+//    private List<Event> events = new ArrayList<>();
 
 }

@@ -20,7 +20,7 @@ public class Friendship {
     private Long friendIdx;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "app_member_idx")
+    @JoinColumn(name = "member_idx")
     private AppMember appMember;
 
     public void changeAppMember(AppMember appMember){

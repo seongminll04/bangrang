@@ -1,5 +1,6 @@
 package com.ssafy.bangrang.domain.inquiry.entity;
 
+import com.ssafy.bangrang.domain.event.entity.Event;
 import com.ssafy.bangrang.domain.member.entity.AppMember;
 import com.ssafy.bangrang.domain.member.entity.WebMember;
 import com.ssafy.bangrang.global.common.entity.CommonEntity;
@@ -27,8 +28,17 @@ public class Inquiry extends CommonEntity {
     @Column(name = "inquiry_type")
     private String type;
 
+    // 문의사항 등록한 사람
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "app_member_idx")
+    @JoinColumn(name = "member_idx")
     private AppMember appMember;
 
+    // 어떤 행사에 대한 문의인지
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "event_idx")
+    private Event event;
+
+    // 문의에 대한 답변
+    @OneToOne(mappedBy = "inquiry")
+    private Comment comment;
 }

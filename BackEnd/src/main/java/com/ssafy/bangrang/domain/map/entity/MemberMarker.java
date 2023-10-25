@@ -25,7 +25,7 @@ public class MemberMarker extends CommonEntity {
     private Double longitude;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "app_member_idx")
+    @JoinColumn(name = "member_idx")
     private AppMember appMember;
 
 

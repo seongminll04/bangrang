@@ -15,6 +15,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@DiscriminatorValue("app")
 public class AppMember extends Member{
 
 
@@ -35,16 +36,16 @@ public class AppMember extends Member{
     private SocialProvider socialProvider;
 
 
-    @OneToMany(mappedBy = "appMember")
-    private List<Inquiry> inquiries = new ArrayList<>();
+//    @OneToMany(mappedBy = "appMember")
+//    private List<Inquiry> inquiries = new ArrayList<>();
 
     @OneToMany(mappedBy = "appMember")
     private List<Friendship> friendships = new ArrayList<>();
 
-    @OneToMany(mappedBy = "appMember")
-    private List<MemberMarker> memberMarkers = new ArrayList<>();
+//    @OneToMany(mappedBy = "appMember")
+//    private List<MemberMarker> memberMarkers = new ArrayList<>();
 
-    @OneToMany(mappedBy = "appMember")
-    private List<MemberMapArea> memberMapAreas = new ArrayList<>();
+//    @OneToMany(mappedBy = "appMember")
+//    private List<MemberMapArea> memberMapAreas = new ArrayList<>();
 
 }

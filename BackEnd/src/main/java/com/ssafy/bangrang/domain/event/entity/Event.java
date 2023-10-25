@@ -41,11 +41,14 @@ public class Event extends CommonEntity {
     @Column(name = "event_url")
     private String eventUrl;
 
+    // 행사 등록한 사람
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "web_member_idx")
+    @JoinColumn(name = "member_idx")
     private WebMember webMember;
 
-    @OneToMany(mappedBy = "inquiry_idx")
-    private List<Inquiry> inquiries = new ArrayList<>();
+    // 행사에 대한 문의사항
+//    @OneToMany(mappedBy = "event")
+//    private List<Inquiry> inquiries = new ArrayList<>();
+
 
 }

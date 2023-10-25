@@ -22,7 +22,11 @@ public class Comment extends CommonEntity {
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "web_member_idx")
+    @JoinColumn(name = "member_idx")
     private WebMember webMember;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "inquiry_idx")
+    private Inquiry inquiry;
 
 }
