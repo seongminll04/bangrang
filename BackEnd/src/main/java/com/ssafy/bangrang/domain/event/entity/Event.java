@@ -23,8 +23,11 @@ public class Event extends CommonEntity {
     @Column(name = "event_idx")
     private Long idx;
 
-    @Column(name = "evnet_title", nullable = false)
+    @Column(name = "event_title", nullable = false)
     private String title;
+
+    @Column(name = "event_sub_title")
+    private String subTitle;
 
     @Column(name = "event_content")
     private String content;
