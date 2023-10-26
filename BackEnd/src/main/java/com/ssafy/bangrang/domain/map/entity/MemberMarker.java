@@ -4,6 +4,7 @@ import com.ssafy.bangrang.domain.member.entity.AppMember;
 import com.ssafy.bangrang.global.common.entity.CommonEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "member_marker")
+@Builder
 public class MemberMarker extends CommonEntity {
 
     @Id

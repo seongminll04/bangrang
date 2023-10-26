@@ -5,6 +5,7 @@ import com.ssafy.bangrang.domain.member.entity.WebMember;
 import com.ssafy.bangrang.global.common.entity.CommonEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -16,6 +17,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "event")
+@Builder
 public class Event extends CommonEntity {
 
     @Id
