@@ -133,7 +133,7 @@ fun AppNavigation(
             Box(modifier = Modifier.weight(1f)) {
                 NavHost(navController, startDestination = startDestination) {
                     composable("Permission") { PermissionPage(navController) }
-                    composable("Login") { LoginPage(navController, userViewModel) }
+                    composable("Login") { LoginPage(navController, userViewModel, sharedPreferencesUtil) }
                     composable("SignUp") { SignUpPage(navController, userViewModel) }
 
                     composable("Home") { HomePage(navController, userViewModel) }
