@@ -21,7 +21,6 @@ import lombok.NoArgsConstructor;
                 }
         )
     })
-@Builder
 public class Stamp extends CommonEntity {
 
     @Id
@@ -37,4 +36,14 @@ public class Stamp extends CommonEntity {
     @JoinColumn(name = "member_idx", nullable = false)
     private AppMember appMember;
 
+    @Builder
+    public Stamp(Event event, AppMember appMember){
+        this.event = event;
+        this.changeAppMember(appMember);
+    }
+
+    public void changeAppMember(AppMember appMember){
+        this.appMember = appMember;
+        appMember.getStamps().add(this);
+    }
 }

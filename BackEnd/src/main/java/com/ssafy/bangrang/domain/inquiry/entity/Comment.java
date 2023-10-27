@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "comment")
-@Builder
 public class Comment extends CommonEntity {
 
     @Id
@@ -30,5 +29,22 @@ public class Comment extends CommonEntity {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "inquiry_idx")
     private Inquiry inquiry;
+
+    @Builder
+    public Comment(String content, WebMember webMember, Inquiry inquiry){
+        this.content = content;
+        this.changeWebMember(webMember);
+        this.changeInquiry(inquiry);
+    }
+
+    public void changeWebMember(WebMember webMember){
+        this.webMember = webMember;
+        webMember.getComments().add(this);
+    }
+
+    public void changeInquiry(Inquiry inquiry){
+        this.inquiry = inquiry;
+        inquiry.changeComment(this);
+    }
 
 }

@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "member_marker")
-@Builder
 public class MemberMarker extends CommonEntity {
 
     @Id
@@ -30,5 +29,16 @@ public class MemberMarker extends CommonEntity {
     @JoinColumn(name = "member_idx")
     private AppMember appMember;
 
+    @Builder
+    public MemberMarker(Double latitude, Double longitude, AppMember appMember){
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.changeAppMember(appMember);
+    }
+
+    private void changeAppMember(AppMember appMember) {
+        this.appMember = appMember;
+        appMember.getMemberMarkers().add(this);
+    }
 
 }

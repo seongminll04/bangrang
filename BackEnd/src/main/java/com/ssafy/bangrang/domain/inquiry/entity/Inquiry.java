@@ -14,7 +14,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "inquiry")
-@Builder
 public class Inquiry extends CommonEntity {
     @Id
     @GeneratedValue
@@ -43,4 +42,30 @@ public class Inquiry extends CommonEntity {
     // 문의에 대한 답변
     @OneToOne(mappedBy = "inquiry")
     private Comment comment;
+
+    @Builder
+    public Inquiry(String title, String content, String type, AppMember appMember, Event event, Comment comment){
+        this.title = title;
+        this.content = content;
+        this.type = type;
+        this.changeAppMember(appMember);
+        this.changeEvent(event);
+        this.changeComment(comment);
+    }
+
+    public void changeComment(Comment comment) {
+        this.comment = comment;
+        comment.changeInquiry(this);
+    }
+
+    public void changeEvent(Event event) {
+        this.event = event;
+        event.getInquiries().add(this);
+    }
+
+    public void changeAppMember(AppMember appMember) {
+        this.appMember = appMember;
+        appMember.getInquiries().add(this);
+    }
+
 }

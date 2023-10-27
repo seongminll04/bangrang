@@ -2,6 +2,7 @@ package com.ssafy.bangrang.domain.member.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -22,6 +23,12 @@ public class Friendship {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_idx")
     private AppMember appMember;
+
+    @Builder
+    public Friendship(Long friendIdx, AppMember appMember){
+        this.friendIdx = friendIdx;
+        this.changeAppMember(appMember);
+    }
 
     public void changeAppMember(AppMember appMember){
         this.appMember = appMember;

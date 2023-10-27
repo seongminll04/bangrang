@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "member_map_area")
-@Builder
 public class MemberMapArea extends CommonEntity {
 
     @Id
@@ -31,4 +30,16 @@ public class MemberMapArea extends CommonEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_idx")
     private AppMember appMember;
+
+    @Builder
+    public MemberMapArea(RegionType regionType, Double dimension, AppMember appMember){
+        this.regionType = regionType;
+        this.dimension = dimension;
+        this.changeAppMember(appMember);
+    }
+
+    private void changeAppMember(AppMember appMember) {
+        this.appMember = appMember;
+        appMember.getMemberMapAreas().add(this);
+    }
 }

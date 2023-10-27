@@ -1,6 +1,9 @@
 package com.ssafy.bangrang.domain.member.entity;
 
+import com.ssafy.bangrang.domain.member.model.vo.AlarmReceivedStatus;
 import jakarta.persistence.*;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -14,9 +17,9 @@ public abstract class Member {
     private Long idx;
 
     @Column(name = "member_access_token")
-    private String accessToken;
+    protected String accessToken;
 
     @Column(name = "member_refresh_token")
-    private String refreshToken;
+    protected String refreshToken;
 
 }
