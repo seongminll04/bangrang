@@ -3,10 +3,7 @@ package com.ssafy.bangrang.domain.inquiry.entity;
 import com.ssafy.bangrang.domain.member.entity.WebMember;
 import com.ssafy.bangrang.global.common.entity.CommonEntity;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Getter
