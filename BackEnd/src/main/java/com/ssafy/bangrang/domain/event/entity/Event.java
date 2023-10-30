@@ -32,7 +32,10 @@ public class Event extends CommonEntity {
     private String content;
 
     @Column(name = "event_image")
-    private String eventImage;
+    private String image;
+
+    @Column(name = "event_subImage")
+    private String subImage;
 
     @Column(name = "event_start_date")
     private LocalDateTime startDate;
@@ -66,13 +69,17 @@ public class Event extends CommonEntity {
     private List<Likes> likes = new ArrayList<>();
 
     @Builder
-    public Event(String title, String subTitle, String content, LocalDateTime startDate, LocalDateTime endDate, String address, String eventUrl, WebMember webMember){
+    public Event(String title, String subTitle, String content, String image, String subImage, LocalDateTime startDate, LocalDateTime endDate, String address, Double latitude, Double longitude, String eventUrl, WebMember webMember){
         this.title = title;
         this.subTitle = subTitle;
         this.content = content;
+        this.image = image;
+        this.subImage = subImage;
         this.startDate = startDate;
         this.endDate = endDate;
         this.address = address;
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.eventUrl = eventUrl;
         this.changeWebMember(webMember);
     }
