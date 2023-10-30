@@ -48,6 +48,8 @@ public class QAppMember extends EntityPathBase<AppMember> {
 
     public final ListPath<com.ssafy.bangrang.domain.inquiry.entity.Inquiry, com.ssafy.bangrang.domain.inquiry.entity.QInquiry> inquiries = this.<com.ssafy.bangrang.domain.inquiry.entity.Inquiry, com.ssafy.bangrang.domain.inquiry.entity.QInquiry>createList("inquiries", com.ssafy.bangrang.domain.inquiry.entity.Inquiry.class, com.ssafy.bangrang.domain.inquiry.entity.QInquiry.class, PathInits.DIRECT2);
 
+    public final ListPath<com.ssafy.bangrang.domain.event.entity.Likes, com.ssafy.bangrang.domain.event.entity.QLikes> likes = this.<com.ssafy.bangrang.domain.event.entity.Likes, com.ssafy.bangrang.domain.event.entity.QLikes>createList("likes", com.ssafy.bangrang.domain.event.entity.Likes.class, com.ssafy.bangrang.domain.event.entity.QLikes.class, PathInits.DIRECT2);
+
     public final ListPath<com.ssafy.bangrang.domain.map.entity.MemberMapArea, com.ssafy.bangrang.domain.map.entity.QMemberMapArea> memberMapAreas = this.<com.ssafy.bangrang.domain.map.entity.MemberMapArea, com.ssafy.bangrang.domain.map.entity.QMemberMapArea>createList("memberMapAreas", com.ssafy.bangrang.domain.map.entity.MemberMapArea.class, com.ssafy.bangrang.domain.map.entity.QMemberMapArea.class, PathInits.DIRECT2);
 
     public final ListPath<com.ssafy.bangrang.domain.map.entity.MemberMarker, com.ssafy.bangrang.domain.map.entity.QMemberMarker> memberMarkers = this.<com.ssafy.bangrang.domain.map.entity.MemberMarker, com.ssafy.bangrang.domain.map.entity.QMemberMarker>createList("memberMarkers", com.ssafy.bangrang.domain.map.entity.MemberMarker.class, com.ssafy.bangrang.domain.map.entity.QMemberMarker.class, PathInits.DIRECT2);
@@ -63,7 +65,7 @@ public class QAppMember extends EntityPathBase<AppMember> {
 
     public final EnumPath<com.ssafy.bangrang.domain.member.model.vo.SocialProvider> socialProvider = createEnum("socialProvider", com.ssafy.bangrang.domain.member.model.vo.SocialProvider.class);
 
-    public final ListPath<com.ssafy.bangrang.domain.event.entity.Stamp, com.ssafy.bangrang.domain.event.entity.QStamp> stamps = this.<com.ssafy.bangrang.domain.event.entity.Stamp, com.ssafy.bangrang.domain.event.entity.QStamp>createList("stamps", com.ssafy.bangrang.domain.event.entity.Stamp.class, com.ssafy.bangrang.domain.event.entity.QStamp.class, PathInits.DIRECT2);
+    public final ListPath<Stamp, QStamp> stamps = this.<Stamp, QStamp>createList("stamps", Stamp.class, QStamp.class, PathInits.DIRECT2);
 
     public QAppMember(String variable) {
         super(AppMember.class, forVariable(variable));

@@ -1,7 +1,6 @@
 package com.ssafy.bangrang.domain.member.entity;
 
 import com.ssafy.bangrang.domain.event.entity.Likes;
-import com.ssafy.bangrang.domain.event.entity.Stamp;
 import com.ssafy.bangrang.domain.inquiry.entity.Inquiry;
 import com.ssafy.bangrang.domain.map.entity.MemberMapArea;
 import com.ssafy.bangrang.domain.map.entity.MemberMarker;
@@ -20,7 +19,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @DiscriminatorValue("app")
-@ToString(of = {"idx", "email", "nickname"})
+@ToString(of = {"email", "nickname"})
 public class AppMember extends Member{
 
 

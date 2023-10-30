@@ -37,9 +37,19 @@ public class QEvent extends EntityPathBase<Event> {
 
     public final NumberPath<Long> idx = createNumber("idx", Long.class);
 
+    public final StringPath image = createString("image");
+
     public final ListPath<com.ssafy.bangrang.domain.inquiry.entity.Inquiry, com.ssafy.bangrang.domain.inquiry.entity.QInquiry> inquiries = this.<com.ssafy.bangrang.domain.inquiry.entity.Inquiry, com.ssafy.bangrang.domain.inquiry.entity.QInquiry>createList("inquiries", com.ssafy.bangrang.domain.inquiry.entity.Inquiry.class, com.ssafy.bangrang.domain.inquiry.entity.QInquiry.class, PathInits.DIRECT2);
 
+    public final NumberPath<Double> latitude = createNumber("latitude", Double.class);
+
+    public final ListPath<Likes, QLikes> likes = this.<Likes, QLikes>createList("likes", Likes.class, QLikes.class, PathInits.DIRECT2);
+
+    public final NumberPath<Double> longitude = createNumber("longitude", Double.class);
+
     public final DateTimePath<java.time.LocalDateTime> startDate = createDateTime("startDate", java.time.LocalDateTime.class);
+
+    public final StringPath subImage = createString("subImage");
 
     public final StringPath subTitle = createString("subTitle");
 

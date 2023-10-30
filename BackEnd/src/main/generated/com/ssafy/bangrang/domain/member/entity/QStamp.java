@@ -1,4 +1,4 @@
-package com.ssafy.bangrang.domain.event.entity;
+package com.ssafy.bangrang.domain.member.entity;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
@@ -16,7 +16,7 @@ import com.querydsl.core.types.dsl.PathInits;
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QStamp extends EntityPathBase<Stamp> {
 
-    private static final long serialVersionUID = 759551855L;
+    private static final long serialVersionUID = -550090167L;
 
     private static final PathInits INITS = PathInits.DIRECT2;
 
@@ -24,12 +24,12 @@ public class QStamp extends EntityPathBase<Stamp> {
 
     public final com.ssafy.bangrang.global.common.entity.QCommonEntity _super = new com.ssafy.bangrang.global.common.entity.QCommonEntity(this);
 
-    public final com.ssafy.bangrang.domain.member.entity.QAppMember appMember;
+    public final QAppMember appMember;
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
 
-    public final QEvent event;
+    public final com.ssafy.bangrang.domain.event.entity.QEvent event;
 
     public final NumberPath<Long> idx = createNumber("idx", Long.class);
 
@@ -54,8 +54,8 @@ public class QStamp extends EntityPathBase<Stamp> {
 
     public QStamp(Class<? extends Stamp> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.appMember = inits.isInitialized("appMember") ? new com.ssafy.bangrang.domain.member.entity.QAppMember(forProperty("appMember")) : null;
-        this.event = inits.isInitialized("event") ? new QEvent(forProperty("event"), inits.get("event")) : null;
+        this.appMember = inits.isInitialized("appMember") ? new QAppMember(forProperty("appMember")) : null;
+        this.event = inits.isInitialized("event") ? new com.ssafy.bangrang.domain.event.entity.QEvent(forProperty("event"), inits.get("event")) : null;
     }
 
 }

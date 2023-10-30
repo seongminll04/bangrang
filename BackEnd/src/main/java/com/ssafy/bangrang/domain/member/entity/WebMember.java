@@ -14,7 +14,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @DiscriminatorValue("web")
-@ToString(of = {"idx", "id", "organizationName"})
+@ToString(of = {"id", "organizationName"})
 public class WebMember extends Member{
 
     @Column(name = "web_member_id", unique = true)
