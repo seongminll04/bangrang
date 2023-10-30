@@ -1,15 +1,13 @@
 package com.ssafy.bangrang.domain.member.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "friendship")
+@ToString(of = {"idx", "friendIdx"})
 public class Friendship {
 
     @Id

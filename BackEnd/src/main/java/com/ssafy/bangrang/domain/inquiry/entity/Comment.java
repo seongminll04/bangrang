@@ -9,6 +9,7 @@ import lombok.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "comment")
+@ToString(of = {"idx", "content"})
 public class Comment extends CommonEntity {
 
     @Id

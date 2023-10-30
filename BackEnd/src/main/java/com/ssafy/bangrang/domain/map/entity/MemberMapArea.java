@@ -4,15 +4,13 @@ import com.ssafy.bangrang.domain.map.model.vo.RegionType;
 import com.ssafy.bangrang.domain.member.entity.AppMember;
 import com.ssafy.bangrang.global.common.entity.CommonEntity;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "member_map_area")
+@ToString(of = {"idx", "regionType", "dimension"})
 public class MemberMapArea extends CommonEntity {
 
     @Id

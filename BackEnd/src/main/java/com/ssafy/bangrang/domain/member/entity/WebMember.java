@@ -5,10 +5,8 @@ import com.ssafy.bangrang.domain.inquiry.entity.Comment;
 import com.ssafy.bangrang.domain.inquiry.entity.Inquiry;
 import com.ssafy.bangrang.domain.member.model.vo.WebMemberStatus;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +14,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @DiscriminatorValue("web")
+@ToString(of = {"idx", "id", "organizationName"})
 public class WebMember extends Member{
 
     @Column(name = "web_member_id", unique = true)
