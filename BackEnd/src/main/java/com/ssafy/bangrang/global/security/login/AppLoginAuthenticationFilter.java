@@ -27,15 +27,6 @@ public class AppLoginAuthenticationFilter extends AbstractAuthenticationProcessi
 
     private static final String CONTENT_TYPE = "application/json";
 
-    @Value("${kakao.client-id}")
-    private String kakao_client_id;
-
-    @Value("${kakao.client-secret}")
-    private String kakao_client_secret;
-
-    @Value("${kakao.redirect-uri}")
-    private String kakao_redirect;
-
     @Autowired
     private AppMemberService appMemberService;
 
@@ -55,20 +46,22 @@ public class AppLoginAuthenticationFilter extends AbstractAuthenticationProcessi
      */
     @Override
     public Authentication attemptAuthentication(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws AuthenticationException, IOException {
+        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
         if(httpServletRequest.getContentType() == null || !httpServletRequest.getContentType().equals(CONTENT_TYPE))
             throw new AuthenticationServiceException("Authentication Content-Type Not Supported : " + httpServletRequest.getContentType());
-
+        System.out.println("#############################################################");
         // request에서 messageBody를 JSON 형태로 반환
         String messageBody = StreamUtils.copyToString(httpServletRequest.getInputStream(), StandardCharsets.UTF_8);
-
+        System.out.println("1233213112312312321@");
         // JSON 형태를 Key-Value 형태로 변환하여 Map에 저장
         Map<String, String> loginData  = objectMapper.readValue(messageBody, Map.class);
-
+        System.out.println("asdfasdfasfadsf@");
         // 보내온 token, social 데이터 가져옴
         String token = loginData.get("token");
         String social = loginData.get("social");
-
+        System.out.println("a79301f@");
         if (social.equals("kakao")) {
+            System.out.println("kakao들어옴");
             HttpHeaders headers = new HttpHeaders();
             headers.add("Content-type", "application/x-www-form-urlencoded; charset=utf-8");
             headers.add("Authorization", "Bearer "+ token);
@@ -79,11 +72,12 @@ public class AppLoginAuthenticationFilter extends AbstractAuthenticationProcessi
                             HttpMethod.GET,
                             new HttpEntity<>(null, headers),
                             String.class);
-
+            System.out.println("정보요청");
             String body = response.getBody();
-
+            System.out.println("데이터 가져옴");
             Map<String, ?> data = objectMapper.readValue(body, Map.class);
             String num = String.valueOf(data.get("id"));
+            System.out.println(num);
             Map<String, Object> kakaoAccount = (Map<String, Object>) data.get("kakao_account");
             String thumbnailImageUrl = (String) ((Map<String, Object>) kakaoAccount.get("profile")).get("thumbnail_image_url");
 
