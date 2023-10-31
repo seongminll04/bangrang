@@ -34,7 +34,8 @@ import com.ssafy.bangrang.global.security.redis.RedisRefreshTokenService;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     // 제외해야하는 api 요청 (일반 로그인_웹)
-    private static final String NO_CHECK_URL = "/api/login";
+    List<String> NO_CHECK_URLS = Arrays.asList("/api/member/login", "/api/web/login", "/api/web/signup"); // NO_CHECK_URLS 리스트를 정의합니다.
+
 
     private final JwtService jwtService;
 
@@ -46,8 +47,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
                                     FilterChain filterChain) throws ServletException, IOException {
-        // 웹 일반 로그인 요청일 때
-        if(httpServletRequest.getRequestURI().equals(NO_CHECK_URL)) {
+        // token 검증이 필요없는 api일때
+        if (NO_CHECK_URLS.stream().anyMatch(url -> httpServletRequest.getRequestURI().equals(url))) {
             filterChain.doFilter(httpServletRequest, httpServletResponse);
 
             // 더 이상 필터를 진행하지 않고 return!
