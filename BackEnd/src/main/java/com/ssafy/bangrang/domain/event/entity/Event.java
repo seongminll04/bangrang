@@ -14,6 +14,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "event")
+@ToString(of = {"idx", "title"})
 public class Event extends CommonEntity {
 
     @Id
@@ -30,14 +31,26 @@ public class Event extends CommonEntity {
     @Column(name = "event_content")
     private String content;
 
+    @Column(name = "event_image")
+    private String image;
+
+    @Column(name = "event_subImage")
+    private String subImage;
+
     @Column(name = "event_start_date")
     private LocalDateTime startDate;
 
     @Column(name = "event_end_date")
     private LocalDateTime endDate;
 
-    @Column(name = "evnet_address")
+    @Column(name = "event_address")
     private String address;
+
+    @Column(name = "event_latitude")
+    private Double latitude;
+
+    @Column(name = "event_longitude")
+    private Double longitude;
 
     @Column(name = "event_url")
     private String eventUrl;
@@ -51,14 +64,22 @@ public class Event extends CommonEntity {
     @OneToMany(mappedBy = "event")
     private List<Inquiry> inquiries = new ArrayList<>();
 
+    // 좋아요 수
+    @OneToMany(mappedBy = "event")
+    private List<Likes> likes = new ArrayList<>();
+
     @Builder
-    public Event(String title, String subTitle, String content, LocalDateTime startDate, LocalDateTime endDate, String address, String eventUrl, WebMember webMember){
+    public Event(String title, String subTitle, String content, String image, String subImage, LocalDateTime startDate, LocalDateTime endDate, String address, Double latitude, Double longitude, String eventUrl, WebMember webMember){
         this.title = title;
         this.subTitle = subTitle;
         this.content = content;
+        this.image = image;
+        this.subImage = subImage;
         this.startDate = startDate;
         this.endDate = endDate;
         this.address = address;
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.eventUrl = eventUrl;
         this.changeWebMember(webMember);
     }

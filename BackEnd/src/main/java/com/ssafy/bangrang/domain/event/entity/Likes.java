@@ -1,28 +1,30 @@
 package com.ssafy.bangrang.domain.event.entity;
 
 import com.ssafy.bangrang.domain.member.entity.AppMember;
-import com.ssafy.bangrang.global.common.entity.CommonEntity;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "stamp",
-    uniqueConstraints = {
-        @UniqueConstraint(
-                name="stamp_unique",
-                columnNames = {
-                        "event_idx",
-                        "member_idx"
-                }
-        )
-    })
-public class Stamp extends CommonEntity {
+@Table(name = "likes",
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        name="likes_unique",
+                        columnNames = {
+                                "event_idx",
+                                "member_idx"
+                        }
+                )
+        })
+public class Likes {
 
     @Id
     @GeneratedValue
-    @Column(name = "stamp_idx")
+    @Column(name = "likes_idx")
     private Long idx;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -33,14 +35,15 @@ public class Stamp extends CommonEntity {
     @JoinColumn(name = "member_idx", nullable = false)
     private AppMember appMember;
 
+
     @Builder
-    public Stamp(Event event, AppMember appMember){
+    public Likes(Event event, AppMember appMember){
         this.event = event;
         this.changeAppMember(appMember);
     }
 
     public void changeAppMember(AppMember appMember){
         this.appMember = appMember;
-        appMember.getStamps().add(this);
+        appMember.getLikes().add(this);
     }
 }
