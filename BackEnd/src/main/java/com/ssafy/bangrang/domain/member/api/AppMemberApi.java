@@ -30,7 +30,8 @@ public class AppMemberApi {
 
         log.info("[멤버 도장 리스트 요청 시작]", LocalDateTime.now());
 
-        AppMember appMember = appMemberService.findAppMemberByAccessToken(accessToken).orElseThrow();
+//        AppMember appMember = appMemberService.findAppMemberByAccessToken(accessToken).orElseThrow();
+        AppMember appMember = null;
         List<StampDetailDto> stampDetailDtos = appMember.getStamps()
                 .stream()
                 .map(stamp -> StampDetailDto.builder()

@@ -11,6 +11,7 @@ import lombok.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "inquiry")
+@ToString(of = {"idx", "title", "content", "type"})
 public class Inquiry extends CommonEntity {
     @Id
     @GeneratedValue

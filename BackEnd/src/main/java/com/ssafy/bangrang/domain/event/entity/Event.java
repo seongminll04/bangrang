@@ -14,6 +14,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "event")
+@ToString(of = {"idx", "title"})
 public class Event extends CommonEntity {
 
     @Id

@@ -1,5 +1,6 @@
 package com.ssafy.bangrang.domain.event.api;
 
+
 import com.ssafy.bangrang.domain.event.api.response.GetEventAllResponseDto;
 import com.ssafy.bangrang.domain.event.api.response.GetEventDetailResponseDto;
 import com.ssafy.bangrang.domain.event.service.EventService;
