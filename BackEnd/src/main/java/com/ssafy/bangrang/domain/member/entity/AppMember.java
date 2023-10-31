@@ -1,7 +1,6 @@
 package com.ssafy.bangrang.domain.member.entity;
 
 import com.ssafy.bangrang.domain.event.entity.Likes;
-import com.ssafy.bangrang.domain.event.entity.Stamp;
 import com.ssafy.bangrang.domain.inquiry.entity.Inquiry;
 import com.ssafy.bangrang.domain.map.entity.MemberMapArea;
 import com.ssafy.bangrang.domain.map.entity.MemberMarker;
@@ -10,10 +9,7 @@ import com.ssafy.bangrang.domain.member.model.vo.AppMemberStatus;
 import com.ssafy.bangrang.domain.member.model.vo.SocialProvider;
 import com.ssafy.bangrang.global.fcm.entity.Alarm;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -23,6 +19,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @DiscriminatorValue("app")
+@ToString(of = {"email", "nickname"})
 public class AppMember extends Member{
 
 

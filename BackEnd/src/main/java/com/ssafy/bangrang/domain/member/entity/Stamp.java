@@ -1,5 +1,6 @@
-package com.ssafy.bangrang.domain.event.entity;
+package com.ssafy.bangrang.domain.member.entity;
 
+import com.ssafy.bangrang.domain.event.entity.Event;
 import com.ssafy.bangrang.domain.member.entity.AppMember;
 import com.ssafy.bangrang.global.common.entity.CommonEntity;
 import jakarta.persistence.*;
