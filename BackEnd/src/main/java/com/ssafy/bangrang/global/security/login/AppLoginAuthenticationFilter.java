@@ -47,6 +47,7 @@ public class AppLoginAuthenticationFilter extends AbstractAuthenticationProcessi
     @Override
     public Authentication attemptAuthentication(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws AuthenticationException, IOException {
         System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        System.out.println(httpServletRequest.getContentType())
         if(httpServletRequest.getContentType() == null || !httpServletRequest.getContentType().equals(CONTENT_TYPE))
             throw new AuthenticationServiceException("Authentication Content-Type Not Supported : " + httpServletRequest.getContentType());
         System.out.println("#############################################################");
