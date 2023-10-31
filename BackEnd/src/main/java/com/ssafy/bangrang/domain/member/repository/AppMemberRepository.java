@@ -18,5 +18,5 @@ public interface AppMemberRepository extends JpaRepository<AppMember, Long> {
     @Query("select am.idx from AppMember am where am.nickname = :nickname")
     Long findIdxByNickname(@Param("nickname") String nickname);
 
-    Optional<AppMember> findAppMemberByAccessToken(@Param("accessToken") String accessToken);
+//    Optional<AppMember> findAppMemberByAccessToken(@Param("accessToken") String accessToken);
 }
