@@ -71,7 +71,7 @@ public class SecurityConfig {
             "/api/web/signup",
             "/api/web/login",
             /* 앱 회원가입, 로그인 */
-            "/api/app/login",
+            "/api/member/login",
             
     };
 

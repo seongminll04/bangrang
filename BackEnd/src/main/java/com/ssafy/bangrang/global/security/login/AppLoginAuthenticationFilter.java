@@ -45,7 +45,7 @@ public class AppLoginAuthenticationFilter extends AbstractAuthenticationProcessi
     private AppMemberRepository appMemberRepository;
 
     public AppLoginAuthenticationFilter(ObjectMapper objectMapper) {
-        super(new AntPathRequestMatcher("/api/app/login", "POST"));
+        super(new AntPathRequestMatcher("/api/member/login", "POST"));
 
         this.objectMapper = objectMapper;
     }
