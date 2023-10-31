@@ -13,10 +13,14 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -118,7 +122,7 @@ fun AppNavigation(
         "Permission"
     }
 
-    Surface(modifier = Modifier.fillMaxSize()) {
+    Surface(modifier = Modifier.fillMaxSize(), color = Color.Transparent) {
         Column {
             val currentDestination =
                 navController.currentBackStackEntryAsState().value?.destination?.route
@@ -164,7 +168,6 @@ fun AppNavigation(
                             FullScreenImagePage(navController, decodedImageUrl)
                         }
                     }
-
                 }
             }
 

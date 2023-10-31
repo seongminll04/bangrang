@@ -1,5 +1,6 @@
 package com.ssafyb109.bangrang.view
 
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.util.Log
 import androidx.compose.foundation.Image
@@ -38,6 +39,7 @@ import com.google.android.gms.tasks.Task
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
+import com.kakao.sdk.common.util.Utility
 import com.kakao.sdk.user.UserApiClient
 import com.ssafyb109.bangrang.MainActivity
 import com.ssafyb109.bangrang.R
@@ -50,9 +52,20 @@ import kotlinx.coroutines.launch
 fun LoginPage(
     navController: NavHostController,
     userViewModel: UserViewModel,
+    sharedPreferencesUtil: SharedPreferencesUtil,
 ) {
     val context = LocalContext.current
     val googleSignInClient = (context as MainActivity).getGoogleLoginAuth()
+    val loginResponse by userViewModel.loginResponse.collectAsState()
+
+    LaunchedEffect(loginResponse){
+        if(loginResponse == "기존회원"){
+            navController.navigate("Home")
+        }
+        if(loginResponse == "신규회원"){
+            navController.navigate("SignUp")
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -79,7 +92,7 @@ fun LoginPage(
             contentScale = ContentScale.Fit,
             modifier = Modifier
                 .clickable {
-                    performKakaoLogin(context, navController, userViewModel)
+                    performKakaoLogin(context, navController, userViewModel, sharedPreferencesUtil)
                 }
                 .width(350.dp)
                 .height(80.dp)
@@ -122,8 +135,9 @@ fun LoginPage(
         //네이버로그인 = 앱 출시이후 가능
         
         // 임시 홈이동
-        Button(onClick = { navController.navigate("Home") }) {
+        Button(onClick = { navController.navigate("Home")}) {
             Text(text = "임시 홈이동")
+
         }
 
         Button(onClick = { navController.navigate("SignUp") }) {
@@ -138,7 +152,7 @@ fun performKakaoLogin(context: Context, navController: NavHostController, viewMo
 
     val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
         if (error != null) {
-            Log.e("KAKAO_LOGIN", "카카오계정으로 로그인 실패", error)
+            Log.e("KAKAO_LOGIN", "카카오계정으로 로그인 실패1", error)
         } else if (token != null) {
             viewModel.sendTokenToServer("kakao",token.accessToken)
             Log.i("KAKAO_LOGIN", "카카오계정으로 로그인 성공2 ${token.accessToken}")
@@ -150,7 +164,7 @@ fun performKakaoLogin(context: Context, navController: NavHostController, viewMo
     if (UserApiClient.instance.isKakaoTalkLoginAvailable(context)) {
         UserApiClient.instance.loginWithKakaoTalk(context) { token, error ->
             if (error != null) {
-                Log.e("KAKAO_LOGIN", "카카오톡으로 로그인 실패", error)
+                Log.e("KAKAO_LOGIN", "카카오톡으로 로그인 실패2", error)
                 if (error is ClientError && error.reason == ClientErrorCause.Cancelled) {
                     return@loginWithKakaoTalk
                 }

@@ -24,7 +24,7 @@ android {
 
         // 카카오 키 저장
         buildConfigField("String", "KAKAO_NATIVE_APP_KEY", "\"${properties.getProperty("KAKAO_NATIVE_APP_KEY")}\"")
-        manifestPlaceholders["kakaoScheme"] = "kakao${properties.getProperty("KAKAO_NATIVE_APP_KEY")}"
+        manifestPlaceholders["kakaoKey"] = "kakao${properties.getProperty("KAKAO_NATIVE_APP_KEY")}"
 
         // 구글 지도
         buildConfigField("String", "GOOGLE_MAP_APP_KEY", "\"${properties.getProperty("GOOGLE_MAP_APP_KEY")}\"")
