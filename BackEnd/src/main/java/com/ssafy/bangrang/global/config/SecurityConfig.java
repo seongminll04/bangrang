@@ -62,12 +62,17 @@ public class SecurityConfig {
             "/swagger-ui/**",
             "/ws/**",
 
+            "/",
+            "/favicon.ico",
+            "/oauth2/**",
+            "/api/sessions/**",
+
+            /* 웹 회원가입, 로그인 */
             "/api/web/signup",
             "/api/web/login",
+            /* 앱 회원가입, 로그인 */
             "/api/app/login",
             
-            "/api/**",
-            "/api/user/nicknameCheck/**"
     };
 
     @Bean
@@ -83,16 +88,13 @@ public class SecurityConfig {
                 .authorizeRequests(a->a
                         .requestMatchers(WHITE_LIST).permitAll()
                         .anyRequest().authenticated()) // 그 외 경로는 모두 인증된 사용자만 접근 가능
-                // 소셜 로그인 설정
-
-                ;
-        httpSecurity.addFilterAfter(appLoginAuthenticationFilter(), LogoutFilter.class);
-        httpSecurity.addFilterBefore(jwtAuthenticationFilter(), AppLoginAuthenticationFilter.class);
-        // 스프링 시큐리티 필터 순서 :
-        // LogoutFilter -> JwtAuthenticationProcessingFilter -> CustomJsonUsernamePasswordAuthenticationFilter
-        // 아래 둘 순서 바꾸면 에러
-        httpSecurity.addFilterAfter(webLoginAuthenticationFilter(), LogoutFilter.class);
-        httpSecurity.addFilterBefore(jwtAuthenticationFilter(), WebLoginAuthenticationFilter.class);
+                // 스프링 시큐리티 필터 순서 :
+                // LogoutFilter -> JwtAuthenticationProcessingFilter -> AuthenticationFilter
+                // 아래 둘 순서 바꾸면 에러
+                .addFilterAfter(appLoginAuthenticationFilter(), LogoutFilter.class)
+                .addFilterAfter(webLoginAuthenticationFilter(), LogoutFilter.class)
+                .addFilterBefore(jwtAuthenticationFilter(), AppLoginAuthenticationFilter.class)
+                .addFilterBefore(jwtAuthenticationFilter(), WebLoginAuthenticationFilter.class);
 
         return httpSecurity.build();
     }
