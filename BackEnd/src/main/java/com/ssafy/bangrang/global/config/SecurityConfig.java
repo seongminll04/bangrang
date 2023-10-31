@@ -62,10 +62,11 @@ public class SecurityConfig {
             "/swagger-ui/**",
             "/ws/**",
 
-            "/",
+            "/api/web/signup",
+            "/api/web/login",
+            "/api/app/login",
+            
             "/api/**",
-            "/api/user/signup",
-            "/api/login",
             "/api/user/nicknameCheck/**"
     };
 
