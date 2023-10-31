@@ -64,14 +64,14 @@ public class AppLoginAuthenticationFilter extends AbstractAuthenticationProcessi
         // JSON 형태를 Key-Value 형태로 변환하여 Map에 저장
         Map<String, String> loginData  = objectMapper.readValue(messageBody, Map.class);
 
-        // 보내온 id, password 데이터 가져옴
-        String code = loginData.get("code");
+        // 보내온 token, social 데이터 가져옴
+        String token = loginData.get("token");
         String social = loginData.get("social");
 
         if (social.equals("kakao")) {
             HttpHeaders headers = new HttpHeaders();
             headers.add("Content-type", "application/x-www-form-urlencoded; charset=utf-8");
-            headers.add("Authorization", "Bearer "+ code);
+            headers.add("Authorization", "Bearer "+ token);
             RestTemplate restTemplate = new RestTemplate();
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
             ResponseEntity<String> response =
@@ -103,7 +103,7 @@ public class AppLoginAuthenticationFilter extends AbstractAuthenticationProcessi
         } else if (social.equals("google")) {
             HttpHeaders headers = new HttpHeaders();
             headers.add("Content-type", "application/x-www-form-urlencoded; charset=utf-8");
-            headers.add("Authorization", "Bearer "+ code);
+            headers.add("Authorization", "Bearer "+ token);
             RestTemplate restTemplate = new RestTemplate();
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
             ResponseEntity<String> response =
