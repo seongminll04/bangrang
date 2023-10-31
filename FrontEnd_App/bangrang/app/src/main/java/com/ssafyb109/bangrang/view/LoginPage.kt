@@ -19,6 +19,9 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,6 +30,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.common.api.ApiException
@@ -37,7 +41,10 @@ import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
 import com.ssafyb109.bangrang.MainActivity
 import com.ssafyb109.bangrang.R
+import com.ssafyb109.bangrang.repository.ResultType
 import com.ssafyb109.bangrang.viewmodel.UserViewModel
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @Composable
 fun LoginPage(
@@ -128,14 +135,17 @@ fun LoginPage(
 
 
 fun performKakaoLogin(context: Context, navController: NavHostController, viewModel: UserViewModel) {
+
     val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
         if (error != null) {
             Log.e("KAKAO_LOGIN", "카카오계정으로 로그인 실패", error)
         } else if (token != null) {
-            Log.i("KAKAO_LOGIN", "카카오계정으로 로그인 성공 ${token.accessToken}")
-            navController.navigate("Home")
+            viewModel.sendTokenToServer("kakao",token.accessToken)
+            Log.i("KAKAO_LOGIN", "카카오계정으로 로그인 성공2 ${token.accessToken}")
+
         }
     }
+
 
     if (UserApiClient.instance.isKakaoTalkLoginAvailable(context)) {
         UserApiClient.instance.loginWithKakaoTalk(context) { token, error ->
@@ -146,13 +156,28 @@ fun performKakaoLogin(context: Context, navController: NavHostController, viewMo
                 }
                 UserApiClient.instance.loginWithKakaoAccount(context, callback = callback)
             } else if (token != null) {
-                viewModel.sendTokenToServer(token.accessToken)
-                Log.i("KAKAO_LOGIN", "카카오톡으로 로그인 성공 ${token.accessToken}")
-                navController.navigate("Home")
+                viewModel.sendTokenToServer("kakao",token.accessToken)
+                Log.i("KAKAO_LOGIN", "카카오톡으로 로그인 성공1 ${token.accessToken}")
             }
         }
     } else {
         UserApiClient.instance.loginWithKakaoAccount(context, callback = callback)
+    }
+
+    // 이동
+    viewModel.viewModelScope.launch {
+        viewModel.loginResponse.collectLatest { response ->
+            when (response) {
+                ResultType.NICKNAME -> {
+                    navController.navigate("SignUp")
+                }
+                ResultType.SUCCESS -> {
+                    navController.navigate("Home")
+                }
+                // 다른 ResultType에 대한 처리
+                else -> {}
+            }
+        }
     }
 }
 
@@ -161,7 +186,7 @@ fun handleGoogleSignInResult(task: Task<GoogleSignInAccount>, navController: Nav
     try {
         val account: GoogleSignInAccount? = task.getResult(ApiException::class.java)
         if (account != null) {
-            viewModel.sendTokenToServer(account.idToken ?: "")
+            viewModel.sendTokenToServer("kakao",account.idToken ?: "")
             navController.navigate("Home")
         }
     } catch (e: ApiException) {

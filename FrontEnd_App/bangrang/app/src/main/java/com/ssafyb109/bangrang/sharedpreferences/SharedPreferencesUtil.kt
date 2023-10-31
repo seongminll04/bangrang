@@ -12,6 +12,7 @@ class SharedPreferencesUtil @Inject constructor(private val context: Context) {
         private const val USER_IDX = "1111111111"
         private const val USER_NICKNAME = "user_nickname"
         private const val USER_TOKEN = "user_token"
+        private const val USER_REFRESH_TOKEN = "user_refresh_token"
         private const val USER_ALARM = "false"
         private const val USER_IMAGE = "https://bangrang-bucket.s3.ap-northeast-2.amazonaws.com/image.png"
     }
@@ -69,6 +70,19 @@ class SharedPreferencesUtil @Inject constructor(private val context: Context) {
     // 저장된 사용자 토큰을 가져오는 메서드
     fun getUserToken(): String? {
         return sharedPreferences.getString(USER_TOKEN, null)
+    }
+
+    // 사용자 리프레시 토큰을 저장하는 메서드
+    fun setUserRefreshToken(token: String) {
+        with(sharedPreferences.edit()) {
+            putString(USER_REFRESH_TOKEN, token)
+            apply()
+        }
+    }
+
+    // 저장된 사용자 리프레시 토큰을 가져오는 메서드
+    fun getUserRefreshToken(): String? {
+        return sharedPreferences.getString(USER_REFRESH_TOKEN, null)
     }
 
     // 사용자의 알람 설정 저장

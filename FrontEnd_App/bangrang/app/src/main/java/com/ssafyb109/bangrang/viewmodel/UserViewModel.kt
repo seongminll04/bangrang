@@ -15,7 +15,9 @@ import com.ssafyb109.bangrang.sharedpreferences.SharedPreferencesUtil
 import com.ssafyb109.bangrang.view.utill.getAddressFromLocation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -30,8 +32,8 @@ class UserViewModel @Inject constructor(
 ) : ViewModel() {
 
     // 로그인 응답
-    private val _loginResponse = MutableStateFlow<ResultType?>(null)
-    val loginResponse: StateFlow<ResultType?> = _loginResponse
+    private val _loginResponse = MutableSharedFlow<ResultType?>()
+    val loginResponse: SharedFlow<ResultType?> = _loginResponse
 
     // 닉네임 검증 응답
     private val _nicknameAvailability = MutableStateFlow<Boolean?>(null)
@@ -117,11 +119,11 @@ class UserViewModel @Inject constructor(
     }
 
     // 구글 로그인
-    fun sendTokenToServer(token: String) {
+    fun sendTokenToServer(social: String, token: String) {
         viewModelScope.launch {
-            _loginResponse.value = ResultType.LOADING
-            val result = repository.verifyGoogleToken(token)
-            _loginResponse.value = result
+            _loginResponse.emit(ResultType.LOADING)
+            val result = repository.verifyGoogleToken(social, token)
+            _loginResponse.emit(result)
         }
     }
 

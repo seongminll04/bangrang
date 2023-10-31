@@ -1,9 +1,6 @@
 package com.ssafyb109.bangrang
 
-import com.ssafyb109.bangrang.view.ProfileChangePage
-import com.ssafyb109.bangrang.view.FullScreenImagePage
 import android.Manifest
-import com.ssafyb109.bangrang.view.EventPage
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -19,7 +16,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -38,20 +34,22 @@ import com.ssafyb109.bangrang.view.AlarmPage
 import com.ssafyb109.bangrang.view.BottomBar
 import com.ssafyb109.bangrang.view.CollectionPage
 import com.ssafyb109.bangrang.view.EventDetailPage
+import com.ssafyb109.bangrang.view.EventPage
+import com.ssafyb109.bangrang.view.FullScreenImagePage
 import com.ssafyb109.bangrang.view.HomePage
 import com.ssafyb109.bangrang.view.InquiryDetailPage
 import com.ssafyb109.bangrang.view.InquiryPage
 import com.ssafyb109.bangrang.view.InquiryResistPage
+import com.ssafyb109.bangrang.view.LocationPermissionPage
 import com.ssafyb109.bangrang.view.LoginPage
 import com.ssafyb109.bangrang.view.MapPage
 import com.ssafyb109.bangrang.view.MyPage
-import com.ssafyb109.bangrang.view.PermissionPage
+import com.ssafyb109.bangrang.view.ProfileChangePage
 import com.ssafyb109.bangrang.view.RankPage
 import com.ssafyb109.bangrang.view.SignUpPage
 import com.ssafyb109.bangrang.view.StampPage
 import com.ssafyb109.bangrang.view.TopBar
 import com.ssafyb109.bangrang.view.handleGoogleSignInResult
-import com.ssafyb109.bangrang.viewmodel.EventViewModel
 import com.ssafyb109.bangrang.viewmodel.InquiryViewModel
 import com.ssafyb109.bangrang.viewmodel.RankViewModel
 import com.ssafyb109.bangrang.viewmodel.UserViewModel
@@ -132,7 +130,7 @@ fun AppNavigation(
 
             Box(modifier = Modifier.weight(1f)) {
                 NavHost(navController, startDestination = startDestination) {
-                    composable("Permission") { PermissionPage(navController) }
+                    composable("Permission") { LocationPermissionPage(navController) }
                     composable("Login") { LoginPage(navController, userViewModel) }
                     composable("SignUp") { SignUpPage(navController, userViewModel) }
 

@@ -96,15 +96,16 @@ interface UserService {
 
 // 로그인 요청 DTO
 data class LoginRequestDTO(
+    val social: String,
     val token: String
 )
 
 // 로그인 응답 DTO
 data class LoginResponseDTO(
     val userIdx: Long,
-    val userNickname: String,
-    val accessToken: String,
-    val refreshToken: String,
+    val userNickname: String?,
+    val userImage: String?,
+    val userAlarm: Boolean,
 )
 
 // 닉네임 중복확인 요청 응답 DTO = Path, Void
