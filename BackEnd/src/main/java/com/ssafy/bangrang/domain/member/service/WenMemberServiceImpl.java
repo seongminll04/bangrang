@@ -50,12 +50,8 @@ public class WenMemberServiceImpl implements WebMemberService {
     @Override
     @Transactional
     public Long signup(WebMemberSignUpRequestDto webMemberSignUpRequestDto, MultipartFile multipartFile) throws Exception {
-
-        // 문서 인증파일 필수!
-        if (multipartFile.isEmpty()) {
-            throw new IllegalArgumentException("파일이 없으면 회원가입할 수 없습니다.");
-        }
-
+        if (multipartFile.isEmpty())
+            throw new Exception("파일이 없어!");
         // 아이디 중복 여부
         if(webMemberRepository.findById(webMemberSignUpRequestDto.getId()).isPresent())
             throw new Exception("이미 존재하는 아이디입니다.");
@@ -72,7 +68,6 @@ public class WenMemberServiceImpl implements WebMemberService {
 
         String fileName = webMemberSignUpRequestDto.getId() + "_auth_file";
         byte[] fileBytes = multipartFile.getBytes();
-
         // S3에 업로드하고 그 url 가져옴
         String authfilePath = uploadToS3(fileName, fileBytes, multipartFile.getContentType());
 
