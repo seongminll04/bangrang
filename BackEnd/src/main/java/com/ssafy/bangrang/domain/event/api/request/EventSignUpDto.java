@@ -18,21 +18,22 @@ public class EventSignUpDto {
     private String endDate;
     private String address;
     private String eventUrl;
-    //    private Double longitude;
-//    private Double latitude;
-    private Long webMemberIdx;
+    private String subTitle;
+    private Double longitude;
+    private Double latitude;
+
 
 
     @Builder
-    public EventSignUpDto(String title, String content, String startDate, String endDate, String address, String eventUrl, Double longitude, Double latitude, Long webMemberIdx) {
+    public EventSignUpDto(String title, String content, String startDate, String endDate, String address, String eventUrl, String subTitle, Double longitude, Double latitude, Long webMemberIdx) {
         this.title = title;
         this.content = content;
         this.startDate = startDate;
         this.endDate = endDate;
         this.address = address;
         this.eventUrl = eventUrl;
-//        this.longitude = longitude;
-//        this.latitude = latitude;
-        this.webMemberIdx = webMemberIdx;
+        this.subTitle = subTitle;
+        this.longitude = longitude;
+        this.latitude = latitude;
     }
 }

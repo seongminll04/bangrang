@@ -11,10 +11,13 @@ import java.time.LocalDateTime;
 public class EventGetDto {
 
     private String title;
+    private String subTitle;
     private String content;
     private String startDate;
     private String endDate;
     private String address;
+    private Double longitude;
+    private Double latitude;
     private String eventUrl;
 
 

@@ -97,8 +97,11 @@ public class Event extends CommonEntity {
     public Event update(EventPutDto eventPutDto) {
         this.title = eventPutDto.getTitle();
         this.content = eventPutDto.getTitle();
-        this.startDate = eventPutDto.getStartDate();
-        this.endDate = eventPutDto.getEndDate();
+        this.subTitle = eventPutDto.getSubTitle();
+        this.latitude = eventPutDto.getLatitude();
+        this.longitude = eventPutDto.getLongitude();
+        this.startDate = LocalDateTime.parse(eventPutDto.getStartDate());
+        this.endDate = LocalDateTime.parse(eventPutDto.getEndDate());
         this.address = eventPutDto.getAddress();
         this.eventUrl = eventPutDto.getEventUrl();
         return this;

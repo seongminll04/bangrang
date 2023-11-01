@@ -9,6 +9,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,10 +24,12 @@ public class EventWebApi {
     private final EventWebService eventWebService;
 
     @PostMapping
-    public ResponseEntity<?> postWebEvent(@RequestBody @Valid EventSignUpDto eventSignUpDto) {
+    public ResponseEntity<?> postWebEvent(@RequestBody @Valid EventSignUpDto eventSignUpDto,
+                                          @AuthenticationPrincipal UserDetails userDetails
+    ) {
         log.info("웹 이벤트 생성중");
         try {
-            eventWebService.saveEvent(eventSignUpDto);
+            eventWebService.saveEvent(eventSignUpDto, userDetails);
             return ResponseEntity.ok().body("이벤트 생성 완료");
         } catch (Exception e){
             log.info("작성 실패");
@@ -44,11 +48,12 @@ public class EventWebApi {
         }
     }
 
-    @DeleteMapping
-    public ResponseEntity<?> deleteEvent(@PathVariable Long eventIdx) {
+    @PostMapping("/delete/{eventIdx}")
+    public ResponseEntity<?> deleteEvent(@PathVariable Long eventIdx,
+                                         @AuthenticationPrincipal UserDetails userDetails) {
         log.info("이벤트 삭제");
         try {
-            eventWebService.deleteEvent(eventIdx);
+            eventWebService.deleteEvent(eventIdx,userDetails);
             return ResponseEntity.ok().body("이벤트 삭제 완료");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
