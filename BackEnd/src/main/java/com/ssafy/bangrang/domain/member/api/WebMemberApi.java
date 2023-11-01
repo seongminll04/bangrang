@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RequiredArgsConstructor
 @RestController
@@ -23,9 +24,9 @@ public class WebMemberApi {
 
     @ApiOperation(value = "일반 회원 가입")
     @PostMapping("/signup")
-    public ResponseEntity signup(@Valid @RequestBody WebMemberSignUpRequest webMemberSignUpRequest) throws Exception{
+    public ResponseEntity signup(@Valid @RequestBody WebMemberSignUpRequest webMemberSignUpRequest, MultipartFile multipartFile) throws Exception{
         return ResponseEntity.ok()
-                .body(webMemberService.signup(webMemberSignUpRequest));
+                .body(webMemberService.signup(webMemberSignUpRequest, multipartFile));
     }
 
     @ApiOperation(value = "웹 로그아웃")

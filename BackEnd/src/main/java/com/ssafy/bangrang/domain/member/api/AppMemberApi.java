@@ -27,8 +27,8 @@ public class AppMemberApi {
     private final JwtService jwtService;
 
     @ApiOperation(value = "닉네임 중복 확인")
-    @GetMapping("/nicknameCheck")
-    public ResponseEntity<?> nicknameUsefulCheck(@RequestParam("nickname") String nickname) throws Exception {
+    @GetMapping("/nicknameCheck/{nickname}")
+    public ResponseEntity<?> nicknameUsefulCheck(@PathVariable("nickname") String nickname) throws Exception {
         appMemberService.nicknameUsefulCheck(nickname);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body("");
     }
