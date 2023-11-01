@@ -8,6 +8,8 @@ import io.swagger.annotations.Authorization;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -24,12 +26,11 @@ public class FriendshipApi {
 
     // 친구 추가
     @PostMapping("/{nickname}")
-    public ResponseEntity addFriend(@RequestHeader("Authorization") String accessToken, @PathVariable String nickname) {
+    public ResponseEntity addFriend(@AuthenticationPrincipal UserDetails userDetails, @PathVariable String nickname) {
 
         log.info("[친구 추가 요청 시작]", LocalDateTime.now());
 
-        String id = jwtService.extractEmail(accessToken).orElseThrow();
-        AppMember appMember = appMemberService.findById(id).orElseThrow();
+        AppMember appMember = appMemberService.findById(userDetails.getUsername()).orElseThrow();
         Long friendIdx = appMemberService.findIdxByNickname(nickname);
         friendshipService.addFriendship(appMember, friendIdx);
 
@@ -40,12 +41,11 @@ public class FriendshipApi {
 
     // 친구 삭제
     @DeleteMapping("/{nickname}")
-    public ResponseEntity deleteFriend(@RequestHeader("Authorization") String accessToken, @PathVariable String nickname) {
+    public ResponseEntity deleteFriend(@AuthenticationPrincipal UserDetails userDetails, @PathVariable String nickname) {
 
         log.info("[친구 삭제 요청 시작]", LocalDateTime.now());
 
-        String id = jwtService.extractEmail(accessToken).orElseThrow();
-        AppMember appMember = appMemberService.findById(id).orElseThrow();
+        AppMember appMember = appMemberService.findById(userDetails.getUsername()).orElseThrow();
         Long friendIdx = appMemberService.findIdxByNickname(nickname);
         friendshipService.deleteFriendship(appMember, friendIdx);
 

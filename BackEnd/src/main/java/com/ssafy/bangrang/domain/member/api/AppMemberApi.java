@@ -12,7 +12,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 
@@ -23,7 +26,6 @@ import java.time.LocalDateTime;
 public class AppMemberApi {
 
     private final AppMemberService appMemberService;
-    private final JwtService jwtService;
 
     @ApiOperation(value = "닉네임 중복 확인")
     @GetMapping("/nicknameCheck")
@@ -54,12 +56,11 @@ public class AppMemberApi {
 
     // 멤버 도장 리스트 요청
     @GetMapping("/stamp")
-    public ResponseEntity getMemberStampList(@RequestHeader("Authorization") String accessToken){
+    public ResponseEntity getMemberStampList(@AuthenticationPrincipal UserDetails userDetails){
 
         log.info("[멤버 도장 리스트 요청 시작]", LocalDateTime.now());
 
-        String id = jwtService.extractEmail(accessToken).orElseThrow();
-        StampResponseDto stampResponse = appMemberService.findStampsById(id);
+        StampResponseDto stampResponse = appMemberService.findStampsById(userDetails.getUsername());
 
         log.info("[멤버 도장 리스트 요청 끝]", LocalDateTime.now());
 

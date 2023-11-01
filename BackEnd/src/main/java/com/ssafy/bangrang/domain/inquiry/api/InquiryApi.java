@@ -11,6 +11,8 @@ import com.ssafy.bangrang.global.security.jwt.JwtService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -23,18 +25,16 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/inquiry")
 public class InquiryApi {
 
-    private final JwtService jwtService;
     private final AppMemberService appMemberService;
     private final InquiryService inquiryService;
 
     // 사용자 일대일 문의 리스트
     @GetMapping("/list")
-    public ResponseEntity getInquiryAll(@RequestHeader("Authorization") String accessToken){
+    public ResponseEntity getInquiryAll(@AuthenticationPrincipal UserDetails userDetails){
 
         log.info("[사용자 일대일 문의 리스트 요청 시작]", LocalDateTime.now());
 
-        String id = jwtService.extractEmail(accessToken).orElseThrow();
-        List<GetInquiryAllResponseDto> inquiryList = appMemberService.findInquiryById(id);
+        List<GetInquiryAllResponseDto> inquiryList = appMemberService.findInquiryById(userDetails.getUsername());
 
         log.info("[사용자 일대일 문의 리스트 요청 끝]");
 
@@ -43,12 +43,11 @@ public class InquiryApi {
 
     // 사용자 일대일 문의 등록
     @PostMapping("/resist")
-    public ResponseEntity addInquiry(@RequestHeader("Authorization") String accessToken, @RequestBody AddInquiryRequestDto addInquiryRequestDto){
+    public ResponseEntity addInquiry(@AuthenticationPrincipal UserDetails userDetails, @RequestBody AddInquiryRequestDto addInquiryRequestDto){
 
         log.info("[사용자 일대일 문의 등록 요청 시작]", LocalDateTime.now());
 
-        String id = jwtService.extractEmail(accessToken).orElseThrow();
-        inquiryService.saveInquiry(id, addInquiryRequestDto);
+        inquiryService.saveInquiry(userDetails.getUsername(), addInquiryRequestDto);
 
         log.info("[사용자 일대일 문의 등록 요청 끝]");
 
