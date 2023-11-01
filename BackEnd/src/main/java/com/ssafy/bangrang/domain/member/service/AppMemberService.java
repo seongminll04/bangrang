@@ -18,8 +18,8 @@ public interface AppMemberService {
 
     void nicknameUsefulCheck(String nickname) throws Exception;
 
+    void nicknamePlus(String nickname, UserDetails userDetails) throws Exception;
     void nicknameUpdate(String nickname, UserDetails userDetails) throws Exception;
-
     Long logout(String accessToken, UserDetails userDetails);
 
     StampResponseDto findStampsById(String id);

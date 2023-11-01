@@ -1,6 +1,6 @@
 package com.ssafy.bangrang.domain.member.api;
 
-import com.ssafy.bangrang.domain.member.api.request.WebMemberSignUpRequest;
+import com.ssafy.bangrang.domain.member.api.request.WebMemberSignUpRequestDto;
 import com.ssafy.bangrang.domain.member.service.WebMemberService;
 import com.ssafy.bangrang.global.security.jwt.JwtService;
 import io.swagger.annotations.ApiOperation;
@@ -24,9 +24,9 @@ public class WebMemberApi {
 
     @ApiOperation(value = "일반 회원 가입")
     @PostMapping("/signup")
-    public ResponseEntity signup(@Valid @RequestBody WebMemberSignUpRequest webMemberSignUpRequest, MultipartFile multipartFile) throws Exception{
+    public ResponseEntity signup(@Valid @RequestBody WebMemberSignUpRequestDto webMemberSignUpRequestDto, MultipartFile multipartFile) throws Exception{
         return ResponseEntity.ok()
-                .body(webMemberService.signup(webMemberSignUpRequest, multipartFile));
+                .body(webMemberService.signup(webMemberSignUpRequestDto, multipartFile));
     }
 
     @ApiOperation(value = "웹 로그아웃")

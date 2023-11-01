@@ -5,8 +5,7 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.amazonaws.services.s3.model.S3Object;
-import com.ssafy.bangrang.domain.member.api.request.WebMemberSignUpRequest;
+import com.ssafy.bangrang.domain.member.api.request.WebMemberSignUpRequestDto;
 import com.ssafy.bangrang.domain.member.entity.WebMember;
 import com.ssafy.bangrang.domain.member.repository.WebMemberRepository;
 import com.ssafy.bangrang.global.security.redis.RedisAccessTokenService;
@@ -50,7 +49,7 @@ public class WenMemberServiceImpl implements WebMemberService {
      */
     @Override
     @Transactional
-    public Long signup(WebMemberSignUpRequest webMemberSignUpRequest, MultipartFile multipartFile) throws Exception {
+    public Long signup(WebMemberSignUpRequestDto webMemberSignUpRequestDto, MultipartFile multipartFile) throws Exception {
 
         // 문서 인증파일 필수!
         if (multipartFile.isEmpty()) {
@@ -58,27 +57,27 @@ public class WenMemberServiceImpl implements WebMemberService {
         }
 
         // 아이디 중복 여부
-        if(webMemberRepository.findById(webMemberSignUpRequest.getId()).isPresent())
+        if(webMemberRepository.findById(webMemberSignUpRequestDto.getId()).isPresent())
             throw new Exception("이미 존재하는 아이디입니다.");
 
         // 아이디 유효성 검사  (영문,숫자 5자 이상)
-        if (!Pattern.matches("^[a-zA-Z0-9]{5,}$", webMemberSignUpRequest.getId())) {
+        if (!Pattern.matches("^[a-zA-Z0-9]{5,}$", webMemberSignUpRequestDto.getId())) {
             throw new IllegalStateException("이메일 형식을 다시 맞춰주세요.");
         }
 
         // 비밀번호 유효성 검사
-        if (!Pattern.matches("^.*(?=^.{9,15}$)(?=.*\\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$", webMemberSignUpRequest.getPassword())) {
+        if (!Pattern.matches("^.*(?=^.{9,15}$)(?=.*\\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$", webMemberSignUpRequestDto.getPassword())) {
             throw new IllegalStateException("비밀번호 형식이 맞지않습니다.");
         }
 
-        String fileName = webMemberSignUpRequest.getId() + "_auth_file";
+        String fileName = webMemberSignUpRequestDto.getId() + "_auth_file";
         byte[] fileBytes = multipartFile.getBytes();
 
         // S3에 업로드하고 그 url 가져옴
         String authfilePath = uploadToS3(fileName, fileBytes, multipartFile.getContentType());
 
         // 계정 엔티티 생성
-        WebMember webMember = webMemberSignUpRequest.toEntity(authfilePath);
+        WebMember webMember = webMemberSignUpRequestDto.toEntity(authfilePath);
         // 패스워드 암호화
         webMember.passwordEncode(passwordEncoder);
         // 그리고 저장
