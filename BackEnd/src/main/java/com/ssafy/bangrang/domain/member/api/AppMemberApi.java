@@ -52,6 +52,13 @@ public class AppMemberApi {
         return ResponseEntity.ok().body(result);
     }
 
+    @ApiOperation(value = "알람 ON/OFF")
+    @PutMapping("/alarm")
+    public ResponseEntity<?> alarmOnOff(@RequestBody Boolean alarmSet,
+                                        @AuthenticationPrincipal UserDetails userDetails) throws Exception {
+        appMemberService.alarmOnOff(alarmSet, userDetails);
+        return ResponseEntity.ok().body("");
+    }
 
     // 멤버 도장 리스트 요청
     @GetMapping("/stamp")

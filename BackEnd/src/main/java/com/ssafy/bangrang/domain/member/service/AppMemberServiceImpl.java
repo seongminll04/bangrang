@@ -97,6 +97,13 @@ public class AppMemberServiceImpl implements AppMemberService {
     }
 
     @Override
+    public void alarmOnOff(Boolean alarmSet,UserDetails userDetails) throws Exception {
+        AppMember user = appMemberRepository.findById(userDetails.getUsername())
+                .orElseThrow(() -> new EmptyResultDataAccessException("해당 유저는 존재하지 않습니다.", 1));
+        user.alarmOnOff(alarmSet);
+    }
+
+    @Override
     public Long findIdxByNickname(String nickname){
         return appMemberRepository.findIdxByNickname(nickname);
     }

@@ -14,6 +14,8 @@ public interface AppMemberService {
 
     Long kakaologin(String id, String ImgUrl) throws Exception;
 
+    void alarmOnOff(Boolean alarmSet, UserDetails userDetails) throws Exception;
+
     void nicknameUsefulCheck(String nickname) throws Exception;
 
     void nicknameUpdate(String nickname, UserDetails userDetails) throws Exception;
