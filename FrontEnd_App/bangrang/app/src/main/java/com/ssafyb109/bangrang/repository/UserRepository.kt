@@ -41,8 +41,8 @@ class UserRepository @Inject constructor(
                     data.userNickname?.let { sharedPreferencesUtil.setUserNickname(it) }
                     data.userImage?.let { sharedPreferencesUtil.setUserImage(it) }
                     sharedPreferencesUtil.setUserIdx(data.userIdx)
-
-                    if(data.userNickname == "null"){
+                    
+                    if(data.userNickname == null){
                         return ResultType.NICKNAME
                     }
                 }
