@@ -23,7 +23,7 @@ public class EventWebApi {
 
     private final EventWebService eventWebService;
 
-    @PostMapping
+    @PostMapping(path = "/regist", consumes = {"multipart/form-data"})
     public ResponseEntity<?> postWebEvent(@RequestBody @Valid EventSignUpDto eventSignUpDto,
                                           @AuthenticationPrincipal UserDetails userDetails
     ) {

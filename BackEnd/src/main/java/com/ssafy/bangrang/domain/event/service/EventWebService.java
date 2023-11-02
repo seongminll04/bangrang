@@ -1,5 +1,7 @@
 package com.ssafy.bangrang.domain.event.service;
 
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -27,10 +29,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -40,9 +42,11 @@ import java.util.stream.Collectors;
 @Slf4j
 public class EventWebService {
 
+
     private final EventRepository eventRepository;
     private final WebMemberRepository webMemberRepository;
     private final ObjectMapper objectMapper;
+    private final AmazonS3Client amazonS3Client;
 
     @Value("${cloud.naver.client_id}")
     String client_id;
@@ -50,6 +54,16 @@ public class EventWebService {
     @Value("${cloud.naver.client_secret}")
     String client_secret;
 
+    @Value("${cloud.aws.s3.bucket}")
+    private String bucket;
+
+    @Value("${cloud.aws.region.static}")
+    private String region;
+
+    private String convertDateToString(LocalDateTime nowDate) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+        return nowDate.format(formatter);
+    }
 
 
     @Transactional
@@ -79,7 +93,37 @@ public class EventWebService {
 
         JsonNode root = objectMapper.readTree(body);
         JsonNode addresses = root.get("addresses");
+
+
+
+
         if (addresses.isArray() && addresses.size() > 0) {
+
+            String S3_fileName = "";
+            if (eventSignUpDto.getEventUrl() != null) {
+
+
+                // 랜덤으로 이름 생성중
+                Random generator = new java.util.Random();
+                generator.setSeed(System.currentTimeMillis());
+                String randomNumber = String.format("%06d", generator.nextInt(1000000) % 1000000);
+                S3_fileName = "eventUrl/" + convertDateToString(LocalDateTime.now()) + '_' + randomNumber + ".jpg";
+
+                // 아마존 s3에 데이터 타입 설정 사이즈 설정
+                ObjectMetadata metadata = new ObjectMetadata();
+                metadata.setContentType(eventSignUpDto.getEventUrl().getContentType());
+                metadata.setContentLength(eventSignUpDto.getEventUrl().getSize());
+
+                // s3에 데이터 저장
+                try {
+                    amazonS3Client.putObject(bucket, S3_fileName, eventSignUpDto.getEventUrl().getInputStream(),metadata);
+                } catch (IOException e) {
+                    log.info("이미지 저장 에러발생");
+                    e.printStackTrace();
+                    throw new RuntimeException(e);
+                }
+            }
+
             JsonNode firstAddress = addresses.get(0);
             double latitude = Double.parseDouble(firstAddress.get("x").asText());
             double longitude = Double.parseDouble(firstAddress.get("y").asText());
@@ -89,7 +133,7 @@ public class EventWebService {
                     .subTitle(eventSignUpDto.getSubTitle())
                     .address(eventSignUpDto.getAddress())
                     .content(eventSignUpDto.getContent())
-                    .eventUrl(eventSignUpDto.getEventUrl())
+                    .eventUrl(S3_fileName)
                     .longitude(longitude)
                     .latitude(latitude)
                     .startDate(LocalDateTime.parse(eventSignUpDto.getStartDate())) // 수정된 부분

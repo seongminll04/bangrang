@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import net.bytebuddy.asm.Advice;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 
@@ -17,15 +18,14 @@ public class EventSignUpDto {
     private String startDate;
     private String endDate;
     private String address;
-    private String eventUrl;
+    private MultipartFile eventUrl;
     private String subTitle;
     private Double longitude;
     private Double latitude;
 
-
-
     @Builder
-    public EventSignUpDto(String title, String content, String startDate, String endDate, String address, String eventUrl, String subTitle, Double longitude, Double latitude, Long webMemberIdx) {
+
+    public EventSignUpDto(String title, String content, String startDate, String endDate, String address, MultipartFile eventUrl, String subTitle, Double longitude, Double latitude) {
         this.title = title;
         this.content = content;
         this.startDate = startDate;
