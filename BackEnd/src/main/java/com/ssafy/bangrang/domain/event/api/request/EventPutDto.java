@@ -21,7 +21,6 @@ public class EventPutDto {
 
 
     @Builder
-
     public EventPutDto(String title, String content, String startDate, String endDate, String subTitle, Double longitude, Double latitude, String address, String eventUrl) {
         this.title = title;
         this.content = content;
