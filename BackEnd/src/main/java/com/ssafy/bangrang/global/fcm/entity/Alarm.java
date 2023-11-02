@@ -26,7 +26,7 @@ public class Alarm extends CommonEntity {
     private String content;
 
     @Column(name = "alarm_status")
-    private int status;
+    private Number status;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_idx")
