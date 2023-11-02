@@ -25,7 +25,7 @@ public class WebMemberApi {
 
     @ApiOperation(value = "일반 회원 가입")
     @PostMapping(value = "/signup")
-    public ResponseEntity signup(@Valid @RequestPart(value = "info") WebMemberSignUpRequestDto webMemberSignUpRequestDto, @RequestPart(value = "authFile") MultipartFile file) throws Exception{
+    public ResponseEntity signup(@Valid @RequestPart(value = "user") WebMemberSignUpRequestDto webMemberSignUpRequestDto, @RequestPart(value = "authFile") MultipartFile file) throws Exception{
         return ResponseEntity.ok()
                 .body(webMemberService.signup(webMemberSignUpRequestDto,file));
     }
