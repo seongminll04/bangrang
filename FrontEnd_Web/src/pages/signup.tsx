@@ -23,7 +23,7 @@ const validationSchema = Yup.object().shape({
 const SignUp: React.FC = () => {
     const navigate = useNavigate()
     const [isCheckId, setCheckId] = useState(false) //아이디 중복 검사 체크변수
-    const [file, setFile] = useState<FormData|null>(null);
+    const [file, setFile] = useState<FileList|null>(null);
     useEffect(()=>{
       const AccessToken = localStorage.getItem('AccessToken')
       if (AccessToken) {
