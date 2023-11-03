@@ -9,7 +9,11 @@ const Login: React.FC = () => {
     useEffect(()=>{
       const AccessToken = localStorage.getItem('AccessToken')
       if (AccessToken) {
-        navigate('/manage')
+        if (localStorage.getItem("UserName")==='admin@bangrang') {
+          navigate('/admin')
+        } else {
+          navigate('/manage')
+        }
       }
     },[navigate])
 
