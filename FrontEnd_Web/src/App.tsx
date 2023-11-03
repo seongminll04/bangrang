@@ -1,21 +1,21 @@
-import React from 'react';
+import React from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 
-import './App.css';
+import "./App.css";
 
-import Navbar from './components/navbar';
+import Navbar from "./components/navbar";
 
-import IntroHome from './pages/introhome';
-import ManageHome from './pages/managehome';
-import Login from './pages/login';
-import NotFound from './pages/notfound';
-import SignUp from './pages/signup';
+import IntroHome from "./pages/introhome";
+import ManageHome from "./pages/managehome";
+import Login from "./pages/login";
+import NotFound from "./pages/notfound";
+import SignUp from "./pages/signup";
 
 function App() {
   const location = useLocation();
   return (
     <div className="App">
-      <Navbar />      
+      <Navbar />
       <Routes location={location}>
         <Route path="/" element={<IntroHome />} />
         <Route path="/manage" element={<ManageHome />} />
