@@ -41,15 +41,24 @@ const SignUp: React.FC = () => {
       validationSchema: validationSchema,
       onSubmit: (values) => {
           // 회원가입 요청 로직
+          if (!file) {
+            // 첨부 파일없으면 리턴
+            return
+          }
+          const formData = new FormData();
+          formData.append('authFile', file[0]); 
+          formData.append('userData', JSON.stringify({
+            id: values.id,
+            password: values.password,
+            organizationName: values.organizationName
+          }));
           axios({
               method:'post',
               url:`${process.env.REACT_APP_API}/web/signup`,
-              data:{ 
-                'user':{'id':values.id,
-                  'password':values.password,
-                  'organizationName':values.organizationName
-                },
-                'authFile': file},
+              data:formData,
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
           }).then(res=>{
               console.log(res)
               navigate('/login')
@@ -62,7 +71,6 @@ const SignUp: React.FC = () => {
   });
 
   const idcheck = (id:string) => {
-    setCheckId(true);
     axios({
       method:'get',
       url:`${process.env.REACT_APP_API}/web/idCheck/${id}`,
@@ -114,10 +122,7 @@ const SignUp: React.FC = () => {
           {/* 인증파일 input */}
           <input type="file" placeholder="인증파일" 
           onChange={({ target: { files } }) => {
-            if (files && files[0]) {
-                const formData = new FormData();
-                formData.append('authFile', files[0]); 
-                setFile(formData) }}}
+            if (files && files[0]) {setFile(files) }}}
             />
           <p style={{fontSize:'8px', fontWeight:'bold',  color:'red'}}>
             {file === null ? <span>파일을 첨부해주세요</span> :<span style={{color:'green'}}>첨부완료</span>}
