@@ -25,7 +25,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'junit:junit:4.13.1'
-    implementation 'junit:junit:4.13.1'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'com.mysql:mysql-connector-j'
@@ -59,6 +58,13 @@ dependencies {
 
     // spring boot batch
     implementation 'org.springframework.boot:spring-boot-starter-batch'
+
+    // postgresSql
+    implementation 'org.postgresql:postgresql'
+
+    // hibernate-spatial
+//    implementation 'org.hibernate:hibernate-spatial:5.6.11.Final'
+
 }
 
 tasks.named('test') {
