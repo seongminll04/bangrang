@@ -26,8 +26,6 @@ public class QAppMember extends EntityPathBase<AppMember> {
 
     public final ListPath<AppMemberStamp, QAppMemberStamp> appMemberStamps = this.<AppMemberStamp, QAppMemberStamp>createList("appMemberStamps", AppMemberStamp.class, QAppMemberStamp.class, PathInits.DIRECT2);
 
-    public final EnumPath<com.ssafy.bangrang.domain.member.model.vo.AppMemberStatus> appMemberStatus = createEnum("appMemberStatus", com.ssafy.bangrang.domain.member.model.vo.AppMemberStatus.class);
-
     public final DateTimePath<java.time.LocalDateTime> deletedAt = createDateTime("deletedAt", java.time.LocalDateTime.class);
 
     public final StringPath firebaseToken = createString("firebaseToken");

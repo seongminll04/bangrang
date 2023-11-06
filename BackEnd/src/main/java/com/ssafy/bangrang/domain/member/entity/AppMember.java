@@ -4,7 +4,6 @@ import com.ssafy.bangrang.domain.event.entity.Likes;
 import com.ssafy.bangrang.domain.inquiry.entity.Inquiry;
 import com.ssafy.bangrang.domain.map.entity.MemberMapArea;
 import com.ssafy.bangrang.domain.map.entity.MemberMarker;
-import com.ssafy.bangrang.domain.member.model.vo.AppMemberStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,10 +26,6 @@ public class AppMember extends Member{
 
     @Column(name = "app_member_firebase_token")
     private String firebaseToken;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "app_member_status")
-    private AppMemberStatus appMemberStatus;
 
     @Column(name = "app_member_deleted_at")
     private LocalDateTime deletedAt;
@@ -58,23 +53,14 @@ public class AppMember extends Member{
 
     @Builder
     public AppMember(Long idx, String id, String nickname, String password, String imgUrl,
-                     String firebaseToken, AppMemberStatus appMemberStatus){
+                     String firebaseToken){
         this.idx = idx;
         this.id = id;
         this.nickname = nickname;
         this.password = password;
         this.imgUrl = imgUrl;
         this.firebaseToken = firebaseToken;
-        this.alarms = true;
-        this.appMemberStatus = appMemberStatus.ACTIVE;
-    }
-
-
-    public void changeAppMemberStatus(AppMemberStatus appMemberStatus){
-        if(appMemberStatus == AppMemberStatus.UNACTIVE){
-            this.deletedAt = LocalDateTime.now();
-        }
-        this.appMemberStatus = appMemberStatus;
+        this.alarms = false;
     }
 
     /**
@@ -84,5 +70,24 @@ public class AppMember extends Member{
         this.nickname = nickname;
     }
 
+    /**
+     * 유저 알람 설정 on/off
+     */
+    public void alarmOnOff(Boolean alarmSet) {
+        this.alarms = !alarmSet;
+    }
 
+    /**
+     * 회원탈퇴 등록
+     */
+    public void updateDeletedDate() {
+        this.deletedAt = LocalDateTime.now();
+    }
+
+    /**
+     * 회원탈퇴 취소
+     */
+    public void cancelDeletedDate() {
+        this.deletedAt = null;
+    }
 }

@@ -48,26 +48,31 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
                                     FilterChain filterChain) throws ServletException, IOException {
   
-        // 로그인 요청일 때
-        if(httpServletRequest.getRequestURI().equals("/api/member/login")) {
+        // token 검증이 필요없는 요청일 때
+        if(httpServletRequest.getRequestURI().equals("/api/member/login") ||
+                httpServletRequest.getRequestURI().equals("/api/web/login") ||
+                httpServletRequest.getRequestURI().equals("/api/web/signup") ||
+                httpServletRequest.getRequestURI().contains("/api/member/nicknameCheck") ||
+                httpServletRequest.getRequestURI().contains("/api/web/idCheck")) {
             filterChain.doFilter(httpServletRequest, httpServletResponse);
 
             // 더 이상 필터를 진행하지 않고 return!
             return;
         }
 
-        // 일반 로그인 아니면 계속해서 진행
+        // 검증이 필요한 요청은 진행
 
-        // 요청 헤더에서 RefreshToken 추출 - 없거나 유효하지 않으면 null 반환
-        String refreshToken = jwtService.extractRefreshToken(httpServletRequest)
-                .filter(jwtService::isTokenValid)
-                .orElse(null);
+        if(httpServletRequest.getRequestURI().equals("/api/refresh")) {
+            // 요청 헤더에서 RefreshToken 추출 - 없거나 유효하지 않으면 null 반환
+            String refreshToken = jwtService.extractRefreshToken(httpServletRequest)
+                    .filter(jwtService::isTokenValid)
+                    .orElse(null);
+            // 요청 헤더에 RefreshToken이 존재한다면
+            if(refreshToken != null)
+                // 헤더의 RefreshToken과 Redis의 RefreshToken 비교 => 일치한다면 AccessToken 재발급
+                checkRefreshTokenAndReIssueAccessToken(httpServletResponse, refreshToken);
+        }
 
-        // 요청 헤더에 RefreshToken이 존재한다면
-        if(refreshToken != null)
-            // 헤더의 RefreshToken과 Redis의 RefreshToken 비교 => 일치한다면 AccessToken 재발급
-            checkRefreshTokenAndReIssueAccessToken(httpServletResponse, refreshToken);
-            // 요청 헤더에 RefreshToken이 존재하지 않는다면
         else
             // AccessToken 검사 및 인증 처리
             // AccessToken이 존재하지 않거나 유효하지 않다면 => 인증 객체가 담기지 않은 상태로 인증 실패(403)
@@ -139,11 +144,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
      * Builder의 User : UserDetails의 User 객체
      */
     public void saveAuthentication(Member myUser) {
-//        String password = myUser.getPassword();
-//
-//        // 소셜 회원이라면
-//        if(password == null)
-//            password = PasswordUtil.generateRandomPassword();
 
         UserDetails userDetails = org.springframework.security.core.userdetails.User.builder()
                 .username(myUser.getId())

@@ -31,6 +31,10 @@ public class QAlarm extends EntityPathBase<Alarm> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
 
+    public final DateTimePath<java.time.LocalDateTime> createdDate = createDateTime("createdDate", java.time.LocalDateTime.class);
+
+    public final NumberPath<Long> eventIdx = createNumber("eventIdx", Long.class);
+
     public final NumberPath<Long> idx = createNumber("idx", Long.class);
 
     public final SimplePath<Number> status = createSimple("status", Number.class);

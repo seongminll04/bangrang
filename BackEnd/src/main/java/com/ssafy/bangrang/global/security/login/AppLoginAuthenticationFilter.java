@@ -46,7 +46,7 @@ public class AppLoginAuthenticationFilter extends AbstractAuthenticationProcessi
      */
     @Override
     public Authentication attemptAuthentication(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws AuthenticationException, IOException {
-        if(httpServletRequest.getContentType() == null || !httpServletRequest.getContentType().equals(CONTENT_TYPE))
+        if(httpServletRequest.getContentType() == null)
             throw new AuthenticationServiceException("Authentication Content-Type Not Supported : " + httpServletRequest.getContentType());
         // request에서 messageBody를 JSON 형태로 반환
         String messageBody = StreamUtils.copyToString(httpServletRequest.getInputStream(), StandardCharsets.UTF_8);
@@ -85,6 +85,11 @@ public class AppLoginAuthenticationFilter extends AbstractAuthenticationProcessi
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
+            }
+            // 로그인 했으니깐 탈퇴중이라면 탈퇴 취소
+            if (user.getDeletedAt() != null) {
+                user.cancelDeletedDate();
+                appMemberRepository.save(user);
             }
             UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken("kakao@"+num, "social");
 

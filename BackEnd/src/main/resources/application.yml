@@ -9,8 +9,12 @@ cloud:
     stack:
       auto: false
     credentials:
-      access-key: AKIAVB4WTZEV5BAP2YOG
-      secret-key: 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
+      access-key: AKIAVB4WTZEVRB6JL6PD
+      secret-key: 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
+  naver:
+    client_id: xivofkt7y5
+    client_secret: kNHOAmrLVU2R6N3K3PKDKnHuzSfEoT6vBkQrVCge
+
 
 spring:
   h2:
