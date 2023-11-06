@@ -22,18 +22,18 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 
-@RestController
-@RequestMapping("/api/web")
+//@RestController
+//@RequestMapping("/api/web")
 @RequiredArgsConstructor
 @Slf4j
-public class InquiryController {
+public class InquiryWebApi {
 
     private final CommentService commentService;
     private final InquiryWebService inquiryWebService;
     private final InquiryRepository inquiryRepository;
 
 
-    //webMember의 문의사항 자세히보기
+    // 관리자 일대일 문의 리스트
     @GetMapping("/inquiry")
     public ResponseEntity<?> getWebMemberInquiries(@AuthenticationPrincipal UserDetails userDetails) {
         try {
