@@ -2,12 +2,20 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../axiosinstance";
 
+interface EventList<T> {
+  data: T[];
+}
 const EventRegist: React.FC = () => {
-  const [eventList, setEventList] = useState([]);
+  const [eventList, setEventList] = useState<any>([]);
 
   useEffect(() => {
-    axiosInstance.get(`${process.env.REACT_APP_API}/event`);
-  });
+    axiosInstance
+      .get(`${process.env.REACT_APP_API}/event`)
+      .then((res) => setEventList([...res.data]))
+      .catch((err) => console.log(err));
+  }, []);
+
+  console.log(eventList);
 
   const navigate = useNavigate();
   useEffect(() => {
