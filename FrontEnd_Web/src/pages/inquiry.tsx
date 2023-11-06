@@ -27,7 +27,7 @@ const Inquiry: React.FC = () => {
   const [isInquiry, setInquiry] = useState<inquiry[]>([{inquiryIdx:1,title:"OO축제 운영 시간 문의",event:"<부산 불꽃놀이 축제>",createdAt:new Date()},{inquiryIdx:2,title:"OO축제 운영 시간 문의",event:"<부산 불꽃놀이 축제>",createdAt:new Date()},{inquiryIdx:3,title:"OO축제 운영 시간 문의ddddddddddddddddddddddddddddddddd",event:"<부산 불꽃놀이 축제>",createdAt:new Date()}])
   const [isDetail, setDetail] = useState<Detailinquiry|null>(
     {inquiryIdx:1, title:"OO축제 운영 시간 문의",event:"<부산 불꽃놀이 축제>",createdAt:new Date(),content:"asdfads",nickname:"casdf",
-  comment:{commentIdx:1,content:"asdf",updatedAt:new Date()}}
+  comment:null}
   )
   const [isEdit, setEdit] = useState(false); // comment 수정 on/off
   const [isComment, setComment] = useState('');  // 수정할 comment 내용 담아두는 변수
@@ -142,6 +142,21 @@ const Inquiry: React.FC = () => {
     })
   }
 
+  const commentrefuse = () => {
+    axiosInstance({
+      method:'delete',
+      url:`${process.env.REACT_APP_API}/api/web/inquiry`,
+      data:{
+        inquiryIdx : isDetail?.inquiryIdx,
+      }
+    }).then(res=>{
+      setDetail(null);
+      loaddata();
+    }).catch(err=>{
+      console.log(err)
+      alert('답변 거절 실패')
+    })
+  }
   return (
     <div style={{width:'100%',height:(window.innerHeight-80), backgroundColor:'#E2F5FF',padding:'3% 10%',boxSizing:"border-box"}}>
       <p style={{border:'1px solid black', margin:0,width:'100%'}}>1 : 1 문의</p>
@@ -188,7 +203,6 @@ const Inquiry: React.FC = () => {
               </div>
 
               <div style={{margin:'2% 10%',height:'90%'}}>
-
                 <div style={{display:'flex', textAlign:'start',height:'15%'}}>
                   <div style={{width:'20%', border: '1px solid black',display:'flex', alignItems:'center',paddingLeft:10,boxSizing:'border-box'}}>
                     문의 제목
@@ -228,9 +242,12 @@ const Inquiry: React.FC = () => {
             <div style={{height:'40%',padding:'2% 12%', boxSizing:'border-box'}}>
               <div style={{display:'flex',justifyContent:'space-between'}}>
                 답변
+                <div>
                 <button onClick={commentregist}>등록</button>
+                <button onClick={commentrefuse}>답변거절</button>
+                </div>
               </div>
-              <div style={{width:'100%', height:'85%', display:'flex',padding:'5px 10px',boxSizing:'border-box'}}>
+              <div style={{width:'100%', height:'85%', display:'flex',boxSizing:'border-box'}}>
                 <textarea style={{resize:'none'}} name="" id="" cols={100} rows={100} value={isComment} onChange={(e)=>setComment(e.target.value)}></textarea>
               </div>
             </div>
