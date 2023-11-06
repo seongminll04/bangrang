@@ -60,11 +60,12 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-batch'
 
     // postgresSql
-    implementation 'org.postgresql:postgresql'
+    runtimeOnly 'org.postgresql:postgresql'
 
-    // hibernate-spatial
-//    implementation 'org.hibernate:hibernate-spatial:5.6.11.Final'
+//    implementation group: 'org.hibernate', name: 'hibernate-spatial', version: '5.4.28.Final'
+//    implementation 'com.querydsl:querydsl-spatial'
 
+//    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 }
 
 tasks.named('test') {
