@@ -1,16 +1,16 @@
 package com.ssafy.bangrang.test1.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.locationtech.jts.geom.Point;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString(of = {"title"})
 public class MyTest1 {
     @Id
     @GeneratedValue
@@ -18,9 +18,13 @@ public class MyTest1 {
 
     String title;
 
+    @Column(columnDefinition = "geometry(Point, 4326)")
+    private Point position;
+
     @Builder
-    public MyTest1(String title){
+    public MyTest1(String title, Point position){
         this.title = title;
+        this.position = position;
     }
 
 }

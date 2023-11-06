@@ -21,6 +21,8 @@ public class QMyTest1 extends EntityPathBase<MyTest1> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
+    public final ComparablePath<org.locationtech.jts.geom.Point> position = createComparable("position", org.locationtech.jts.geom.Point.class);
+
     public final StringPath title = createString("title");
 
     public QMyTest1(String variable) {

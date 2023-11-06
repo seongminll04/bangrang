@@ -21,55 +21,30 @@ spring:
     console:
       enabled: false
 
+  # postgis 설정
+#  hibernate:
+#    dialect: org.hibernate.spatial.dialect.postgis.PostgisDialect
+
   # jpa 설정
   jpa:
-#    database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
+#      hibernate:
+      dialect: org.hibernate.spatial.dialect.postgis.PostgisDialect
     properties:
       hibernate:
         show_sql: true
         format_sql: true
     use_sql_comments: true
+    database: postgresql
+#    database-platform: org.hibernate.spatial.dialect.postgis.PostgisDialect
 
-
+  # db 설정
   datasource:
-#    driver-class-name: org.postgresql.Driver
-#    url: jdbc:postgresql://localhost:5432/bangrang?charSet=utf-8&prepareThreshold=1
-#    username: postgres
-#    password: 1234
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://k9b109.p.ssafy.io:6033/bangrang?createDatabaseIfNotExist=true
-    username: bangrang-b109
-    password: bangrang_ssafy_b109!
-
-#    mysql:
-#      driver-class-name: com.mysql.cj.jdbc.Driver
-      #    jdbc-url: jdbc:mysql://k9b109.p.ssafy.io:6033/bangrang?createDatabaseIfNotExist=true
-      #    username: bangrang-b109
-      #    password: bangrang_ssafy_b109!
-
-#      jdbc-url: jdbc:mysql://localhost:3306/bangrang
-#      username: root
-#      password: 1234
-#
-#      hibernate:
-#        ddl-auto: create
-#        dialect: org.hibernate.dialect.MySQLDialect
-#
-#
-#    postgresql:
-#      driver-class-name: org.postgresql.Driver
-#      jdbc-url: jdbc:postgresql://localhost:5432/bangrang?charSet=utf-8&prepareThreshold=1
-#      username: postgres
-#      password: 1234
-#
-#      hibernate:
-#        ddl-auto: create
-#        dialect: org.hibernate.spatial.dialect.postgis.PostgisDialect
-
-
-
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/bangrang?charSet=utf-8&prepareThreshold=1
+    username: postgres
+    password: 1234
 
   # redis 설정
   data:
