@@ -64,6 +64,9 @@ dependencies {
     // hibernate-spatial
     implementation 'org.hibernate:hibernate-spatial:6.2.13.Final'
 
+    // firebase 설정
+    implementation 'com.google.firebase:firebase-admin'
+
 
 }
 

@@ -14,6 +14,8 @@ import com.ssafy.bangrang.domain.member.repository.WebMemberRepository;
 import com.ssafy.bangrang.global.s3service.S3ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.GeometryFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -39,6 +41,7 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 @Slf4j
 public class EventWebServiceImpl implements EventWebService{
+    private final GeometryFactory geometryFactory;
 
 
     private final EventRepository eventRepository;
@@ -113,6 +116,7 @@ public class EventWebServiceImpl implements EventWebService{
                         .eventUrl(eventPath)
                         .longitude(longitude)
                         .latitude(latitude)
+//                        .location(geometryFactory.createPoint(new Coordinate(latitude, longitude)))
                         .startDate(LocalDateTime.parse(eventSignUpDto.getStartDate())) // 수정된 부분
                         .endDate(LocalDateTime.parse(eventSignUpDto.getEndDate())) // 수정된 부분
                         .webMember(webMember)
@@ -252,8 +256,8 @@ public class EventWebServiceImpl implements EventWebService{
                         .image(e.getImage())
                         .title(e.getTitle())
                         .subtitle(e.getSubTitle())
-                        .startDate(e.getStartDate())
-                        .endDate(e.getEndDate())
+//                        .startDate(e.getStartDate())
+//                        .endDate(e.getEndDate())
                         .address(e.getAddress())
                         .latitude(e.getLatitude())
                         .longitude(e.getLongitude())
