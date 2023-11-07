@@ -40,20 +40,20 @@ const Inquiry: React.FC = () => {
       if (localStorage.getItem("UserName")!=='admin@bangrang') {
         if (location.pathname.includes('/admin')) {
           navigate('/manage')
+        } else {
+          loaddata()
         }
       } else {
         if (location.pathname.includes('/manage')) {
           navigate('/admin')
+        } else {
+          loaddata()
         }
       }
     } else {
       navigate('/login')
     }
   },[navigate])
-
-  useEffect(()=>{
-    loaddata()
-  },[])
 
   const loaddata = () => {
     axiosInstance({
@@ -167,10 +167,10 @@ const Inquiry: React.FC = () => {
           </div>
        
           <div style={{width:'100%', height:'95%', overflowY:'scroll'}}>
-            {isInquiry.map((item, index) => (
-              <div key={index} className={`${isDetail?.inquiryIdx===item.inquiryIdx ? styles.sel_inquiry:''} ${styles.inquiry_lst}`} 
+            {isInquiry.map((item, idx) => (
+              <div key={idx} className={`${isDetail?.inquiryIdx===item.inquiryIdx ? styles.sel_inquiry:''} ${styles.inquiry_lst}`} 
               onClick={()=>detaildata(item.inquiryIdx)}>
-                <div className={styles.inquiry_idx}>{index+1}</div>
+                <div className={styles.inquiry_idx}>{idx+1}</div>
                 <div className={styles.inquiry_info}>
                   <span>{item.title}</span>
                   <span>{item.event}</span>
