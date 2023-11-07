@@ -58,6 +58,7 @@ public class InquiryServiceImpl implements InquiryService {
     }
 
     @Override
+    @Transactional
     public void deleteById(Long inquiryIdx) {
         inquiryRepository.deleteById(inquiryIdx);
     }
