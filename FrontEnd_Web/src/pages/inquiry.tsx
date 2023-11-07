@@ -24,35 +24,11 @@ interface Detailinquiry {
 }
 
 const Inquiry: React.FC = () => {
-  const [isInquiry, setInquiry] = useState<inquiry[]>([
-    {
-      inquiryIdx: 1,
-      title: "OO축제 운영 시간 문의",
-      event: "<부산 불꽃놀이 축제>",
-      createdAt: new Date(),
-    },
-    {
-      inquiryIdx: 2,
-      title: "OO축제 운영 시간 문의",
-      event: "<부산 불꽃놀이 축제>",
-      createdAt: new Date(),
-    },
-    {
-      inquiryIdx: 3,
-      title: "OO축제 운영 시간 문의ddddddddddddddddddddddddddddddddd",
-      event: "<부산 불꽃놀이 축제>",
-      createdAt: new Date(),
-    },
-  ]);
-  const [isDetail, setDetail] = useState<Detailinquiry | null>({
-    inquiryIdx: 1,
-    title: "OO축제 운영 시간 문의",
-    event: "<부산 불꽃놀이 축제>",
-    createdAt: new Date(),
-    content: "asdfads",
-    nickname: "casdf",
-    comment: null,
-  });
+  const [isInquiry, setInquiry] = useState<inquiry[]>([])
+  const [isDetail, setDetail] = useState<Detailinquiry|null>(
+    {inquiryIdx:1, title:"OO축제 운영 시간 문의",event:"<부산 불꽃놀이 축제>",createdAt:new Date(),content:"asdfads",nickname:"casdf",
+  comment:null}
+  )
   const [isEdit, setEdit] = useState(false); // comment 수정 on/off
   const [isComment, setComment] = useState(""); // 수정할 comment 내용 담아두는 변수
   const days = ["일", "월", "화", "수", "목", "금", "토"];
@@ -81,8 +57,12 @@ const Inquiry: React.FC = () => {
 
   const loaddata = () => {
     axiosInstance({
-      method: "get",
-      url: `${process.env.REACT_APP_API}/api/web/inquiry`,
+      method:'get',
+      url:`${process.env.REACT_APP_API}/web/inquiry`,
+    }).then(res=>{
+      setInquiry(res.data)
+    }).catch(err=>{
+      console.log(err)
     })
       .then((res) => {
         setInquiry(res.data);
@@ -94,8 +74,12 @@ const Inquiry: React.FC = () => {
 
   const detaildata = (idx: Number) => {
     axiosInstance({
-      method: "get",
-      url: `${process.env.REACT_APP_API}/api/web/inquiry/${idx}`,
+      method:'get',
+      url:`${process.env.REACT_APP_API}/web/inquiry/${idx}`,
+    }).then(res=>{
+      setDetail(res.data)
+    }).catch(err=>{
+      console.log(err)
     })
       .then((res) => {
         setDetail(res.data);
@@ -110,12 +94,25 @@ const Inquiry: React.FC = () => {
       return alert("수정할 내용이 없음");
     }
     axiosInstance({
-      method: "put",
-      url: `${process.env.REACT_APP_API}/api/web/comment`,
-      data: {
-        commentIdx: isDetail?.comment?.commentIdx,
-        content: isComment,
-      },
+      method:'put',
+      url:`${process.env.REACT_APP_API}/web/comment`,
+      data:{
+        commentIdx : isDetail?.comment?.commentIdx,
+        content : isComment,
+      }
+    }).then(res=>{
+      setDetail(prev => ({
+        ...prev!,
+        comment: {
+          ...prev!.comment!,
+          content: isComment,
+        }
+      }));
+      setComment('');
+      setEdit(false);
+    }).catch(err=>{
+      console.log(err)
+      alert('수정실패')
     })
       .then((res) => {
         setDetail((prev) => ({
@@ -136,11 +133,19 @@ const Inquiry: React.FC = () => {
 
   const deletecomment = () => {
     axiosInstance({
-      method: "delete",
-      url: `${process.env.REACT_APP_API}/api/web/comment`,
-      data: {
-        commentIdx: isDetail?.comment?.commentIdx,
-      },
+      method:'delete',
+      url:`${process.env.REACT_APP_API}/web/comment`,
+      data:{
+        commentIdx : isDetail?.comment?.commentIdx,
+      }
+    }).then(res=>{
+      setDetail(prev => ({
+        ...prev!,
+        comment: null
+      }));
+    }).catch(err=>{
+      console.log(err)
+      alert('삭제실패')
     })
       .then((res) => {
         setDetail((prev) => ({
@@ -159,12 +164,18 @@ const Inquiry: React.FC = () => {
       return;
     }
     axiosInstance({
-      method: "post",
-      url: `${process.env.REACT_APP_API}/api/web/comment`,
-      data: {
-        inquiryIdx: isDetail?.inquiryIdx,
-        content: isComment,
-      },
+      method:'post',
+      url:`${process.env.REACT_APP_API}/web/comment`,
+      data:{
+        inquiryIdx : isDetail?.inquiryIdx,
+        content : isComment,
+      }
+    }).then(res=>{
+      detaildata(isDetail?.inquiryIdx!);
+      setComment('');
+    }).catch(err=>{
+      console.log(err)
+      alert('등록실패')
     })
       .then((res) => {
         detaildata(isDetail?.inquiryIdx!);
@@ -178,11 +189,17 @@ const Inquiry: React.FC = () => {
 
   const commentrefuse = () => {
     axiosInstance({
-      method: "delete",
-      url: `${process.env.REACT_APP_API}/api/web/inquiry`,
-      data: {
-        inquiryIdx: isDetail?.inquiryIdx,
-      },
+      method:'delete',
+      url:`${process.env.REACT_APP_API}/web/inquiry`,
+      data:{
+        inquiryIdx : isDetail?.inquiryIdx,
+      }
+    }).then(res=>{
+      setDetail(null);
+      loaddata();
+    }).catch(err=>{
+      console.log(err)
+      alert('답변 거절 실패')
     })
       .then((res) => {
         setDetail(null);
