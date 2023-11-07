@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class EventGetDto {
 
+    private Long eventIdx;
     private String title;
     private String subTitle;
     private String content;
@@ -20,7 +21,8 @@ public class EventGetDto {
     private int likeCount;
 
 
-    public EventGetDto(String title, String subTitle, String content, String eventUrl, String address, LocalDateTime startDate, LocalDateTime endDate, Double longitude, Double latitude, int likes) {
+    public EventGetDto(Long eventIdx, String title, String subTitle, String content, String eventUrl, String address, LocalDateTime startDate, LocalDateTime endDate, Double longitude, Double latitude, int likes) {
+        this.eventIdx = eventIdx;
         this.title = title;
         this.subTitle = subTitle;
         this.content = content;

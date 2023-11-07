@@ -80,6 +80,7 @@ public class EventWebApi {
             log.info(eventList.toString());
             List<EventGetDto> eventGetDtoList = eventList.stream()
                     .map(e -> new EventGetDto(
+                            e.getIdx(),
                             e.getTitle(),
                             e.getSubTitle(),
                             e.getContent(),
