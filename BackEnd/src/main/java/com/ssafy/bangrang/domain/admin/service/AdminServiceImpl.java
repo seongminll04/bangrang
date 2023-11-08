@@ -69,6 +69,8 @@ public class AdminServiceImpl implements AdminService {
             user.changeWebMemberStatus(WebMemberStatus.DECLINED);
         else
             throw new Exception("올바르지 않은 status 변수입니다.");
+        
+        webMemberRepository.save(user);
 
     }
 
