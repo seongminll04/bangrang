@@ -1,6 +1,7 @@
 package com.ssafy.bangrang.domain.event.entity;
 
 import com.ssafy.bangrang.domain.event.api.request.EventUpdateDto;
+import com.ssafy.bangrang.domain.event.api.request.UpdateEventRequestDto;
 import com.ssafy.bangrang.domain.inquiry.entity.Inquiry;
 import com.ssafy.bangrang.domain.member.entity.Stamp;
 import com.ssafy.bangrang.domain.member.entity.WebMember;
@@ -38,9 +39,11 @@ public class Event extends CommonEntity {
 
     @Column(name = "event_image")
     private String image;
+    // 이미지 1
 
     @Column(name = "event_subImage")
     private String subImage;
+    // 이미지 2
 
     @Column(name = "event_start_date")
     private LocalDateTime startDate;
@@ -59,6 +62,7 @@ public class Event extends CommonEntity {
 
     @Column(name = "event_url")
     private String eventUrl;
+    // 행사 메인 페이지
 
     // 행사 등록한 사람
     @ManyToOne(fetch = FetchType.LAZY)
@@ -77,7 +81,8 @@ public class Event extends CommonEntity {
     private List<Stamp> stamps = new ArrayList<>();
 
     @Builder
-    public Event(String title, String subTitle, String content, String image, String subImage, LocalDateTime startDate, LocalDateTime endDate, String address, Double latitude, Double longitude, String eventUrl, WebMember webMember){
+    public Event(Long idx,String title, String subTitle, String content, String image, String subImage, LocalDateTime startDate, LocalDateTime endDate, String address, Double latitude, Double longitude, String eventUrl, WebMember webMember){
+        this.idx = idx;
         this.title = title;
         this.subTitle = subTitle;
         this.content = content;
@@ -110,5 +115,25 @@ public class Event extends CommonEntity {
         this.address = eventPutDto.getAddress();
         this.eventUrl = eventUrl;
         return this;
+    }
+    /**
+     * 이벤트 상태 변경
+     */
+    public void updateEvent(UpdateEventRequestDto updateEventRequestDto, double changelati, double changelong) {
+        this.title=updateEventRequestDto.getTitle();
+        this.subTitle=updateEventRequestDto.getSubTitle();
+        this.content=updateEventRequestDto.getContent();
+        this.startDate=updateEventRequestDto.getStartDate();
+        this.endDate=updateEventRequestDto.getEndDate();
+        this.address=updateEventRequestDto.getAddress();
+        this.latitude=changelati;
+        this.longitude=changelong;
+        this.eventUrl=updateEventRequestDto.getEventUrl();
+    }
+    public void updateEventImg(String ImgUrl) {
+        this.image=ImgUrl;
+    }
+    public void updateEventSubImg(String ImgUrl) {
+        this.subImage=ImgUrl;
     }
 }
