@@ -11,8 +11,5 @@ public interface WebMemberRepository extends JpaRepository<WebMember, Long> {
     @Query("SELECT u FROM WebMember u WHERE u.id = :id")
     Optional<WebMember> findById(String id);
 
-    @Override
-    <S extends WebMember> S save(S entity);
-
     Optional<WebMember> findByIdx(Long idx);
 }
