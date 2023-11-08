@@ -50,6 +50,7 @@ public class AdminServiceImpl implements AdminService {
         return result;
     }
     @Override
+    @Transactional
     public void updateAccountStatus(Long userIdx, int status, UserDetails userDetails) throws Exception {
 
         WebMember admin = webMemberRepository.findById(userDetails.getUsername())
@@ -70,11 +71,12 @@ public class AdminServiceImpl implements AdminService {
         else
             throw new Exception("올바르지 않은 status 변수입니다.");
         
-        webMemberRepository.save(user);
+        // webMemberRepository.save(user);
 
     }
 
     @Override
+    @Transactional
     public void deleteAccountStatus(Long userIdx, UserDetails userDetails) throws Exception {
 
         WebMember admin = webMemberRepository.findById(userDetails.getUsername())
