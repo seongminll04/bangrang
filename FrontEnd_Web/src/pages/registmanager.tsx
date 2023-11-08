@@ -58,9 +58,6 @@ const RegistManager: React.FC = () => {
     }).catch(err=>{
       console.log(err)
     }) 
-    const updatedManagers = [...isManagers]; // isManagers 배열 복사
-    updatedManagers[isDetail!] = { ...updatedManagers[isDetail!], status: changeStatus[statusNum] }; 
-    setManagers(updatedManagers);
   }
 
   const deleteAccount = () => {
@@ -78,9 +75,6 @@ const RegistManager: React.FC = () => {
     }).catch(err=>{
       console.log(err)
     }) 
-    const updatedManagers = isManagers.filter((_, index) => index !== isDetail); 
-    setManagers(updatedManagers); 
-
   }
 
   return (
@@ -103,24 +97,29 @@ const RegistManager: React.FC = () => {
         {isManagers.length > 0 ?
         <div style={{width:'100%', height:'100%',display:'flex'}}>
           <div style={{height:'100%', width:'70%', backgroundColor:'olive'}}>
-            <div style={{height:'5%',width:'100%',alignItems:'center',marginLeft:'2%',display:'flex'}}>
-              <span>필터 : </span>
-              <label>
-                <input type="radio" checked={isFilter === 'ALL'} onClick={()=>setFilter('ALL')}/>
-                전체
-              </label>
-              <label>
-                <input type="radio" checked={isFilter === 'WATING'} onClick={()=>setFilter('WATING')} />
-                대기중
-              </label>
-              <label>
-                <input type="radio" checked={isFilter === 'ACCEPTED'} onClick={()=>setFilter('ACCEPTED')}/>
-                승인
-              </label>
-              <label>
-                <input type="radio" checked={isFilter === 'DECLINED'} onClick={()=>setFilter('DECLINED')}/>
-                거절
-              </label>
+            <div style={{height:'5%',width:'96%',alignItems:'center',display:'flex', justifyContent:'space-between', margin:'0 2%'}}>
+              <div>
+                <span>필터 : </span>
+                <label>
+                  <input type="radio" checked={isFilter === 'ALL'} onClick={()=>setFilter('ALL')}/>
+                  전체
+                </label>
+                <label>
+                  <input type="radio" checked={isFilter === 'WATING'} onClick={()=>setFilter('WATING')} />
+                  대기중
+                </label>
+                <label>
+                  <input type="radio" checked={isFilter === 'ACCEPTED'} onClick={()=>setFilter('ACCEPTED')}/>
+                  승인
+                </label>
+                <label>
+                  <input type="radio" checked={isFilter === 'DECLINED'} onClick={()=>setFilter('DECLINED')}/>
+                  거절
+                </label>
+              </div>
+              <span onClick={()=>{loaddata();setDetail(null);}}>
+                🔁 새로고침
+              </span>
             </div>
 
             <div style={{height:'95%',width:'100%', backgroundColor:'bisque', overflowY:'auto', display:'flex',flexWrap: 'wrap'}}>
