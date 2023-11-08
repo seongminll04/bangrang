@@ -62,7 +62,7 @@ public class AdminServiceImpl implements AdminService {
                 .orElseThrow(() -> new EmptyResultDataAccessException("해당 유저는 존재하지 않습니다.", 1));
 
         if (status == 0)
-            user.changeWebMemberStatus(WebMemberStatus.WATING);
+            user.changeWebMemberStatus(WebMemberStatus.WAITING);
         else if (status == 1)
             user.changeWebMemberStatus(WebMemberStatus.ACCEPTED);
         else if (status == 2)

@@ -1,5 +1,6 @@
 package com.ssafy.bangrang.domain.admin.api;
 
+import com.ssafy.bangrang.domain.admin.api.request.UpdateAccountStatusRequestDto;
 import com.ssafy.bangrang.domain.admin.service.AdminService;
 import io.swagger.annotations.ApiOperation;
 import jakarta.validation.Valid;
@@ -25,9 +26,9 @@ public class AdminApi {
 
     @ApiOperation(value = "계정 상태 수정")
     @PutMapping
-    public ResponseEntity<?> updateAccountStatus(@Valid @RequestBody Long userIdx, int status,
-            @AuthenticationPrincipal UserDetails userDetails) throws Exception {
-        adminService.updateAccountStatus(userIdx,status,userDetails);
+    public ResponseEntity<?> updateAccountStatus(@Valid @RequestBody UpdateAccountStatusRequestDto request,
+                                                 @AuthenticationPrincipal UserDetails userDetails) throws Exception {
+        adminService.updateAccountStatus(request.getUserIdx(),request.getStatus(),userDetails);
         return ResponseEntity.ok().body("");
     }
 
