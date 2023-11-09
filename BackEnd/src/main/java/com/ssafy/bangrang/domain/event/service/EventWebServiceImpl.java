@@ -144,13 +144,13 @@ public class EventWebServiceImpl implements EventWebService{
             String fileName =  s3Service.generateEventImageName(image, createEventRequestDto.getTitle());
             byte[] fileBytes = image.getBytes();
             img = s3Service.uploadToS3(fileName,fileBytes, image.getContentType());
-        } else img = null;
+        } else img = "";
 
         if (!subImage.isEmpty()) {
             String fileName =  s3Service.generateEventSubImageName(subImage, createEventRequestDto.getTitle());
             byte[] fileBytes = subImage.getBytes();
             subImg = s3Service.uploadToS3(fileName,fileBytes, subImage.getContentType());
-        } else subImg = null;
+        } else subImg = "";
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 
