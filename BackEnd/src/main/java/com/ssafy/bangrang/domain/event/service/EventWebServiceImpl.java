@@ -140,13 +140,13 @@ public class EventWebServiceImpl implements EventWebService{
         String img;
         String subImg;
 
-        if (!image.isEmpty()) {
+        if (image!=null && !image.isEmpty()) {
             String fileName =  s3Service.generateEventImageName(image, createEventRequestDto.getTitle());
             byte[] fileBytes = image.getBytes();
             img = s3Service.uploadToS3(fileName,fileBytes, image.getContentType());
         } else img = null;
 
-        if (!subImage.isEmpty()) {
+        if (subImage!=null && !subImage.isEmpty()) {
             String fileName =  s3Service.generateEventSubImageName(subImage, createEventRequestDto.getTitle());
             byte[] fileBytes = subImage.getBytes();
             subImg = s3Service.uploadToS3(fileName,fileBytes, subImage.getContentType());
@@ -198,7 +198,7 @@ public class EventWebServiceImpl implements EventWebService{
             event.updateEvent(updateEventRequestDto, event.getLatitude(), event.getLongitude());
         }
 
-        if (!image.isEmpty()) {
+        if (image!=null && !image.isEmpty()) {
             if (!event.getImage().isEmpty()) {
                 String[] parts = event.getImage().split("amazonaws.com/");
                 s3Service.removeFile(parts[1]);
@@ -208,7 +208,7 @@ public class EventWebServiceImpl implements EventWebService{
             event.updateEventImg(s3Service.uploadToS3(fileName,fileBytes, image.getContentType()));
         }
 
-        if (!subImage.isEmpty()) {
+        if (subImage!=null && !subImage.isEmpty()) {
             if (!event.getSubImage().isEmpty()) {
                 String[] parts = event.getSubImage().split("amazonaws.com/");
                 s3Service.removeFile(parts[1]);
