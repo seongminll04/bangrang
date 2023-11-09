@@ -2,7 +2,7 @@ import axios from "axios";
 
 const axiosInstance = axios.create({
   headers: {
-    // "Content-Type": "application/json",
+    "Content-Type": "application/json",
     Authorization: "Bearer " + localStorage.getItem("AccessToken"),
   },
 });
@@ -25,21 +25,20 @@ axiosInstance.interceptors.response.use(
 
       try {
         const { data, headers } = await axios({
-          method: 'post',
+          method: "post",
           url: `${process.env.REACT_APP_API}/refresh`,
           headers: {
-            Authorization: "Bearer " +accessToken,
-            "Authorization-refresh": "Bearer " +refreshToken,
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + accessToken,
+            "Authorization-refresh": "Bearer " + refreshToken,
           },
-          // data: { accessToken, refreshToken },
+          data: { accessToken, refreshToken },
         });
-        const newAccessToken = headers['authorization'];
-        const newRefreshToken = headers['authorization-refresh'];
+        const newAccessToken = headers["authorization"];
+        const newRefreshToken = headers["authorization-refresh"];
         localStorage.setItem("AccessToken", newAccessToken);
         localStorage.setItem("RefreshToken", newRefreshToken);
-        originalRequest.headers = {
-          Authorization: "Bearer " + newAccessToken,
-        };
+        originalRequest.headers["Authorization"] = "Bearer " + newAccessToken;
         return await axios(originalRequest);
       } catch (err) {
         console.log(err);
