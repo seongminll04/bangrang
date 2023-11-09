@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styles from "./MainPage.module.css";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useSpring, animated } from "@react-spring/web";
 
 const MainPage: React.FC = () => {
-  const district = ["서울", "구미", "대전", "광주", "부울경"];
-  const [scrollPercent, setScrollPercent] = useState(-1);
+  const [scrollPercent, setScrollPercent] = useState(0);
 
   const handleScroll = () => {
     const scrollTop = window.scrollY;
@@ -12,6 +12,9 @@ const MainPage: React.FC = () => {
 
     const percentage = (scrollTop / scrollHeight) * 100;
     setScrollPercent(percentage);
+
+    // Disable horizontal scroll
+    window.scrollTo(0, scrollTop);
   };
 
   useEffect(() => {
@@ -22,16 +25,68 @@ const MainPage: React.FC = () => {
     };
   }, []);
 
+  /* 서울 */
+  // if (scrollPercent > 22 && scrollPercent < 25) {
+  //   console.log("서울이에요");
+  // }
+  /* 구미 */
+  // if (scrollPercent > 39) {
+  //   console.log("구미에요");
+  // }
+  /* 대전 */
+  // if (scrollPercent > 55) {
+  //   console.log("구미에요");
+  // }
+  /* 광주 */
+  // if (scrollPercent > 77) {
+  //   console.log("광주에요");
+  // }
+  /* 부산 */
+  // if (scrollPercent > 88) {
+  //   console.log("부산이에요");
+  // }
+  const cities = ["서울", "구미", "대전", "광주", "부울경"];
+  const borderList = [22, 44, 55, 77, 88];
+
+  const cityStyles = cities.map((city, index) => {
+    const border = borderList[index];
+
+    const fadeInSpring = useSpring({
+      opacity: scrollPercent > border ? 1 : 0,
+      config: { duration: 500 },
+    });
+
+    const scaleSpring = useSpring({
+      transform: `scale(${scrollPercent > border ? 1 : 1.3})`,
+      config: { duration: 800 },
+    });
+
+    return { fadeInSpring, scaleSpring };
+  });
+
   return (
     <div className={styles.Page}>
-      <div className={styles.btnContainer}>{/* 나머지 JSX 코드 */}</div>
+      <div className={styles.districtContainer}>
+        {cities.map((city, index) => (
+          <animated.div
+            className={styles[`distric${index + 1}`]}
+            key={index}
+            style={{
+              ...cityStyles[index].fadeInSpring,
+              ...cityStyles[index].scaleSpring,
+            }}
+          >
+            <img src="assets/orange.svg" alt="" />
+            <p>{city}</p>
+          </animated.div>
+        ))}
+      </div>
       <div className={styles.wrap}>
         <div className={styles.airplaneScrollTimeline}>
           <div className={styles.track}>
-            <img src="assets" alt="" />
             <img
               className={styles.airplane}
-              src="assets/cloud.svg"
+              src="assets/logo.png"
               style={{ offsetDistance: scrollPercent + "%" }}
             />
             <svg
@@ -45,28 +100,6 @@ const MainPage: React.FC = () => {
               />
             </svg>
           </div>
-        </div>
-      </div>
-      <div className={styles.districtContainer}>
-        <div className={styles.distric1}>
-          <img src="assets/orange.svg" alt="" />
-          <p>서울</p>
-        </div>
-        <div className={styles.distric2}>
-          <img src="assets/orange.svg" alt="" />
-          <p>구미</p>
-        </div>
-        <div className={styles.distric3}>
-          <img src="assets/orange.svg" alt="" />
-          <p>대전</p>
-        </div>
-        <div className={styles.distric4}>
-          <img src="assets/orange.svg" alt="" />
-          <p>광주</p>
-        </div>
-        <div className={styles.distric5}>
-          <img src="assets/orange.svg" alt="" />
-          <p>부울경</p>
         </div>
       </div>
     </div>
