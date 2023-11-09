@@ -48,8 +48,8 @@ public class EventWebApi {
      * */
     @PostMapping
     public ResponseEntity<?> createEvent(@Valid @RequestPart("data") String data,
-                                         @RequestPart("image") MultipartFile image,
-                                         @RequestPart("subImage") MultipartFile subImage,
+                                         @RequestPart(value = "image",required = false) MultipartFile image,
+                                         @RequestPart(value = "subImage", required = false) MultipartFile subImage,
                                           @AuthenticationPrincipal UserDetails userDetails) throws Exception{
         ObjectMapper objectMapper = new ObjectMapper();
         try {
@@ -69,8 +69,8 @@ public class EventWebApi {
     @PutMapping("/{eventIdx}")
     public ResponseEntity<?> updateEvent(@Valid @PathVariable("eventIdx") Long eventIdx,
                                          @RequestPart("data") String data,
-                                         @RequestPart("image") MultipartFile image,
-                                         @RequestPart("subImage") MultipartFile subImage,
+                                         @RequestPart(value = "image",required = false) MultipartFile image,
+                                         @RequestPart(value = "subImage", required = false) MultipartFile subImage,
                                          @AuthenticationPrincipal UserDetails userDetails) throws Exception{
         ObjectMapper objectMapper = new ObjectMapper();
         try {
