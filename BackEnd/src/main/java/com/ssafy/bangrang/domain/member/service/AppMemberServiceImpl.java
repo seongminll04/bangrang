@@ -50,7 +50,7 @@ public class AppMemberServiceImpl implements AppMemberService {
      */
     @Override
     @Transactional
-    public Long kakaologin(String id, String ImgUrl) throws Exception {
+    public Long sociallogin(String id, String ImgUrl) throws Exception {
 
         AppMember appMember = AppMember.builder()
                 .id(id)
@@ -65,6 +65,7 @@ public class AppMemberServiceImpl implements AppMemberService {
         // 생성한 계정의 Idx 번호 리턴
         return saveUser.getIdx();
     }
+
 
     /* 닉네임 중복 확인 */
     @Override
@@ -143,6 +144,7 @@ public class AppMemberServiceImpl implements AppMemberService {
         return user.getIdx();
     }
     @Override
+    @Transactional
     public String profileImgUpdate(MultipartFile multipartFile, UserDetails userDetails) throws Exception {
         AppMember user = appMemberRepository.findById(userDetails.getUsername())
                 .orElseThrow(() -> new EmptyResultDataAccessException("해당 유저는 존재하지 않습니다.", 1));
@@ -155,6 +157,7 @@ public class AppMemberServiceImpl implements AppMemberService {
         // S3에 업로드하고 그 url 가져옴
         String imgPath = s3Service.uploadToS3(fileName, fileBytes, multipartFile.getContentType());
 
+        user.updateProfileImg(imgPath);
 
         return imgPath;
     }

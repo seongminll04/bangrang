@@ -97,7 +97,7 @@ public class EventWebServiceImpl implements EventWebService{
      * 이벤트 상세정보 조회
      * */
     @Override
-    public GetEventDetailWebResponseDto getEventDetailWeb(Long eventIdx, UserDetails userDetails) {
+    public GetEventDetailWebResponseDto getEventDetail(Long eventIdx, UserDetails userDetails) {
 
         if (webMemberRepository.findById(userDetails.getUsername()).isEmpty())
             throw new EmptyResultDataAccessException("해당 유저는 존재하지 않습니다.", 1);
@@ -125,6 +125,7 @@ public class EventWebServiceImpl implements EventWebService{
      * 이벤트 생성
      * */
     @Override
+    @Transactional
     public void createEvent(CreateEventRequestDto createEventRequestDto, MultipartFile image, MultipartFile subImage, UserDetails userDetails) throws Exception{
         WebMember user = webMemberRepository.findById(userDetails.getUsername())
                 .orElseThrow(() -> new EmptyResultDataAccessException("해당 유저는 존재하지 않습니다.", 1));
@@ -141,17 +142,19 @@ public class EventWebServiceImpl implements EventWebService{
         String img;
         String subImg;
 
-        if (!image.isEmpty()) {
+        if (image!=null && !image.isEmpty()) {
             String fileName =  s3Service.generateEventImageName(image, createEventRequestDto.getTitle());
             byte[] fileBytes = image.getBytes();
             img = s3Service.uploadToS3(fileName,fileBytes, image.getContentType());
         } else img = null;
 
-        if (!subImage.isEmpty()) {
+        if (subImage!=null && !subImage.isEmpty()) {
             String fileName =  s3Service.generateEventSubImageName(subImage, createEventRequestDto.getTitle());
             byte[] fileBytes = subImage.getBytes();
             subImg = s3Service.uploadToS3(fileName,fileBytes, subImage.getContentType());
         } else subImg = null;
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 
         Event event = Event.builder()
                 .title(createEventRequestDto.getTitle())
@@ -161,8 +164,8 @@ public class EventWebServiceImpl implements EventWebService{
                 .eventUrl(createEventRequestDto.getEventUrl())
                 .longitude(longitude)
                 .latitude(latitude)
-                .startDate(createEventRequestDto.getStartDate())
-                .endDate(createEventRequestDto.getEndDate())
+                .startDate(LocalDateTime.parse(createEventRequestDto.getStartDate(),formatter))
+                .endDate(LocalDateTime.parse(createEventRequestDto.getEndDate(),formatter))
                 .image(img)
                 .subImage(subImg)
                 .webMember(user)
@@ -173,6 +176,7 @@ public class EventWebServiceImpl implements EventWebService{
 
     // 이벤트 수정하기
     @Override
+    @Transactional
     public void updateEvent(Long eventIdx, UpdateEventRequestDto updateEventRequestDto, MultipartFile image, MultipartFile subImage, UserDetails userDetails)
             throws Exception {
         WebMember user = webMemberRepository.findById(userDetails.getUsername())
@@ -196,8 +200,8 @@ public class EventWebServiceImpl implements EventWebService{
             event.updateEvent(updateEventRequestDto, event.getLatitude(), event.getLongitude());
         }
 
-        if (!image.isEmpty()) {
-            if (!event.getImage().isEmpty()) {
+        if (image!=null && !image.isEmpty()) {
+            if (event.getImage() != null) {
                 String[] parts = event.getImage().split("amazonaws.com/");
                 s3Service.removeFile(parts[1]);
             }
@@ -206,8 +210,8 @@ public class EventWebServiceImpl implements EventWebService{
             event.updateEventImg(s3Service.uploadToS3(fileName,fileBytes, image.getContentType()));
         }
 
-        if (!subImage.isEmpty()) {
-            if (!event.getSubImage().isEmpty()) {
+        if (subImage!=null && !subImage.isEmpty()) {
+            if (event.getSubImage() != null) {
                 String[] parts = event.getSubImage().split("amazonaws.com/");
                 s3Service.removeFile(parts[1]);
             }
@@ -226,6 +230,7 @@ public class EventWebServiceImpl implements EventWebService{
 
     //이벤트 삭제하기
     @Override
+    @Transactional
     public void deleteEvent(Long eventIdx, UserDetails userDetails) throws Exception {
         WebMember user = webMemberRepository.findById(userDetails.getUsername())
                 .orElseThrow(() -> new EmptyResultDataAccessException("해당 유저는 존재하지 않습니다.", 1));

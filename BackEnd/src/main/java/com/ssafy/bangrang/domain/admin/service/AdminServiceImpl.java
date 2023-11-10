@@ -50,6 +50,7 @@ public class AdminServiceImpl implements AdminService {
         return result;
     }
     @Override
+    @Transactional
     public void updateAccountStatus(Long userIdx, int status, UserDetails userDetails) throws Exception {
 
         WebMember admin = webMemberRepository.findById(userDetails.getUsername())
@@ -73,7 +74,8 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void deleteAccountStatus(Long userIdx, UserDetails userDetails) throws Exception {
+    @Transactional
+    public void deleteAccount(Long userIdx, UserDetails userDetails) throws Exception {
 
         WebMember admin = webMemberRepository.findById(userDetails.getUsername())
                 .orElseThrow(() -> new EmptyResultDataAccessException("해당 유저는 존재하지 않습니다.", 1));

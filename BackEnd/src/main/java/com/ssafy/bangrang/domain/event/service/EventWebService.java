@@ -21,7 +21,6 @@ public interface EventWebService {
 
     List<GetEventListResponseDto> getEventList(UserDetails userDetails) throws Exception;
 
-
     GetEventDetailWebResponseDto getEventDetailWeb(Long eventIdx, UserDetails userDetails);
 
     // 이벤트 등록하기
