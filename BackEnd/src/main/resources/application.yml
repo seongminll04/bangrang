@@ -28,7 +28,7 @@ spring:
   # jpa 설정
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
 #      hibernate:
       dialect: org.hibernate.spatial.dialect.postgis.PostgisDialect
     properties:
