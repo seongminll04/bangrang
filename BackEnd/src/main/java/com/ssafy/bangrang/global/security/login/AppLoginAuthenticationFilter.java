@@ -95,20 +95,18 @@ public class AppLoginAuthenticationFilter extends AbstractAuthenticationProcessi
 
             return this.getAuthenticationManager().authenticate(usernamePasswordAuthenticationToken);
         } else if (social.equals("google")) {
-            HttpHeaders headers = new HttpHeaders();
-            headers.add("Authorization", "Bearer "+ token);
             RestTemplate restTemplate = new RestTemplate();
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
             ResponseEntity<String> response =
-                    restTemplate.exchange("https://www.googleapis.com/oauth2/v3/userinfo",
+                    restTemplate.exchange("https://oauth2.googleapis.com/tokeninfo?id_token="+token,
                             HttpMethod.GET,
-                            new HttpEntity<>(null, headers),
+                            new HttpEntity<>(null, null),
                             String.class);
 
             String body = response.getBody();
 
             Map<String, ?> data = objectMapper.readValue(body, Map.class);
-            String num = String.valueOf(data.get("id"));
+            String num = String.valueOf(data.get("sub"));
             String thumbnailImageUrl = String.valueOf(data.get("picture"));
 
             AppMember user = appMemberRepository.findById("google@"+num)
