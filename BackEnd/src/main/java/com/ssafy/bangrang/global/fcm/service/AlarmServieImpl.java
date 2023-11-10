@@ -92,7 +92,7 @@ public class AlarmServieImpl implements AlarmService {
                     .content(alarm.getContent())
                     .eventIdx(eventIdx)
                     .alarmCreatedDate(alarm.getCreatedDate())
-                    .alarmStatus(alarm.getStatus().intValue())
+                    .alarmStatus(alarm.getStatus())
                     .build();
 
             result.add(alarmListResponseDto);
