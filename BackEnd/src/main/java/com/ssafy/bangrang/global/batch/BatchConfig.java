@@ -5,6 +5,7 @@ import com.ssafy.bangrang.domain.map.entity.MemberMapArea;
 import com.ssafy.bangrang.domain.map.model.vo.RegionType;
 import com.ssafy.bangrang.domain.map.repository.KoreaBorderAreaRepository;
 import com.ssafy.bangrang.domain.map.repository.MemberMapAreaRepository;
+import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityManagerFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -46,7 +47,7 @@ public class BatchConfig {
     private final EntityManagerFactory entityManagerFactory; // EntityManagerFactory 주입
     private final KoreaBorderAreaRepository koreaBorderAreaRepository;
     private final MemberMapAreaRepository memberMapAreaRepository;
-    private final Map<Long, RegionType> map = new HashMap<>();
+
 
     @Bean
     public Job myJob() {
@@ -58,8 +59,8 @@ public class BatchConfig {
         return new JobBuilder("my_job", jobRepository)
                 .incrementer(new RunIdIncrementer())
                 .start(getRegionMapAreaStep())
-                .next(getMemberRankingStep())
-                .next(postFCMStep())
+//                .start(getMemberRankingStep())
+//                .next(postFCMStep())
                 .build();
     }
 
@@ -68,9 +69,9 @@ public class BatchConfig {
         log.info("[ STEP 01 ] 지역별 사용자 면적 계산");
         return new StepBuilder("region_map_area_step", jobRepository)
                 .<String, String>chunk(BATCH_SIZE, batchTransactionManager)
-//                .reader(reader())
-//                .processor(proce)
-//                .writer(writer())
+                .reader(regionMapAreaReader())
+                .processor(memberMapAreaProcessor())
+                .writer(memberMapAreaWriter())
                 .build();
     }
 
@@ -84,18 +85,19 @@ public class BatchConfig {
                 .build();
     }
 
-    @Bean
-    public Step postFCMStep(){
-        log.info("[ STEP 03 ] FCM 메시지 발송");
-        return new StepBuilder("post_fcm_step", jobRepository)
-                .<String, String>chunk(BATCH_SIZE, batchTransactionManager)
+//    @Bean
+//    public Step postFCMStep(){
+//        log.info("[ STEP 03 ] FCM 메시지 발송");
+//        return new StepBuilder("post_fcm_step", jobRepository)
+//                .<String, String>chunk(BATCH_SIZE, batchTransactionManager)
 //                .reader(reader())
 //                .writer(writer())
-                .build();
-    }
+//                .build();
+//    }
 
     @Bean
     public JpaPagingItemReader regionMapAreaReader() {
+        log.info("[ STPE 01 - READER ] mapArea 데이터 읽는 중... ");
         LocalDateTime yesterday = LocalDateTime.now().minusDays(1); // 어제 날짜 계산
 
         return new JpaPagingItemReaderBuilder<MemberMapArea>()
@@ -109,6 +111,7 @@ public class BatchConfig {
 
     @Bean
     public ItemProcessor<MemberMapArea, List<MemberMapArea>> memberMapAreaProcessor() {
+        log.info("[ STPE 01 - PROCESSOR ] mapArea 데이터 가공 중... ");
         return item -> {
             return koreaBorderAreaRepository.findAll()
                     .stream()
@@ -130,19 +133,60 @@ public class BatchConfig {
         };
     }
 
-    private RegionType convertRegionType(Long idx) {
-        return RegionType.KOREA;
-    }
+
 
     @Bean
-    public ItemWriter<List<MemberMapArea>> writer() {
-        log.info("writer 중 ");
+    public ItemWriter<List<MemberMapArea>> memberMapAreaWriter() {
+        log.info("[ STPE 01 - WRITER ] mapArea 데이터 저장 중... ");
         return items -> {
             for (var item : items) {
                 log.info("Writing items: {}", item);
-                memberMapAreaRepository.save(item);
+                if(item instanceof MemberMapArea){
+                    memberMapAreaRepository.save((MemberMapArea) item);
+                }
             }
         };
+    }
+
+    private RegionType convertRegionType(Long idx) {
+        switch (idx.intValue()){
+            case 1:
+                return RegionType.GANGWON;
+            case 2:
+                return RegionType.GYEONGGI;
+            case 3:
+                return RegionType.GYEONGNAM;
+            case 4:
+                return RegionType.GYEONGBUK;
+            case 5:
+                return RegionType.GWANGJU;
+            case 6:
+                return RegionType.DAEGU;
+            case 7:
+                return RegionType.DAEJEON;
+            case 8:
+                return RegionType.BUSAN;
+            case 9:
+                return RegionType.SEOUL;
+            case 10:
+                return RegionType.SEJONG;
+            case 11:
+                return RegionType.ULSAN;
+            case 12:
+                return RegionType.INCHEON;
+            case 13:
+                return RegionType.JEOLLANAM;
+            case 14:
+                return RegionType.JEOLLABUK;
+            case 15:
+                return RegionType.JEJU;
+            case 16:
+                return RegionType.CHUNGNAM;
+            case 17:
+                return RegionType.CHUNGBUK;
+            default:
+                return RegionType.KOREA;
+        }
     }
 }
 
