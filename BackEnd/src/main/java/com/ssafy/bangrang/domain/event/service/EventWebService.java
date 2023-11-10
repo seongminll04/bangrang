@@ -5,6 +5,7 @@ import com.ssafy.bangrang.domain.event.api.request.EventUpdateDto;
 import com.ssafy.bangrang.domain.event.api.request.UpdateEventRequestDto;
 import com.ssafy.bangrang.domain.event.api.response.GetEventAllResponseDto;
 import com.ssafy.bangrang.domain.event.api.response.GetEventDetailResponseDto;
+import com.ssafy.bangrang.domain.event.api.response.GetEventDetailWebResponseDto;
 import com.ssafy.bangrang.domain.event.api.response.GetEventListResponseDto;
 import com.ssafy.bangrang.domain.event.entity.Event;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,7 +21,8 @@ public interface EventWebService {
 
     List<GetEventListResponseDto> getEventList(UserDetails userDetails) throws Exception;
 
-    GetEventDetailResponseDto getEventDetail(Long eventIdx, UserDetails userDetails);
+
+    GetEventDetailWebResponseDto getEventDetailWeb(Long eventIdx, UserDetails userDetails);
 
     // 이벤트 등록하기
     void createEvent(CreateEventRequestDto createEventRequestDto, MultipartFile image, MultipartFile subImage, UserDetails userDetails) throws Exception;

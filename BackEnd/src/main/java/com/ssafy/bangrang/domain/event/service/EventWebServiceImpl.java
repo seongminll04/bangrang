@@ -9,6 +9,7 @@ import com.ssafy.bangrang.domain.event.api.request.EventUpdateDto;
 import com.ssafy.bangrang.domain.event.api.request.UpdateEventRequestDto;
 import com.ssafy.bangrang.domain.event.api.response.GetEventAllResponseDto;
 import com.ssafy.bangrang.domain.event.api.response.GetEventDetailResponseDto;
+import com.ssafy.bangrang.domain.event.api.response.GetEventDetailWebResponseDto;
 import com.ssafy.bangrang.domain.event.api.response.GetEventListResponseDto;
 import com.ssafy.bangrang.domain.event.entity.Event;
 import com.ssafy.bangrang.domain.event.repository.EventRepository;
@@ -54,6 +55,8 @@ public class EventWebServiceImpl implements EventWebService{
     private final AmazonS3Client amazonS3Client;
     private final S3ServiceImpl s3Service;
 
+    private final DateTimeFormatter dateTimeFormatter;
+
     @Value("${cloud.naver.client_id}")
     String client_id;
 
@@ -94,7 +97,7 @@ public class EventWebServiceImpl implements EventWebService{
      * 이벤트 상세정보 조회
      * */
     @Override
-    public GetEventDetailResponseDto getEventDetail(Long eventIdx, UserDetails userDetails) {
+    public GetEventDetailWebResponseDto getEventDetailWeb(Long eventIdx, UserDetails userDetails) {
 
         if (webMemberRepository.findById(userDetails.getUsername()).isEmpty())
             throw new EmptyResultDataAccessException("해당 유저는 존재하지 않습니다.", 1);
@@ -102,7 +105,7 @@ public class EventWebServiceImpl implements EventWebService{
         Event foundEvent = eventRepository.findByIdx(eventIdx)
                 .orElseThrow(() -> new EmptyResultDataAccessException("해당 이벤트는 존재하지 않습니다.", 1));
 
-        return GetEventDetailResponseDto.builder()
+        return GetEventDetailWebResponseDto.builder()
                 .title(foundEvent.getTitle())
                 .subtitle(foundEvent.getSubTitle())
                 .content(foundEvent.getContent())
