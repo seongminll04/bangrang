@@ -97,7 +97,7 @@ public class EventWebServiceImpl implements EventWebService{
      * 이벤트 상세정보 조회
      * */
     @Override
-    public GetEventDetailWebResponseDto getEventDetail(Long eventIdx, UserDetails userDetails) {
+    public GetEventDetailWebResponseDto getEventDetailWeb(Long eventIdx, UserDetails userDetails) {
 
         if (webMemberRepository.findById(userDetails.getUsername()).isEmpty())
             throw new EmptyResultDataAccessException("해당 유저는 존재하지 않습니다.", 1);
