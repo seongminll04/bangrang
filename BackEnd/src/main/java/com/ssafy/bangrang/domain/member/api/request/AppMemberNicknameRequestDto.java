@@ -7,4 +7,10 @@ import lombok.Getter;
 public class AppMemberNicknameRequestDto {
     @NotBlank(message = "nickname은 빈값이 올 수 없습니다")
     private String nickname;
+
+    @Builder
+    public AppMemberNicknameRequestDto(String nickname)){
+        this.nickname = nickname;
+    }
+
 }
