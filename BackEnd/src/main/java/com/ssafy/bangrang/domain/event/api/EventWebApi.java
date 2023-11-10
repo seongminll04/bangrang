@@ -88,7 +88,7 @@ public class EventWebApi {
     public ResponseEntity<?> deleteEvent(@Valid @PathVariable("eventIdx") Long eventIdx,
                                          @AuthenticationPrincipal UserDetails userDetails) throws Exception{
         eventWebService.deleteEvent(eventIdx,userDetails);
-        return ResponseEntity.badRequest().body("");
+        return ResponseEntity.ok().body("");
     }
 
 }
