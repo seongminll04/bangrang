@@ -221,8 +221,6 @@ public class EventWebServiceImpl implements EventWebService{
         return nowDate.format(formatter);
     }
 
-
-
     //이벤트 삭제하기
     @Override
     public void deleteEvent(Long eventIdx, UserDetails userDetails) throws Exception {
