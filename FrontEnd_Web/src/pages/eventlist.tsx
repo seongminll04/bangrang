@@ -63,6 +63,10 @@ const EventList: React.FC = () => {
 
   // 이벤트 리스트 불러오기
   useEffect(() => {
+    loaddata();
+  }, []);
+
+  const loaddata = () => {
     axiosInstance({
       method: "get",
       url: `${process.env.REACT_APP_API}/web/event`,
@@ -70,10 +74,10 @@ const EventList: React.FC = () => {
       .then((res) => {
         // console.log(res);
         setEventList(res.data);
+        setDetail(null);
       })
       .catch((err) => console.log(err));
-  }, []);
-
+  };
   const navigate = useNavigate();
   useEffect(() => {
     if (localStorage.getItem("AccessToken")) {
@@ -284,7 +288,7 @@ const EventList: React.FC = () => {
                         .delete(
                           `${process.env.REACT_APP_API}/web/event/${selectedEventIdx}`
                         )
-                        .then((res) => window.location.reload())
+                        .then((res) => loaddata())
                         .catch((err) => console.log(err));
                     }}
                   >
