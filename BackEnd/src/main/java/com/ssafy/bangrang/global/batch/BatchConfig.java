@@ -75,15 +75,15 @@ public class BatchConfig {
                 .build();
     }
 
-    @Bean
-    public Step getMemberRankingStep(){
-        log.info("[ STEP 02 ] 랭킹 계산");
-        return new StepBuilder("member_ranking_step", jobRepository)
-                .<String, String>chunk(BATCH_SIZE, batchTransactionManager)
-                .reader(regionMapAreaReader())
+//    @Bean
+//    public Step getMemberRankingStep(){
+//        log.info("[ STEP 02 ] 랭킹 계산");
+//        return new StepBuilder("member_ranking_step", jobRepository)
+//                .<String, String>chunk(BATCH_SIZE, batchTransactionManager)
+//                .reader(regionMapAreaReader())
 //                .writer(writer())
-                .build();
-    }
+//                .build();
+//    }
 
 //    @Bean
 //    public Step postFCMStep(){
