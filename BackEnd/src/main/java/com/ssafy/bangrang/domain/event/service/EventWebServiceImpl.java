@@ -55,6 +55,8 @@ public class EventWebServiceImpl implements EventWebService{
     private final AmazonS3Client amazonS3Client;
     private final S3ServiceImpl s3Service;
 
+    private final DateTimeFormatter dateTimeFormatter;
+
     @Value("${cloud.naver.client_id}")
     String client_id;
 
@@ -95,7 +97,7 @@ public class EventWebServiceImpl implements EventWebService{
      * 이벤트 상세정보 조회
      * */
     @Override
-    public GetEventDetailWebResponseDto getEventDetail(Long eventIdx, UserDetails userDetails) {
+    public GetEventDetailWebResponseDto getEventDetailWeb(Long eventIdx, UserDetails userDetails) {
 
         if (webMemberRepository.findById(userDetails.getUsername()).isEmpty())
             throw new EmptyResultDataAccessException("해당 유저는 존재하지 않습니다.", 1);
@@ -199,7 +201,7 @@ public class EventWebServiceImpl implements EventWebService{
         }
 
         if (image!=null && !image.isEmpty()) {
-            if (!event.getImage().isEmpty()) {
+            if (event.getImage() != null) {
                 String[] parts = event.getImage().split("amazonaws.com/");
                 s3Service.removeFile(parts[1]);
             }
@@ -209,7 +211,7 @@ public class EventWebServiceImpl implements EventWebService{
         }
 
         if (subImage!=null && !subImage.isEmpty()) {
-            if (!event.getSubImage().isEmpty()) {
+            if (event.getSubImage() != null) {
                 String[] parts = event.getSubImage().split("amazonaws.com/");
                 s3Service.removeFile(parts[1]);
             }
@@ -225,7 +227,6 @@ public class EventWebServiceImpl implements EventWebService{
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
         return nowDate.format(formatter);
     }
-
 
     //이벤트 삭제하기
     @Override

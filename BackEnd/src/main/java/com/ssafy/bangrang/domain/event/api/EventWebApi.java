@@ -40,7 +40,7 @@ public class EventWebApi {
     @GetMapping("/{eventIdx}")
     public ResponseEntity<?> getEventDetail(@Valid @PathVariable("eventIdx") Long eventIdx,
                                                 @AuthenticationPrincipal UserDetails userDetails) throws Exception{
-        return ResponseEntity.ok().body(eventWebService.getEventDetail(eventIdx,userDetails));
+        return ResponseEntity.ok().body(eventWebService.getEventDetailWeb(eventIdx,userDetails));
     }
 
     /**
@@ -88,7 +88,7 @@ public class EventWebApi {
     public ResponseEntity<?> deleteEvent(@Valid @PathVariable("eventIdx") Long eventIdx,
                                          @AuthenticationPrincipal UserDetails userDetails) throws Exception{
         eventWebService.deleteEvent(eventIdx,userDetails);
-        return ResponseEntity.badRequest().body("");
+        return ResponseEntity.ok().body("");
     }
 
 }
