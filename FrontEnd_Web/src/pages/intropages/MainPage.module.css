@@ -46,10 +46,11 @@ body {
 }
 
 .airplane {
+  z-index: 1;
   position: absolute;
   left: 0;
   top: 0;
-  width: 100px;
+  width: 200px;
   /* transform: rotate(180deg); */
   offset-distance: 0%;
   offset-rotate: auto 90deg;
