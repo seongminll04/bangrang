@@ -28,14 +28,14 @@ public class CommentApi {
 
     @PutMapping
     public ResponseEntity<?> updateComment(@RequestBody UpdateCommentRequestDto request,
-                                           UserDetails userDetails){
+                                           @AuthenticationPrincipal UserDetails userDetails){
         commentService.updateCommentV2(request,userDetails);
         return ResponseEntity.ok().body("");
     }
 
     @DeleteMapping
     public ResponseEntity<?> deleteComment(@RequestBody DeleteCommentRequestDto deleteCommentRequestDto,
-                                           UserDetails userDetails){
+                                           @AuthenticationPrincipal UserDetails userDetails){
         commentService.deleteCommentV2(deleteCommentRequestDto.getCommentIdx(),userDetails);
         return ResponseEntity.ok().body("");
     }
