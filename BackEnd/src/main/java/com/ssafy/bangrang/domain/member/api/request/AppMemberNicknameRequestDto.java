@@ -12,7 +12,7 @@ public class AppMemberNicknameRequestDto {
     private String nickname;
 
     @Builder
-    public AppMemberNicknameRequestDto(String nickname)){
+    public AppMemberNicknameRequestDto(String nickname){
         this.nickname = nickname;
     }
 
