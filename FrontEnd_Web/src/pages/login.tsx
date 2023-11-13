@@ -110,7 +110,7 @@ const Login: React.FC = () => {
       }}
     >
       <img src="assets/logo.png" alt="" />
-      <h1>관리자 로그인</h1>
+      <h1 style={{ color: "gray" }}>관리자 로그인</h1>
 
       <form onSubmit={login}>
         <div
@@ -156,13 +156,26 @@ const Login: React.FC = () => {
             />
           </InputContainer>
         </div>
-        <button type="submit" style={{ marginTop: "15px" }}>
+        <button
+          type="submit"
+          style={{
+            marginTop: "30px",
+            border: "none",
+            background: "#0057FF",
+            width: "30%",
+            height: "6vh",
+            borderRadius: "6px",
+            color: "white",
+            fontWeight: "bold",
+            fontSize: "18px",
+          }}
+        >
           로그인
         </button>
       </form>
 
       <br />
-      <Link to={"/signup"} style={{ textDecoration: "none" }}>
+      <Link to={"/signup"} style={{ textDecoration: "none", color: "#0057FF" }}>
         가입신청
       </Link>
     </div>
