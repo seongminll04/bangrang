@@ -46,8 +46,12 @@ body {
 }
 
 .airplane {
+<<<<<<< HEAD
   z-index: 1;
   position: absolute;
+=======
+  position: relative;
+>>>>>>> 6dd7768fbeda99fb42bc1d18dad40150fd170170
   left: 0;
   top: 0;
   width: 200px;
@@ -77,7 +81,6 @@ body {
 
 .airplaneScrollTimeline {
   position: relative;
-  height: 4700px;
   margin: 100px 0;
 }
 
