@@ -45,8 +45,8 @@ public class WebLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandle
         httpServletResponse.addHeader(jwtService.getAccessHeader(), accessToken);
         httpServletResponse.addHeader(jwtService.getRefreshHeader(), refreshToken);
 
-        // httpServletResponse.setContentType("application/json");
-        // httpServletResponse.setCharacterEncoding("UTF-8");
+        httpServletResponse.setContentType("application/json");
+        httpServletResponse.setCharacterEncoding("UTF-8");
 
         WebMember user = webMemberRepository.findById(id)
                 .orElseThrow(() -> new EmptyResultDataAccessException("해당 유저는 존재하지 않습니다.", 1));
