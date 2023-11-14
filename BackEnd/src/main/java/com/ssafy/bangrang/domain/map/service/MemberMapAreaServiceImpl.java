@@ -74,25 +74,32 @@ public class MemberMapAreaServiceImpl implements MemberMapAreaService{
                 GeometryCollection geometryCollection = new GeometryCollection(new Geometry[] {curUnionResult, befoPolygon}, new GeometryFactory());
                 Geometry unionResult = geometryCollection.union();
 
-                MultiPolygon multiPolygonResult = (MultiPolygon) unionResult;
-                befoMemberMapArea.changeShapeAndDimension(multiPolygonResult, multiPolygonResult.getArea());
+                befoMemberMapArea.changeShapeAndDimension(unionResult, unionResult.getArea());
 
-                return getBorderPointList(multiPolygonResult);
+                return getBorderPointListOuter(unionResult);
 
             } else {
                 // 'createdAt'의 날짜가 현재 날짜와 다른 경우, 객체 생성
-                MultiPolygon newShape = (MultiPolygon) curUnionResult;
-                saveMemberMapArea(RegionType.KOREA, newShape, appMember);
-
-                return getBorderPointList(newShape);
+                saveMemberMapArea(RegionType.KOREA, curUnionResult, appMember);
+                return getBorderPointListOuter(curUnionResult);
             }
         }else{
             // 새 데이터를 넣는 경우
-            MultiPolygon newShape = (MultiPolygon) curUnionResult;
-            saveMemberMapArea(RegionType.KOREA, newShape, appMember);
-            return getBorderPointList(newShape);
+            saveMemberMapArea(RegionType.KOREA, curUnionResult, appMember);
+            return getBorderPointListOuter(curUnionResult);
         }
 
+    }
+    private List<List<Point>> getBorderPointListOuter(Geometry geometry){
+        List<List<Point>> result = new ArrayList<>();
+
+        if(geometry instanceof MultiPolygon) return this.getBorderPointList((MultiPolygon) geometry);
+        else if(geometry instanceof Polygon){
+            List<Point> points = this.getBorderPointList((Polygon) geometry);
+            result.add(points);
+        }
+
+        return result;
     }
 
     private List<List<Point>> getBorderPointList(MultiPolygon multiPolygon) {
@@ -116,7 +123,7 @@ public class MemberMapAreaServiceImpl implements MemberMapAreaService{
 
     // saveMemberMapArea에서 error가 생기면 이 메서드를 사용하는 모든 메서드 rollback
     @Transactional(propagation = Propagation.REQUIRED)
-    MemberMapArea saveMemberMapArea(RegionType regionType, MultiPolygon shape, AppMember appMember){
+    MemberMapArea saveMemberMapArea(RegionType regionType, Geometry shape, AppMember appMember){
         MemberMapArea newMemberMapArea = MemberMapArea.builder()
                 .regionType(regionType)
                 .shape(shape)
