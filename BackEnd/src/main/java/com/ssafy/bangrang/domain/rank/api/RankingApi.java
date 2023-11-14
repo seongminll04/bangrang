@@ -1,6 +1,7 @@
 package com.ssafy.bangrang.domain.rank.api;
 
-import com.ssafy.bangrang.domain.rank.api.response.RegionDto;
+import com.ssafy.bangrang.domain.rank.api.response.FriendsRegionDto;
+import com.ssafy.bangrang.domain.rank.api.response.TotalRegionDto;
 import com.ssafy.bangrang.domain.rank.service.RankingService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,8 +28,8 @@ public class RankingApi {
 
         log.info("[전체 랭킹 리스트 요청 시작]", LocalDateTime.now());
 
-       RegionDto regionDto = rankingService.getRankingAll(userDetails);
-        
+        TotalRegionDto regionDto = rankingService.getRankingAll(userDetails);
+
         log.info("[전체 랭킹 리스트 요청 끝]");
 
         return ResponseEntity.ok().body(regionDto);
@@ -36,14 +37,15 @@ public class RankingApi {
 
     // 유저의 친구 랭킹 리스트 불러오기
     @GetMapping("/friendRank")
-    public ResponseEntity getFriendRankingAll(){
+    public ResponseEntity getFriendRankingAll(@AuthenticationPrincipal UserDetails userDetails){
 
         log.info("[유저의 친구 랭킹 리스트 요청 시작]", LocalDateTime.now());
 
+        FriendsRegionDto friendsRegionDto = rankingService.getFriedsRankingAll(userDetails);
 
         log.info("[유저의 친구 랭킹 리스트 요청 끝]");
 
-        return ResponseEntity.ok().body(null);
+        return ResponseEntity.ok().body(friendsRegionDto);
     }
 
 }

@@ -14,7 +14,7 @@ import lombok.*;
 public class Ranking extends CommonEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ranking_idx")
     private Long idx;
 
