@@ -1,6 +1,7 @@
 package com.ssafy.bangrang.domain.event.api;
 
 
+import com.ssafy.bangrang.domain.event.api.request.LikeEventRequestDto;
 import com.ssafy.bangrang.domain.event.api.response.GetEventAllResponseDto;
 import com.ssafy.bangrang.domain.event.api.response.GetEventDetailResponseDto;
 import com.ssafy.bangrang.domain.event.service.EventService;
@@ -26,11 +27,11 @@ public class EventApi {
 
     // 전체 행사 리스트 불러오기
     @GetMapping("/list")
-    public ResponseEntity getEventAll(){
+    public ResponseEntity getEventAll(@AuthenticationPrincipal UserDetails userDetails){
 
         log.info("[전체 행사 리스트 요청 시작]", LocalDateTime.now());
 
-        List<GetEventAllResponseDto> eventList = eventService.findAll();
+        List<GetEventAllResponseDto> eventList = eventService.findAll(userDetails);
 
         log.info("[전체 행사 리스트 요청 끝]");
 
@@ -38,23 +39,27 @@ public class EventApi {
     }
 
     @GetMapping("/index/{eventIdx}")
-    public ResponseEntity getEventDetail(@PathVariable Long eventIdx){
+    public ResponseEntity getEventDetail(@PathVariable Long eventIdx,
+                                         @AuthenticationPrincipal UserDetails userDetails){
 
         log.info("[특정 행사 정보 요청 시작]", LocalDateTime.now());
 
-        GetEventDetailResponseDto getEventDetailResponseDto = eventService.findByIdx(eventIdx);
+        GetEventDetailResponseDto getEventDetailResponseDto = eventService.findByIdx(eventIdx,userDetails);
 
         log.info("[특정 행사 정보 요청 끝]", LocalDateTime.now());
 
         return ResponseEntity.ok().body(getEventDetailResponseDto);
     }
 
-    @PostMapping("/{eventIdx}/likes")
-    public ResponseEntity addEventLikes(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long eventIdx){
+    /**
+     * 이벤트 좋아요 & 해제
+     * */
+    @PatchMapping("/likes")
+    public ResponseEntity likeEventApply(@RequestBody LikeEventRequestDto likeEventRequestDto,
+                                        @AuthenticationPrincipal UserDetails userDetails){
 
-        likesService.saveLikes(userDetails, eventIdx);
+        likesService.saveLikes(likeEventRequestDto, userDetails);
 
         return ResponseEntity.ok().build();
     }
-
 }
