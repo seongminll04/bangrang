@@ -65,7 +65,7 @@ public class CommentServiceImpl implements CommentService{
 
         SendAlarmRequestDto sendAlarmRequestDto = SendAlarmRequestDto.builder()
                 .eventIdx(comment.getInquiry().getEvent().getIdx())
-                .content(comment.getInquiry().getTitle()+" 문의에 답변이 등록되었습니다.")
+                .content(comment.getInquiry().getTitle()+" 문의에 답변이 수정되었습니다.")
                 .type(AlarmType.ANNOUNCEMENT)
                 .build();
 
