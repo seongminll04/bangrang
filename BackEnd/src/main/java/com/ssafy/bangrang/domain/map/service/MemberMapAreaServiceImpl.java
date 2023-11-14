@@ -32,8 +32,8 @@ public class MemberMapAreaServiceImpl implements MemberMapAreaService{
     private final AppMemberRepository appMemberRepository;
     private final GeometryFactory geometryFactory;
 
-    // 정사각형 한 변의 길이  (15cm를 메터로 변환)
-    private final double sideLength = 0.00015;
+    // 정사각형 한 변의 길이  (15cm를 킬로메터로 변환)
+    private final double sideLength = 0.0015;
 
     @Transactional
     @Override
@@ -118,8 +118,8 @@ public class MemberMapAreaServiceImpl implements MemberMapAreaService{
         List<GeometryBorderCoordinate> result = new ArrayList<>();
         for (Coordinate coordinate : polygon.getCoordinates()) {
             result.add(GeometryBorderCoordinate.builder()
-                            .x(coordinate.getX())
-                            .y(coordinate.getY())
+                            .longitude(coordinate.getX())
+                            .latitude(coordinate.getY())
                     .build());
         }
         return result;
