@@ -21,14 +21,14 @@ public class CommentApi {
 
     @PostMapping
     public ResponseEntity<?> addComment(@AuthenticationPrincipal UserDetails userDetails,
-                                        @RequestBody AddCommentRequestDto request){
+                                        @RequestBody AddCommentRequestDto request) throws Exception{
         commentService.save(userDetails, request);
         return ResponseEntity.ok().body("");
     }
 
     @PutMapping
     public ResponseEntity<?> updateComment(@RequestBody UpdateCommentRequestDto request,
-                                           @AuthenticationPrincipal UserDetails userDetails){
+                                           @AuthenticationPrincipal UserDetails userDetails) throws Exception{
         commentService.updateCommentV2(request,userDetails);
         return ResponseEntity.ok().body("");
     }
