@@ -4,6 +4,7 @@ import com.ssafy.bangrang.domain.event.entity.Likes;
 import com.ssafy.bangrang.domain.inquiry.entity.Inquiry;
 import com.ssafy.bangrang.domain.map.entity.MemberMapArea;
 import com.ssafy.bangrang.domain.map.entity.MemberMarker;
+import com.ssafy.bangrang.domain.stamp.entity.AppMemberStamp;
 import jakarta.persistence.*;
 import lombok.*;
 

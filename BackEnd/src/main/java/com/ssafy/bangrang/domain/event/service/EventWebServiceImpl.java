@@ -1,24 +1,22 @@
 package com.ssafy.bangrang.domain.event.service;
 
 import com.amazonaws.services.s3.AmazonS3Client;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssafy.bangrang.domain.event.api.request.CreateEventRequestDto;
-import com.ssafy.bangrang.domain.event.api.request.EventUpdateDto;
 import com.ssafy.bangrang.domain.event.api.request.UpdateEventRequestDto;
 import com.ssafy.bangrang.domain.event.api.response.GetEventAllResponseDto;
-import com.ssafy.bangrang.domain.event.api.response.GetEventDetailResponseDto;
 import com.ssafy.bangrang.domain.event.api.response.GetEventDetailWebResponseDto;
 import com.ssafy.bangrang.domain.event.api.response.GetEventListResponseDto;
 import com.ssafy.bangrang.domain.event.entity.Event;
 import com.ssafy.bangrang.domain.event.repository.EventRepository;
+import com.ssafy.bangrang.domain.stamp.entity.Stamp;
 import com.ssafy.bangrang.domain.member.entity.WebMember;
+import com.ssafy.bangrang.domain.stamp.repository.StampRepository;
 import com.ssafy.bangrang.domain.member.repository.WebMemberRepository;
 import com.ssafy.bangrang.global.s3service.S3ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -33,12 +31,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -50,6 +46,7 @@ public class EventWebServiceImpl implements EventWebService{
     private final GeometryFactory geometryFactory;
 
     private final EventRepository eventRepository;
+    private final StampRepository stampRepository;
     private final WebMemberRepository webMemberRepository;
     private final ObjectMapper objectMapper;
     private final AmazonS3Client amazonS3Client;
@@ -172,6 +169,17 @@ public class EventWebServiceImpl implements EventWebService{
                 .build();
 
         eventRepository.save(event);
+
+        Event saveEvent = eventRepository.findByTitle(createEventRequestDto.getTitle())
+                .orElseThrow();
+
+        Stamp stamp = Stamp.builder()
+                .name(saveEvent.getTitle())
+                .event(saveEvent)
+                .build();
+
+        stampRepository.save(stamp);
+
     }
 
     // 이벤트 수정하기

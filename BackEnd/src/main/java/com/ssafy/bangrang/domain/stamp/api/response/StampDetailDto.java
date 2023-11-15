@@ -1,4 +1,4 @@
-package com.ssafy.bangrang.domain.member.api.response;
+package com.ssafy.bangrang.domain.stamp.api.response;
 
 
 import lombok.Builder;

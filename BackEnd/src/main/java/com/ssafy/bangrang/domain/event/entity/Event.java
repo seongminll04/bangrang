@@ -3,15 +3,11 @@ package com.ssafy.bangrang.domain.event.entity;
 import com.ssafy.bangrang.domain.event.api.request.EventUpdateDto;
 import com.ssafy.bangrang.domain.event.api.request.UpdateEventRequestDto;
 import com.ssafy.bangrang.domain.inquiry.entity.Inquiry;
-import com.ssafy.bangrang.domain.member.entity.Stamp;
+import com.ssafy.bangrang.domain.stamp.entity.Stamp;
 import com.ssafy.bangrang.domain.member.entity.WebMember;
 import com.ssafy.bangrang.global.common.entity.CommonEntity;
 import jakarta.persistence.*;
 import lombok.*;
-import lombok.extern.java.Log;
-import org.hibernate.annotations.Type;
-import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.Point;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -79,8 +75,8 @@ public class Event extends CommonEntity {
     @OneToMany(mappedBy = "event")
     private List<Likes> likes = new ArrayList<>();
 
-    @OneToMany(mappedBy = "event")
-    private List<Stamp> stamps = new ArrayList<>();
+    @OneToOne(mappedBy = "event")
+    private Stamp stamp;
 
     @Builder
     public Event(Long idx,String title, String subTitle, String content, String image, String subImage, LocalDateTime startDate, LocalDateTime endDate, String address, Double latitude, Double longitude, String eventUrl, WebMember webMember){
