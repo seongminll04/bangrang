@@ -24,6 +24,7 @@ import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.JpaPagingItemReader;
 import org.springframework.batch.item.database.builder.JpaPagingItemReaderBuilder;
+import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -72,6 +73,7 @@ public class BatchConfig {
 
     private void initKoreaBorderAreas() {
         koreaBorderAreas = koreaBorderAreaRepository.findAll();
+        System.out.println("koreaBorderAreas.size() = " + koreaBorderAreas.size());
         koreaBorderAreaMap = new HashMap<>();
 
         double koreaArea = 0.0;
@@ -104,13 +106,35 @@ public class BatchConfig {
         log.info("3. 랭킹 관련 알림 보내기 ");
         return new JobBuilder("my_job", jobRepository)
                 .incrementer(new RunIdIncrementer())
-                .start(getRegionMapAreaStep())
-                .next(getMemberRankingStep())
+                .start(taskletStep())
+//                .start(getRegionMapAreaStep())
+//                .next(getMemberRankingStep())
 //                .next(postFCMStep())
                 .build();
     }
 
     @Bean
+    public Step taskletStep() {
+        log.info("*****************************************************************************");
+        log.info("HelloWorld!");
+        log.info("In Batch!!!");
+        log.info("*****************************************************************************");
+
+        System.out.println("totalMemberCnt = " + totalMemberCnt);
+        System.out.println("curRank = " + curRank);
+        System.out.println("curRank.get(RegionType.KOREA) = " + curRank.get(RegionType.KOREA));
+        System.out.println("curRank.size = " + curRank.values().size());
+        System.out.println("koreaBorderAreas.size() = " + koreaBorderAreas.size());
+        System.out.println("koreaBorderAreaMap = " + koreaBorderAreaMap);
+
+        return new StepBuilder("first step", jobRepository)
+                .tasklet((stepContribution, chunkContext) -> {
+                    log.info("Hello World");
+                    return RepeatStatus.FINISHED;
+                }, batchTransactionManager).build();
+    }
+
+//    @Bean
     public Step getRegionMapAreaStep() {
         log.info("[ STEP 01 ] 지역별 사용자 면적 계산");
 
@@ -124,7 +148,7 @@ public class BatchConfig {
 
 
 
-    @Bean
+//    @Bean
     public Step getMemberRankingStep(){
         log.info("[ STEP 02 ] 랭킹 계산");
 
@@ -147,7 +171,7 @@ public class BatchConfig {
 //                .build();
 //    }
 
-    @Bean
+//    @Bean
     public JpaPagingItemReader regionMapAreaReader() {
         log.info("[ STPE 01 - READER ] mapArea 데이터 읽는 중... ");
         LocalDate today = LocalDate.now();
@@ -163,7 +187,7 @@ public class BatchConfig {
                 .build();
     }
 
-    @Bean
+//    @Bean
     public ItemProcessor<List<MemberMapArea>, List<MemberMapArea>> memberMapAreaProcessor() {
         log.info("[ STPE 01 - PROCESSOR ] mapArea 데이터 가공 중... ");
         LocalDateTime yesterday = LocalDateTime.now().minusDays(1); // 어제 날짜를 구함
@@ -193,7 +217,7 @@ public class BatchConfig {
 
 
 
-    @Bean
+//    @Bean
     public ItemWriter<List<MemberMapArea>> memberMapAreaWriter() {
         log.info("[ STPE 01 - WRITER ] mapArea 데이터 저장 중... ");
         return itemLists -> {
@@ -246,7 +270,7 @@ public class BatchConfig {
         }
     }
 
-    @Bean
+//    @Bean
     public JpaPagingItemReader regionMapAreaReaderForRanking() {
         log.info("[ STPE 02 - READER ] mapArea 데이터 읽는 중... ");
         LocalDate today = LocalDate.now();
@@ -261,7 +285,7 @@ public class BatchConfig {
                 .build();
     }
     
-    @Bean
+//    @Bean
     public ItemProcessor<List<MemberMapArea>, List<Ranking>> rankMapAreaProcessor(){
         log.info("[ STPE 02 - PROCESSOR ] mapArea 데이터를 등수 매기는 중... ");
 
@@ -284,7 +308,7 @@ public class BatchConfig {
         };
     }
 
-    @Bean
+//    @Bean
     public ItemWriter<List<Ranking>> rankingWriter(){
         log.info("[ STPE 02 - WRITER ] 등수 데이터 저장 중... ");
         return itemLists  -> {
