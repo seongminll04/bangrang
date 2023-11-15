@@ -30,9 +30,11 @@ public class Event extends CommonEntity {
     @Column(name = "event_idx")
     private Long idx;
 
+    @Lob
     @Column(name = "event_title", nullable = false)
     private String title;
 
+    @Lob
     @Column(name = "event_sub_title")
     private String subTitle;
 
@@ -40,10 +42,12 @@ public class Event extends CommonEntity {
     @Column(name = "event_content")
     private String content;
 
+    @Lob
     @Column(name = "event_image")
     private String image;
     // 이미지 1
 
+    @Lob
     @Column(name = "event_subImage")
     private String subImage;
     // 이미지 2
@@ -64,6 +68,7 @@ public class Event extends CommonEntity {
     @Column(name = "event_longitude")
     private Double longitude;
 
+    @Lob
     @Column(name = "event_url")
     private String eventUrl;
     // 행사 메인 페이지
