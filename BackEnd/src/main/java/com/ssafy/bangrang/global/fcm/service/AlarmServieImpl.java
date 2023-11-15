@@ -133,7 +133,6 @@ public class AlarmServieImpl implements AlarmService {
                 Notification notification = Notification.builder()
                         .setTitle("방랑")
                         .setBody(sendAlarmRequestDto.getContent())
-                        .setImage("알림")
                         .build();
 
 
@@ -165,7 +164,6 @@ public class AlarmServieImpl implements AlarmService {
                 Notification notification = Notification.builder()
                         .setTitle("방랑")
                         .setBody(sendAlarmRequestDto.getContent())
-                        .setImage("공지사항")
                         .build();
 
                 Message message = Message.builder()
