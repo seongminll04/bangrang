@@ -7,6 +7,7 @@ import com.ssafy.bangrang.domain.event.entity.Likes;
 import com.ssafy.bangrang.domain.event.repository.EventRepository;
 import com.ssafy.bangrang.domain.member.entity.AppMember;
 import com.ssafy.bangrang.domain.member.repository.AppMemberRepository;
+import com.ssafy.bangrang.domain.stamp.repository.AppMemberStampRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -30,6 +31,8 @@ public class EventServiceImpl implements EventService{
     private final DateTimeFormatter dateTimeFormatter;
 
     private final AppMemberRepository appMemberRepository;
+
+    private final AppMemberStampRepository appMemberStampRepository;
     @Override
     public List<GetEventAllResponseDto> findAllLatest(UserDetails userDetails){
         AppMember user = appMemberRepository.findById(userDetails.getUsername())
@@ -66,6 +69,7 @@ public class EventServiceImpl implements EventService{
 
         Event event = eventRepository.findById(eventIdx).orElseThrow();
 
+
         GetEventDetailResponseDto getEventDetailResponseDto = GetEventDetailResponseDto.builder()
                 .image(event.getImage())
                 .subImage(event.getSubImage())
@@ -81,6 +85,7 @@ public class EventServiceImpl implements EventService{
                 .likeCount((long) event.getLikes().size())
                 .isLiked(event.getLikes().stream()
                         .anyMatch(likes -> likes.getAppMember().equals(user)))
+                .isStamp(appMemberStampRepository.findByAppMemberAndStamp(user,event.getStamp()).isPresent())
                 .build();
 
         return getEventDetailResponseDto;

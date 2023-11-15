@@ -24,9 +24,10 @@ public class GetEventDetailResponseDto {
     private Long likeCount;
     private String eventUrl;
     private Boolean isLiked;
+    private Boolean isStamp;
     @Builder
     public GetEventDetailResponseDto(String image, String subImage, String title, String subtitle, String content, String startDate, String endDate, String pageURL, String subEventIdx, String address, Double latitude, Double longitude, String eventUrl, Long likeCount,
-                                     Boolean isLiked){
+                                     Boolean isLiked, Boolean isStamp){
         this.image = image;
         this.subImage = subImage;
         this.title = title;
@@ -42,5 +43,6 @@ public class GetEventDetailResponseDto {
         this.eventUrl = eventUrl;
         this.likeCount = likeCount;
         this.isLiked = isLiked;
+        this.isStamp = isStamp;
     }
 }
