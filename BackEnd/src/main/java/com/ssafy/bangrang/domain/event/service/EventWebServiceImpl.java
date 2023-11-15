@@ -136,8 +136,8 @@ public class EventWebServiceImpl implements EventWebService{
             throw new Exception("위도, 경도 오류");
 
         JsonNode firstAddress = addresses.get(0);
-        double latitude = Double.parseDouble(firstAddress.get("x").asText());
-        double longitude = Double.parseDouble(firstAddress.get("y").asText());
+        double longitude = Double.parseDouble(firstAddress.get("x").asText());
+        double latitude = Double.parseDouble(firstAddress.get("y").asText());
 
         String img;
         String subImg;
@@ -192,8 +192,8 @@ public class EventWebServiceImpl implements EventWebService{
                 throw new Exception("위도, 경도 오류");
 
             JsonNode firstAddress = addresses.get(0);
-            double latitude = Double.parseDouble(firstAddress.get("x").asText());
-            double longitude = Double.parseDouble(firstAddress.get("y").asText());
+            double longitude = Double.parseDouble(firstAddress.get("x").asText());
+            double latitude = Double.parseDouble(firstAddress.get("y").asText());
 
             event.updateEvent(updateEventRequestDto, latitude, longitude);
         } else {
