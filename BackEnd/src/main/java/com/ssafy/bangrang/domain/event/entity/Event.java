@@ -8,6 +8,7 @@ import com.ssafy.bangrang.domain.member.entity.WebMember;
 import com.ssafy.bangrang.global.common.entity.CommonEntity;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.extern.java.Log;
 import org.hibernate.annotations.Type;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Point;
@@ -35,7 +36,8 @@ public class Event extends CommonEntity {
     @Column(name = "event_sub_title")
     private String subTitle;
 
-    @Column(name = "event_content", columnDefinition = "TEXT")
+    @Lob
+//    @Column(name = "event_content", columnDefinition = "TEXT")
     private String content;
 
     @Column(name = "event_image")
