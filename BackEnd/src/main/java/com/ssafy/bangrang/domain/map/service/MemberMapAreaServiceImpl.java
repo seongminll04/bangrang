@@ -125,7 +125,7 @@ public class MemberMapAreaServiceImpl implements MemberMapAreaService{
         return result;
     }
 
-    // saveMemberMapArea에서 error가 생기면 이 메서드를 사용하는 모든 메서드 rollback
+    // saveMemberMapArea 에서 error가 생기면 이 메서드를 사용하는 모든 메서드 rollback
     @Transactional(propagation = Propagation.REQUIRED)
     MemberMapArea saveMemberMapArea(RegionType regionType, Geometry shape, AppMember appMember){
         MemberMapArea newMemberMapArea = MemberMapArea.builder()
