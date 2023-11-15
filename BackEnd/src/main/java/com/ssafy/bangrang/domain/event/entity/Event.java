@@ -36,7 +36,6 @@ public class Event extends CommonEntity {
     @Column(name = "event_sub_title", columnDefinition = "TEXT")
     private String subTitle;
 
-    @Lob
     @Column(name = "event_content", columnDefinition = "TEXT")
     private String content;
 
