@@ -164,6 +164,7 @@ const Login: React.FC = () => {
             color: "white",
             fontWeight: "bold",
             fontSize: "18px",
+            cursor:'pointer'
           }}
         >
           로그인

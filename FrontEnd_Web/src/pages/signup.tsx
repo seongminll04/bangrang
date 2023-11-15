@@ -367,6 +367,7 @@ const SignUp: React.FC = () => {
               color: "white",
               fontWeight: "bold",
               fontSize: "18px",
+              cursor:'pointer'
             }}
           >
             가입신청
