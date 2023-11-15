@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import DaumPostcode from "react-daum-postcode";
 import ReactModal from "react-modal";
 interface Props {
@@ -6,21 +6,11 @@ interface Props {
   address: string;
 }
 const PostCode: React.FC<Props> = ({ setAddress, address }) => {
-  // const [zipCode, setZipcode] = useState<string>("");
-  // const [roadAddress, setRoadAddress] = useState<string>("");
-  // const [detailAddress, setDetailAddress] = useState<string>(""); // 추가
   const [isOpen, setIsOpen] = useState<boolean>(false); //추가
 
-  // useEffect(()=>{
-  //   setRoadAddress(address);
-  // },[])
   const completeHandler = (data: any) => {
-    // setZipcode(data.zonecode);
-    // setRoadAddress(data.roadAddress);
     setAddress(data.roadAddress);
-    // setAddress(roadAddress + detailAddress);
-    setIsOpen(false); //추가
-    // console.log(zipCode, roadAddress, detailAddress);
+    setIsOpen(false); // 주소등록 했으면 닫기
   };
 
   // Modal 스타일
@@ -45,17 +35,6 @@ const PostCode: React.FC<Props> = ({ setAddress, address }) => {
     setIsOpen(!isOpen);
   };
 
-  // 상세 주소검색 event
-  // const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setDetailAddress(e.target.value);
-  // };
-
-  // 추가
-  // const clickHandler = () => {
-  //   console.log("주소 저장하기");
-  //   // setAddress(roadAddress);
-  //   // console.log(zipCode, roadAddress, detailAddress);
-  // };
 
   return (
     <div style={{display:'flex', width:'70%', justifyContent:'space-between'}}>

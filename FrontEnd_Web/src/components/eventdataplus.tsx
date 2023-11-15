@@ -437,6 +437,7 @@ const EventDataPlus: React.FC<Props> = ({
                 padding: "6px",
                 color: "white",
                 fontWeight: "bold",
+                cursor:'pointer'
               }} onClick={() => modifyEvent()}>이벤트 수정하기</button>
             ) : (
               <button style={{
