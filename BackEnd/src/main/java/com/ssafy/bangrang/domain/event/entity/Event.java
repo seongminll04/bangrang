@@ -30,25 +30,20 @@ public class Event extends CommonEntity {
     @Column(name = "event_idx")
     private Long idx;
 
-    @Lob
-    @Column(name = "event_title", nullable = false)
+    @Column(name = "event_title", nullable = false, columnDefinition = "TEXT")
     private String title;
 
-    @Lob
-    @Column(name = "event_sub_title")
+    @Column(name = "event_sub_title", columnDefinition = "TEXT")
     private String subTitle;
 
-    @Lob
-    @Column(name = "event_content")
+    @Column(name = "event_content", columnDefinition = "TEXT")
     private String content;
 
-    @Lob
-    @Column(name = "event_image")
+    @Column(name = "event_image", columnDefinition = "TEXT")
     private String image;
     // 이미지 1
 
-    @Lob
-    @Column(name = "event_subImage")
+    @Column(name = "event_subImage", columnDefinition = "TEXT")
     private String subImage;
     // 이미지 2
 
@@ -58,8 +53,7 @@ public class Event extends CommonEntity {
     @Column(name = "event_end_date")
     private LocalDateTime endDate;
 
-    @Lob
-    @Column(name = "event_address")
+    @Column(name = "event_address", columnDefinition = "TEXT")
     private String address;
 
     @Column(name = "event_latitude")
@@ -68,8 +62,7 @@ public class Event extends CommonEntity {
     @Column(name = "event_longitude")
     private Double longitude;
 
-    @Lob
-    @Column(name = "event_url")
+    @Column(name = "event_url", columnDefinition = "TEXT")
     private String eventUrl;
     // 행사 메인 페이지
 
