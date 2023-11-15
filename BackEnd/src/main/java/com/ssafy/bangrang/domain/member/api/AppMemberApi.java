@@ -2,7 +2,6 @@ package com.ssafy.bangrang.domain.member.api;
 
 import com.ssafy.bangrang.domain.member.api.request.AppMemberNicknameRequestDto;
 import com.ssafy.bangrang.domain.member.api.request.UpdateFirebaseRequestDto;
-import com.ssafy.bangrang.domain.member.api.response.StampResponseDto;
 import com.ssafy.bangrang.domain.member.service.AppMemberService;
 import com.ssafy.bangrang.global.security.jwt.JwtService;
 import io.swagger.annotations.ApiOperation;
@@ -15,8 +14,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.time.LocalDateTime;
 
 @RestController
 @RequiredArgsConstructor
@@ -84,16 +81,5 @@ public class AppMemberApi {
         appMemberService.updateFirebase(updateFirebaseRequestDto,userDetails);
         return ResponseEntity.ok().build();
     }
-    // 멤버 도장 리스트 요청
-    @GetMapping("/stamp")
-    public ResponseEntity getMemberStampList(@AuthenticationPrincipal UserDetails userDetails){
 
-        log.info("[멤버 도장 리스트 요청 시작]", LocalDateTime.now());
-
-        StampResponseDto stampResponse = appMemberService.findStampsById(userDetails.getUsername());
-
-        log.info("[멤버 도장 리스트 요청 끝]", LocalDateTime.now());
-
-        return ResponseEntity.ok().body(stampResponse);
-    }
 }

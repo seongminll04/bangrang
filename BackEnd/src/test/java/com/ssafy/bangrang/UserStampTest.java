@@ -2,10 +2,9 @@ package com.ssafy.bangrang;
 
 
 import com.ssafy.bangrang.domain.event.entity.Event;
-import com.ssafy.bangrang.domain.member.api.response.StampResponseDto;
 import com.ssafy.bangrang.domain.member.entity.AppMember;
-import com.ssafy.bangrang.domain.member.entity.AppMemberStamp;
-import com.ssafy.bangrang.domain.member.entity.Stamp;
+import com.ssafy.bangrang.domain.stamp.entity.AppMemberStamp;
+import com.ssafy.bangrang.domain.stamp.entity.Stamp;
 import com.ssafy.bangrang.domain.member.entity.WebMember;
 import com.ssafy.bangrang.domain.member.service.AppMemberService;
 import jakarta.persistence.EntityManager;

@@ -1,19 +1,17 @@
 package com.ssafy.bangrang.domain.member.service;
 
+import com.ssafy.bangrang.domain.event.repository.EventRepository;
 import com.ssafy.bangrang.domain.inquiry.api.response.GetInquiryAllResponseDto;
 import com.ssafy.bangrang.domain.inquiry.entity.Comment;
-import com.ssafy.bangrang.domain.inquiry.entity.Inquiry;
 import com.ssafy.bangrang.domain.member.api.request.UpdateFirebaseRequestDto;
-import com.ssafy.bangrang.domain.member.api.response.StampDetailDto;
-import com.ssafy.bangrang.domain.member.api.response.StampResponseDto;
 import com.ssafy.bangrang.domain.member.entity.AppMember;
 import com.ssafy.bangrang.domain.member.repository.AppMemberRepository;
+import com.ssafy.bangrang.domain.stamp.repository.StampRepository;
 import com.ssafy.bangrang.global.s3service.S3Service;
 import com.ssafy.bangrang.global.security.redis.RedisAccessTokenService;
 import com.ssafy.bangrang.global.security.redis.RedisRefreshTokenService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,12 +19,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 
@@ -192,38 +187,6 @@ public class AppMemberServiceImpl implements AppMemberService {
     }
 
     @Override
-    public StampResponseDto findStampsById(String id){
-        
-        // id로 member를 찾음
-        AppMember appMember = appMemberRepository.findById(id).orElseThrow();
-        
-        // member의 stamp를 불러옴
-        List<StampDetailDto> stampDetailDtos = appMember.getAppMemberStamps()
-                .stream()
-                .map(appMemberStamp -> StampDetailDto
-                        .builder()
-                        .stampName(appMemberStamp.getStamp().getName())
-                        .stampEvent(appMemberStamp.getStamp().getEvent().getIdx())
-                        .stampLocation(appMemberStamp.getStamp().getEvent().getAddress())
-                        .stampTime(appMemberStamp.getCreatedAt().format(dateTimeFormatter))
-                        .build())
-                .collect(Collectors.toList());
-
-        // distinct 행사를 불러옴
-        Set<Long> distinctEvent = stampDetailDtos.stream()
-                .map(appMemberStamp -> appMemberStamp.getStampEvent())
-                .collect(Collectors.toSet());
-
-        StampResponseDto stampResponse = StampResponseDto.builder()
-                .totalNum((long) stampDetailDtos.size())
-                .totalType((long) distinctEvent.size())
-                .stamps(stampDetailDtos)
-                .build();
-
-        return stampResponse;
-    }
-
-    @Override
     public List<GetInquiryAllResponseDto> findInquiryById(UserDetails userDetails){
 
         AppMember appMember = appMemberRepository.findById(userDetails.getUsername())
@@ -249,4 +212,5 @@ public class AppMemberServiceImpl implements AppMemberService {
 
         return inquiryList;
     }
+
 }

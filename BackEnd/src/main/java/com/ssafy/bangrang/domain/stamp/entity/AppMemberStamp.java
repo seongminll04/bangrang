@@ -1,6 +1,7 @@
-package com.ssafy.bangrang.domain.member.entity;
+package com.ssafy.bangrang.domain.stamp.entity;
 
-import com.ssafy.bangrang.domain.event.entity.Event;
+import com.ssafy.bangrang.domain.member.entity.AppMember;
+import com.ssafy.bangrang.domain.stamp.entity.Stamp;
 import com.ssafy.bangrang.global.common.entity.CommonEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;

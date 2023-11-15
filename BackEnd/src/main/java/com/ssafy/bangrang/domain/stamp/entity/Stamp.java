@@ -1,4 +1,4 @@
-package com.ssafy.bangrang.domain.member.entity;
+package com.ssafy.bangrang.domain.stamp.entity;
 
 import com.ssafy.bangrang.domain.event.entity.Event;
 import com.ssafy.bangrang.global.common.entity.CommonEntity;
@@ -19,7 +19,7 @@ public class Stamp{
     @Column(name = "stamp_idx")
     private Long idx;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "event_idx", nullable = false)
     private Event event;
 
@@ -28,12 +28,8 @@ public class Stamp{
 
     @Builder
     public Stamp(Event event, String name){
-        this.changeEvent(event);
+        this.event = event;
         this.name = name;
     }
 
-    private void changeEvent(Event event) {
-        this.event = event;
-        event.getStamps().add(this);
-    }
 }
