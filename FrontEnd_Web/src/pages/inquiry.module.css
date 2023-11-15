@@ -148,3 +148,7 @@
     border-radius: 1rem;
     font-size:14px;
 }
+
+.cursor {
+    cursor: pointer;
+}

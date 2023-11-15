@@ -70,7 +70,9 @@ const validationSchema = Yup.object().shape({
   confirmPassword: Yup.string()
     .oneOf([Yup.ref("password") as any, null], "비밀번호가 일치하지 않습니다.")
     .required("비밀번호를 확인해주세요"),
-  organizationName: Yup.string().required("기관명을 입력해주세요"),
+  organizationName: Yup.string()
+    .required("기관명을 입력해주세요")
+    .matches(/^[a-zA-Z0-9ㄱ-ㅎ가-힣._]{1,}$/,"영문, 숫자, 한글, 특수문자 _ 만 사용가능")
 });
 
 const SignUp: React.FC = () => {

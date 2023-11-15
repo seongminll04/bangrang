@@ -466,6 +466,7 @@ const EventDataPlus: React.FC<Props> = ({
                 padding: "6px",
                 color: "white",
                 fontWeight: "bold",
+                cursor:"pointer"
               }} onClick={() => registEvent()}>이벤트 등록하기</button>
             ) : (
               <button style={{

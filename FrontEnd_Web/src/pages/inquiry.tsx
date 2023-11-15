@@ -210,8 +210,18 @@ const Inquiry: React.FC = () => {
             <div>
               {isAll ? '전체'
               :'미응답'} 문의
-              {isAll ? <button style={{marginLeft:'3px'}} onClick={()=>setAll(false)}>미응답 문의</button>
-              :<button style={{marginLeft:'3px'}} onClick={()=>setAll(true)}>전체 문의</button>}
+              {isAll ? <button className={styles.cursor} style={{marginLeft:'3px', background: "#1DAEFF",
+                border: "none",
+                borderRadius: "3px",
+                padding: "3px",
+                color: "white",
+                fontWeight: "bold",}} onClick={()=>setAll(false)}>미응답문의만 보기</button>
+              :<button className={styles.cursor} style={{marginLeft:'3px', background: "#1DAEFF",
+              border: "none",
+              borderRadius: "3px",
+              padding: "3px",
+              color: "white",
+              fontWeight: "bold",}} onClick={()=>setAll(true)}>모든 문의 보기</button>}
             </div>
             <span onClick={()=>{loaddata();setDetail(null);}}
               className={styles.cursor}>
@@ -403,8 +413,8 @@ const Inquiry: React.FC = () => {
                   >
                     문의 응답
                     <div>
-                      <button onClick={commentregist}>등록</button>
-                      <button style={{marginLeft:'3px'}} onClick={commentrefuse}>답변거절</button>
+                      <button className={styles.cursor} onClick={commentregist}>등록</button>
+                      <button className={styles.cursor} style={{marginLeft:'3px'}} onClick={commentrefuse}>답변거절</button>
                     </div>
                   </div>
                     <textarea
@@ -428,8 +438,8 @@ const Inquiry: React.FC = () => {
                     답변
                     {isEdit ? (
                       <div>
-                        <button onClick={commentchange}>완료</button>
-                        <button style={{marginLeft:'3px'}} 
+                        <button className={styles.cursor} onClick={commentchange}>완료</button>
+                        <button className={styles.cursor} style={{marginLeft:'3px'}} 
                           onClick={() => {
                             setEdit(false);
                             setComment("");
@@ -440,7 +450,7 @@ const Inquiry: React.FC = () => {
                       </div>
                     ) : (
                       <div>
-                        <button
+                        <button className={styles.cursor}
                           onClick={() => {
                             setComment(isDetail.comment?.content!);
                             setEdit(true);
@@ -448,7 +458,7 @@ const Inquiry: React.FC = () => {
                         >
                           수정
                         </button>
-                        <button style={{marginLeft:'3px'}} onClick={deletecomment}>삭제</button>
+                        <button className={styles.cursor} style={{marginLeft:'3px'}} onClick={deletecomment}>삭제</button>
                       </div>
                     )}
                   </div>

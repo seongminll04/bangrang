@@ -7,13 +7,13 @@ interface Props {
 }
 const PostCode: React.FC<Props> = ({ setAddress, address }) => {
   // const [zipCode, setZipcode] = useState<string>("");
-  const [roadAddress, setRoadAddress] = useState<string>("");
+  // const [roadAddress, setRoadAddress] = useState<string>("");
   // const [detailAddress, setDetailAddress] = useState<string>(""); // 추가
   const [isOpen, setIsOpen] = useState<boolean>(false); //추가
 
-  useEffect(()=>{
-    setRoadAddress(address);
-  },[])
+  // useEffect(()=>{
+  //   setRoadAddress(address);
+  // },[])
   const completeHandler = (data: any) => {
     // setZipcode(data.zonecode);
     // setRoadAddress(data.roadAddress);
@@ -72,7 +72,7 @@ const PostCode: React.FC<Props> = ({ setAddress, address }) => {
         style={{ width: "85%",minHeight:'30px',borderRadius:'5px', border:'1px solid black' }}
       />
   
-      <button type="button" onClick={toggle} style={{ width:'12%',borderRadius:'5px', border:'1px solid black'}}>
+      <button type="button" onClick={toggle} style={{ width:'12%',borderRadius:'5px', border:'1px solid black',cursor:'pointer'}}>
         찾기
       </button>
       <ReactModal isOpen={isOpen} ariaHideApp={false} style={customStyles}>

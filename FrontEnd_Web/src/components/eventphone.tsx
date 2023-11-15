@@ -121,7 +121,7 @@ const EventPhone: React.FC<Props> = ({selEventIdx}) => {
         </div>
 
         {!isDetail.eventUrl ? null:(isDetail.eventUrl?.includes('http://') || isDetail.eventUrl?.includes('https://')) ?
-        <button style={{margin:'10px 30%', width:'40%',
+        <button style={{margin:'10px 30%', width:'40%',cursor:'pointer',
         background: "#1DAEFF",border: "none",borderRadius: "3px",padding: "6px",color: "white",fontWeight: "bold",}}
         onClick={()=>{window.open(isDetail.eventUrl!, '_blank')}}>이벤트 페이지</button>
         :<button style={{margin:'10px 30%', width:'40%',
