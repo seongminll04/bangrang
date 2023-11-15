@@ -158,6 +158,7 @@ public class AppMemberServiceImpl implements AppMemberService {
                 .orElseThrow(() -> new EmptyResultDataAccessException("해당 유저는 존재하지 않습니다.", 1));
         
         user.updateFirebase(firebaseRequestDto.getToken());
+        appMemberRepository.save(user);
     }
 
     @Override
