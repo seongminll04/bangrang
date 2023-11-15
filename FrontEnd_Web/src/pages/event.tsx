@@ -98,8 +98,8 @@ const Event: React.FC = () => {
                   <div className={styles.data_idx}>{idx + 1}</div>
                   <img src={item.eventImg!} alt="이벤트 포스터" className={styles.data_img} />
                   <div className={styles.data_info}>
-                    <span style={{ fontSize: "20px" }}>
-                      {item.title.split("t")} : {item.subTitle}
+                    <span className={styles.data_title}>
+                      {item.title} {item.subTitle ? ' : '+ item.subTitle :''}
                     </span>
                     <span style={{ fontSize: "14px", color: "gray",marginBottom:'5px' }}>
                       장소 : {item.address}

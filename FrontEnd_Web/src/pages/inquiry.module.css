@@ -28,7 +28,7 @@
 
 .databox {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     overflow-y: auto;
     height: 93%;
     width: 100%;
