@@ -93,14 +93,42 @@ public class MemberMapAreaServiceImpl implements MemberMapAreaService{
     }
     private List<List<GeometryBorderCoordinate>> getBorderPointListOuter(Geometry geometry){
         List<List<GeometryBorderCoordinate>> result = new ArrayList<>();
+        // 경계 객체를 얻는다.(LineString or MultiLineString)
+        Geometry boundary = geometry.getBoundary();
+//        getCoordinates <- LineString
 
-        if(geometry instanceof MultiPolygon) return this.getBorderPointList((MultiPolygon) geometry);
-        else if(geometry instanceof Polygon){
-            List<GeometryBorderCoordinate> points = this.getBorderPointList((Polygon) geometry);
-            result.add(points);
+        if(boundary instanceof LineString){
+
+//            for (int i = 0; i < coordinateSequence.size(); i++) {
+//                Coordinate coord = coordinateSequence.getCoordinate(i);
+//                System.out.println("Point " + i + ": (" + coord.getX() + ", " + coord.getY() + ")");
+//            }
+        }
+
+
+
+
+        return result;
+    }
+
+    private List<GeometryBorderCoordinate> getBorderPointList(LineString lineString){
+        List<GeometryBorderCoordinate> result = new ArrayList<>();
+
+        CoordinateSequence coordinateSequence = lineString.getCoordinateSequence();
+        for (int i = 0; i < coordinateSequence.size(); i++) {
+            Coordinate coord = coordinateSequence.getCoordinate(i);
+            result.add(GeometryBorderCoordinate
+                    .builder()
+                            .longitude(coord.x)
+                            .latitude(coord.y)
+                    .build());
         }
 
         return result;
+    }
+
+    private List<List<GeometryBorderCoordinate>> getBorderPointList(MultiLineString multiLineString){
+        multiLineString.
     }
 
     private List<List<GeometryBorderCoordinate>> getBorderPointList(MultiPolygon multiPolygon) {
