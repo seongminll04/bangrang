@@ -4,7 +4,7 @@ interface Props{
   latitude:number;
   longtitude:number;
 }
-const MapNaverDefault: React.FC<Props> = ({latitude, longtitude }) => {
+const MapNaverDefault: React.FC<Props> = ({latitude,longtitude }) => {
   const mapElement = useRef(null);
   const { naver } = window;
 
@@ -12,7 +12,7 @@ const MapNaverDefault: React.FC<Props> = ({latitude, longtitude }) => {
     if (!mapElement.current || !naver) return;
 
     // 지도에 표시할 위치의 위도와 경도 좌표를 파라미터로 넣어줍니다.
-    const location = new window.naver.maps.LatLng(longtitude, latitude);
+    const location = new window.naver.maps.LatLng(latitude, longtitude);
     const mapOptions = {
       center: location,
       zoom: 15,
