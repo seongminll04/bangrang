@@ -35,7 +35,8 @@ public class Event extends CommonEntity {
     @Column(name = "event_sub_title")
     private String subTitle;
 
-    @Column(name = "event_content", length = 50000)
+    @Lob
+    @Column(name = "event_content", columnDefinition = "CLOB")
     private String content;
 
     @Column(name = "event_image")
