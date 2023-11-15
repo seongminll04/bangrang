@@ -37,7 +37,7 @@ public class Event extends CommonEntity {
     private String subTitle;
 
     @Lob
-//    @Column(name = "event_content", columnDefinition = "TEXT")
+    @Column(name = "event_content")
     private String content;
 
     @Column(name = "event_image")
@@ -54,6 +54,7 @@ public class Event extends CommonEntity {
     @Column(name = "event_end_date")
     private LocalDateTime endDate;
 
+    @Lob
     @Column(name = "event_address")
     private String address;
 
