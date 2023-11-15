@@ -35,7 +35,7 @@ dependencies {
     implementation 'net.minidev:json-smart:2.4.7'
 
     // firebase
-    implementation group: 'com.google.firebase', name: 'firebase-admin', version: '8.1.0'
+    implementation 'com.google.firebase:firebase-admin:9.2.0'
     implementation 'com.squareup.okhttp3:okhttp:4.9.1'
 
     // Swagger
