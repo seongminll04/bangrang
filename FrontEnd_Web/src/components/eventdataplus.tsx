@@ -425,7 +425,6 @@ const EventDataPlus: React.FC<Props> = ({
         {modaltype ? (
           <div style={{ marginTop: "10px" }}>
             {isEvent.title &&
-            isEvent.subTitle &&
             isEvent.startDate &&
             isEvent.endDate &&
             isEvent.content &&
@@ -441,7 +440,7 @@ const EventDataPlus: React.FC<Props> = ({
               }} onClick={() => modifyEvent()}>이벤트 수정하기</button>
             ) : (
               <button style={{
-                background: "#1DAEFF",
+                background: "gray",
                 border: "none",
                 borderRadius: "3px",
                 width: "20%",
@@ -454,7 +453,6 @@ const EventDataPlus: React.FC<Props> = ({
         ) : (
           <div style={{ marginTop: "10px" }}>
             {isEvent.title &&
-            isEvent.subTitle &&
             isEvent.startDate &&
             isEvent.endDate &&
             isEvent.content &&
@@ -471,7 +469,7 @@ const EventDataPlus: React.FC<Props> = ({
               }} onClick={() => registEvent()}>이벤트 등록하기</button>
             ) : (
               <button style={{
-                background: "#1DAEFF",
+                background: "gray",
                 border: "none",
                 borderRadius: "3px",
                 width: "20%",
