@@ -106,7 +106,8 @@ const EventPhone: React.FC<Props> = ({selEventIdx}) => {
                 color: "black",
                 fontSize: "14px",
                 textAlign: "left", // Add this line to make the content left-aligned
-                margin:"10px"
+                margin:"10px",
+                whiteSpace:'pre-line'
             }}>
             {isDetail.content}
         </p>
