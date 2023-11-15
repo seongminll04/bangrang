@@ -25,7 +25,7 @@ public class Comment extends CommonEntity {
     private WebMember webMember;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "inquiry_idx")
+    @JoinColumn(name = "inquiry_idx", referencedColumnName = "idx")
     private Inquiry inquiry;
 
     @Builder

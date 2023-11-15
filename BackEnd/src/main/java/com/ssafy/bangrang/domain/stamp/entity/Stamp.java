@@ -1,7 +1,6 @@
 package com.ssafy.bangrang.domain.stamp.entity;
 
 import com.ssafy.bangrang.domain.event.entity.Event;
-import com.ssafy.bangrang.global.common.entity.CommonEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -20,10 +19,10 @@ public class Stamp{
     private Long idx;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "event_idx", nullable = false)
+    @JoinColumn(name = "event_idx", nullable = false, referencedColumnName = "idx")
     private Event event;
 
-    @JoinColumn(name = "stamp_name")
+    @Column(name = "stamp_name")
     private String name;
 
     @Builder
