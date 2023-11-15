@@ -9,6 +9,7 @@
 }
 
 .DeckContainer {
+  transform: translateX(-10%);
   /* position: relative; */
   align-items: center;
   flex-direction: column;
@@ -51,6 +52,7 @@
 }
 
 .InfoContainer {
+  transform: translateX(10%);
   flex: 2.5;
   z-index: 1;
 }

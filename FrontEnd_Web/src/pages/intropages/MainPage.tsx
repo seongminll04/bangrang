@@ -17,9 +17,6 @@ const MainPage: React.FC = () => {
     window.scrollTo(0, scrollTop);
   };
 
-  const innermax = 1540;
-  const innermin = 1530;
-
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
 
@@ -29,16 +26,13 @@ const MainPage: React.FC = () => {
   }, []);
 
   const cities = ["서울", "구미", "대전", "광주", "부울경"];
-  const borderList = [22, 44, 55, 77, 88];
+  const borderList = [22, 43, 54, 79, 88];
 
   const cityStyles = cities.map((city, index) => {
     const border = borderList[index];
 
     const fadeInSpring = useSpring({
-      opacity:
-        scrollPercent > border && innermin < innerWidth && innerWidth < innermax
-          ? 1
-          : 0,
+      opacity: scrollPercent > border ? 1 : 0,
       config: { duration: 500 },
     });
 
@@ -52,27 +46,27 @@ const MainPage: React.FC = () => {
 
   return (
     <div className={styles.Page}>
-      <div className={styles.districtContainer}>
-        {cities.map((city, index) => (
-          <animated.div
-            className={styles[`distric${index + 1}`]}
-            key={index}
-            style={{
-              ...cityStyles[index].fadeInSpring,
-              ...cityStyles[index].scaleSpring,
-            }}
-          >
-            <img src="assets/StampImg.svg" alt="" />
-            <p>{city}</p>
-          </animated.div>
-        ))}
-      </div>
       <div className={styles.wrap}>
         <div
           className={styles.airplaneScrollTimeline}
           // style={{ height: window.innerWidth * 2.1 }}
         >
           <div className={styles.track}>
+            <div className={styles.districtContainer}>
+              {cities.map((city, index) => (
+                <animated.div
+                  className={styles[`distric${index + 1}`]}
+                  key={index}
+                  style={{
+                    ...cityStyles[index].fadeInSpring,
+                    ...cityStyles[index].scaleSpring,
+                  }}
+                >
+                  <img src="assets/StampImg.svg" alt="" />
+                  <p>{city}</p>
+                </animated.div>
+              ))}
+            </div>
             <img
               className={styles.airplane}
               src="assets/cloud.svg"

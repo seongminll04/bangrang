@@ -105,8 +105,8 @@ path {
 /* MainPage.module.css */
 
 .distric1 {
-  right: 24.5%;
-  bottom: -146%;
+  right: 27%;
+  top: 30.7%;
   position: absolute;
   width: 100%;
   display: flex;
@@ -117,8 +117,8 @@ path {
   opacity: 0.8;
 }
 .distric2 {
-  left: 14.15%;
-  bottom: -284%;
+  left: 14.75%;
+  top: 51%;
   position: absolute;
   width: 100%;
   display: flex;
@@ -129,8 +129,8 @@ path {
   opacity: 0.8;
 }
 .distric3 {
-  right: 29%;
-  bottom: -330%;
+  right: 31.5%;
+  top: 57.5%;
   position: absolute;
   width: 100%;
   display: flex;
@@ -141,8 +141,8 @@ path {
   opacity: 0.8;
 }
 .distric4 {
-  right: 20.3%;
-  bottom: -521%;
+  right: 22.5%;
+  bottom: 12.8%;
   position: absolute;
   width: 100%;
   display: flex;
@@ -153,8 +153,8 @@ path {
   opacity: 0.8;
 }
 .distric5 {
-  left: 13.2%;
-  bottom: -585%;
+  left: 13.5%;
+  bottom: 3.5%;
   position: absolute;
   width: 98%;
   display: flex;
