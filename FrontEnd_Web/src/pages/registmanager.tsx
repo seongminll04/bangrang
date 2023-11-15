@@ -140,7 +140,9 @@ const RegistManager: React.FC = () => {
                     <span style={{fontSize:'12px'}}>{manager.id}</span>
                     <span>{manager.organizationName}</span>
                   </div>
-                  <div className={styles.data_status}>
+                  <div className={styles.data_status} 
+                  style={manager.status === 'ACCEPTED' ? {backgroundColor: "rgb(7, 199, 7)"}
+                  : manager.status === 'DECLINED' ?{backgroundColor:'red'}:{}} >
                     {manager.status}
                   </div>
                 </div>
