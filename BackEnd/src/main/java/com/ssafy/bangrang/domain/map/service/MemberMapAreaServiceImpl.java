@@ -61,7 +61,7 @@ public class MemberMapAreaServiceImpl implements MemberMapAreaService{
         // 제일 최신의 MemberMapArea을 DB로부터 불러오는 로직
         // 만약 최신 MemberMapArea가 오늘 날짜(yyyymmdd)면 update, 아니면 create
         // 가장 최근에 생성된 엔티티를 불러오는 메서드
-        Optional<MemberMapArea> recent = memberMapAreaRepository.findTopByAppMember_IdxOrderByCreatedAtDesc(appMember.getIdx());
+        Optional<MemberMapArea> recent = memberMapAreaRepository.findTopByAppMemberIdxOrderByCreatedAtDesc(appMember.getIdx());
         if(recent.isPresent()){
             MemberMapArea befoMemberMapArea = recent.get();
 
@@ -98,15 +98,10 @@ public class MemberMapAreaServiceImpl implements MemberMapAreaService{
 //        getCoordinates <- LineString
 
         if(boundary instanceof LineString){
-
-//            for (int i = 0; i < coordinateSequence.size(); i++) {
-//                Coordinate coord = coordinateSequence.getCoordinate(i);
-//                System.out.println("Point " + i + ": (" + coord.getX() + ", " + coord.getY() + ")");
-//            }
+            result.add(getBorderPointList((LineString) boundary));
+        }else if(boundary instanceof MultiLineString){
+            result = getBorderPointList((MultiLineString) boundary);
         }
-
-
-
 
         return result;
     }
@@ -128,7 +123,17 @@ public class MemberMapAreaServiceImpl implements MemberMapAreaService{
     }
 
     private List<List<GeometryBorderCoordinate>> getBorderPointList(MultiLineString multiLineString){
-        multiLineString.
+        List<List<GeometryBorderCoordinate>> result = new ArrayList<>();
+        int numLineStrings = multiLineString.getNumGeometries();
+
+        for (int i = 0; i < numLineStrings; i++) {
+            Geometry geometry = multiLineString.getGeometryN(i);
+            if (geometry instanceof LineString) {
+                result.add(getBorderPointList((LineString) geometry));
+            }
+        }
+
+        return result;
     }
 
     private List<List<GeometryBorderCoordinate>> getBorderPointList(MultiPolygon multiPolygon) {
