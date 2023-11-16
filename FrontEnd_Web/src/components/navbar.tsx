@@ -56,11 +56,12 @@ const Navbar: React.FC = () => {
               <Link className={styles.navbtn} to="/login">
                 관리자 페이지
               </Link>
-              <Link
+              <button className={`${styles.navbtn} ${styles.appdown}`} onClick={()=>{window.open("https://drive.google.com/file/d/19-hTUug92FdA_HqgOl28bpzcjTZeUVlF/view", '_blank')}}>다운로드</button>
+              {/* <Link
                 className={`${styles.navbtn} ${styles.appdown}`}
                 to="https://play.google.com/store">
                 다운로드
-              </Link>
+              </Link> */}
             </div>
           ) : (
             <div className={styles.dropdown}>
@@ -72,7 +73,8 @@ const Navbar: React.FC = () => {
                 <div className={styles.dropdown_content}>
                   <Link to="/">서비스 소개</Link>
                   <Link to="/login">관리자 페이지</Link>
-                  <Link to="https://play.google.com/store">다운로드</Link>
+                  {/* <Link to="https://play.google.com/store">다운로드</Link> */}
+                  <a href="https://drive.google.com/file/d/19-hTUug92FdA_HqgOl28bpzcjTZeUVlF/view">다운로드</a>
                 </div>
               )}
             </div>
