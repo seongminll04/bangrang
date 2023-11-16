@@ -46,7 +46,7 @@ public class RankingServiceImpl implements RankingService{
                         .builder()
                         .region(ranking.getRegionType())
                         .rate(ranking.getRank())
-                        .percent(ranking.getPercent())
+                        .percent(ranking.getPercent() * 100)
                         .build())
                 .collect(Collectors.toList());
 
@@ -65,7 +65,7 @@ public class RankingServiceImpl implements RankingService{
                             .builder()
                             .userNickname(newRanking.getAppMember().getNickname())
                             .userImg(newRanking.getAppMember().getImgUrl())
-                            .percent(newRanking.getPercent())
+                            .percent(newRanking.getPercent() * 100.0)
                             .build())
                     .collect(Collectors.toList());
 
@@ -98,7 +98,7 @@ public class RankingServiceImpl implements RankingService{
                             .builder()
                             .userNickname(ranking.getAppMember().getNickname())
                             .userImg(ranking.getAppMember().getImgUrl())
-                            .percent(ranking.getPercent())
+                            .percent(ranking.getPercent() * 100.0)
                             .build())
                     .collect(Collectors.toList());
 
@@ -151,7 +151,7 @@ public class RankingServiceImpl implements RankingService{
                     .builder()
                             .userNickname(ranking.getAppMember().getNickname())
                             .userImg(ranking.getAppMember().getImgUrl())
-                            .percent(ranking.getPercent())
+                            .percent(ranking.getPercent() * 100.0)
                     .build());
         });
 
