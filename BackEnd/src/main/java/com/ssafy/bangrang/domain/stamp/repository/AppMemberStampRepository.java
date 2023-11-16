@@ -13,4 +13,7 @@ public interface AppMemberStampRepository extends JpaRepository<AppMemberStamp, 
     List<AppMemberStamp> findAllByAppMember(AppMember appMember);
 
     Optional<AppMemberStamp> findByAppMemberAndStamp(AppMember appMember, Stamp stamp);
+
+    List<AppMemberStamp> findAllByStamp(Stamp stamp);
+
 }

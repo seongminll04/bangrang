@@ -13,6 +13,7 @@ import com.ssafy.bangrang.domain.event.repository.EventRepository;
 import com.ssafy.bangrang.domain.stamp.entity.AppMemberStamp;
 import com.ssafy.bangrang.domain.stamp.entity.Stamp;
 import com.ssafy.bangrang.domain.member.entity.WebMember;
+import com.ssafy.bangrang.domain.stamp.repository.AppMemberStampRepository;
 import com.ssafy.bangrang.domain.stamp.repository.StampRepository;
 import com.ssafy.bangrang.domain.member.repository.WebMemberRepository;
 import com.ssafy.bangrang.global.s3service.S3ServiceImpl;
@@ -48,6 +49,7 @@ public class EventWebServiceImpl implements EventWebService{
 
     private final EventRepository eventRepository;
     private final StampRepository stampRepository;
+    private final AppMemberStampRepository appMemberStampRepository;
     private final WebMemberRepository webMemberRepository;
     private final ObjectMapper objectMapper;
     private final AmazonS3Client amazonS3Client;
@@ -248,12 +250,12 @@ public class EventWebServiceImpl implements EventWebService{
                 .orElseThrow(() -> new EmptyResultDataAccessException("해당 이벤트는 존재하지 않습니다.", 1));
 
         if (event.getWebMember().equals(user)) {
-
             Stamp stamp = event.getStamp();
-            stamp.EventDeleteStamp();
-            stampRepository.save(stamp);
 
             eventRepository.delete(event);
+            if (appMemberStampRepository.findAllByStamp(stamp).isEmpty()) {
+                stampRepository.delete(stamp);
+            }
         }
         else
             throw new Exception("이벤트 작성자가 당신이 아닙니다");
