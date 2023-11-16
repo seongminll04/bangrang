@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import MainPage from "./intropages/MainPage";
-import FirstPage from "./intropages/FirstPage";
+// import FirstPage from "./intropages/FirstPage";
 import SecondPage from "./intropages/SecondPage";
 import ThirdPage from "./intropages/ThirdPage";
 import styles from "./introhome.module.css";
+import { WiDirectionUp } from "react-icons/wi";
 const IntroHome: React.FC = () => {
   const [scrollPercent, setScrollPercent] = useState(0);
   const [visible, setVisible] = useState(false);
@@ -30,7 +31,16 @@ const IntroHome: React.FC = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-
+  const scrollToTop = () => {
+    const scrollStep = -window.scrollY / (300 / 10);
+    const scrollInterval = setInterval(() => {
+      if (window.scrollY !== 0) {
+        window.scrollBy(0, scrollStep);
+      } else {
+        clearInterval(scrollInterval);
+      }
+    }, 10);
+  };
   return (
     <div className={styles.Page}>
       <p
@@ -65,6 +75,18 @@ const IntroHome: React.FC = () => {
       {/* <FirstPage></FirstPage> */}
       <SecondPage></SecondPage>
       <ThirdPage visible={visible}></ThirdPage>
+
+
+      <div
+        className={`${styles.buttonContainer} ${
+          scrollPercent > 50 ? styles.show : ""
+        }`}
+      > 
+      {scrollPercent > 50 &&
+        <button className={styles.pageup} onClick={() => scrollToTop()}>
+          <WiDirectionUp style={{ fontSize: 50 }} />
+        </button> }
+      </div>
     </div>
   );
 };

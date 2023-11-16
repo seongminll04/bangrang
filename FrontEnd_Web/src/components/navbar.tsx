@@ -58,8 +58,7 @@ const Navbar: React.FC = () => {
               </Link>
               <Link
                 className={`${styles.navbtn} ${styles.appdown}`}
-                to="https://play.google.com/store"
-              >
+                to="https://play.google.com/store">
                 다운로드
               </Link>
             </div>
