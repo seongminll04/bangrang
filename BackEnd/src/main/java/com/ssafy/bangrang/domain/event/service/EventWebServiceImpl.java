@@ -247,11 +247,14 @@ public class EventWebServiceImpl implements EventWebService{
         Event event = eventRepository.findByIdx(eventIdx)
                 .orElseThrow(() -> new EmptyResultDataAccessException("해당 이벤트는 존재하지 않습니다.", 1));
 
-//        Stamp stamp = event.getStamp();
-//        stamp.EventDeleteStamp();
+        if (event.getWebMember().equals(user)) {
 
-        if (event.getWebMember().equals(user))
+            Stamp stamp = event.getStamp();
+            stamp.EventDeleteStamp();
+            stampRepository.save(stamp);
+
             eventRepository.delete(event);
+        }
         else
             throw new Exception("이벤트 작성자가 당신이 아닙니다");
     }
