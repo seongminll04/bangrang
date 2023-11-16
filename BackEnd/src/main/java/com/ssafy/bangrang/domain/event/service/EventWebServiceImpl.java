@@ -10,6 +10,7 @@ import com.ssafy.bangrang.domain.event.api.response.GetEventDetailWebResponseDto
 import com.ssafy.bangrang.domain.event.api.response.GetEventListResponseDto;
 import com.ssafy.bangrang.domain.event.entity.Event;
 import com.ssafy.bangrang.domain.event.repository.EventRepository;
+import com.ssafy.bangrang.domain.stamp.entity.AppMemberStamp;
 import com.ssafy.bangrang.domain.stamp.entity.Stamp;
 import com.ssafy.bangrang.domain.member.entity.WebMember;
 import com.ssafy.bangrang.domain.stamp.repository.StampRepository;
@@ -246,6 +247,9 @@ public class EventWebServiceImpl implements EventWebService{
         Event event = eventRepository.findByIdx(eventIdx)
                 .orElseThrow(() -> new EmptyResultDataAccessException("해당 이벤트는 존재하지 않습니다.", 1));
 
+        Stamp stamp = event.getStamp();
+        stamp.EventDeleteStamp();
+        
         if (event.getWebMember().equals(user))
             eventRepository.delete(event);
         else
