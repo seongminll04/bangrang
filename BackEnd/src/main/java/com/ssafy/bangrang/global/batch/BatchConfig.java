@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.locationtech.jts.geom.Geometry;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
+import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
@@ -40,6 +41,7 @@ import java.util.stream.Collectors;
 @Configuration
 @RequiredArgsConstructor
 @Slf4j
+@EnableBatchProcessing
 public class BatchConfig {
     private final JobLauncher jobLauncher;
     private final JobRepository jobRepository;
@@ -104,11 +106,11 @@ public class BatchConfig {
         log.info("1. 지역별 사용자 면적 계산 -> ");
         log.info("2. 랭킹 계산 -> ");
         log.info("3. 랭킹 관련 알림 보내기 ");
-        return new JobBuilder("my_job", jobRepository)
+        return new JobBuilder("myRegionRankingJob", jobRepository)
                 .incrementer(new RunIdIncrementer())
                 .start(taskletStep())
-//                .start(getRegionMapAreaStep())
-//                .next(getMemberRankingStep())
+                .next(getRegionMapAreaStep())
+                .next(getMemberRankingStep())
 //                .next(postFCMStep())
                 .build();
     }
@@ -120,25 +122,40 @@ public class BatchConfig {
         log.info("In Batch!!!");
         log.info("*****************************************************************************");
 
-        System.out.println("totalMemberCnt = " + totalMemberCnt);
-        System.out.println("curRank = " + curRank);
-        System.out.println("curRank.get(RegionType.KOREA) = " + curRank.get(RegionType.KOREA));
-        System.out.println("curRank.size = " + curRank.values().size());
-        System.out.println("koreaBorderAreas.size() = " + koreaBorderAreas.size());
-        System.out.println("koreaBorderAreaMap = " + koreaBorderAreaMap);
+        log.info("totalMemberCnt = " + totalMemberCnt);
+        log.info("curRank = " + curRank);
+        log.info("curRank.get(RegionType.KOREA) = " + curRank.get(RegionType.KOREA));
+        log.info("curRank.size = " + curRank.values().size());
+        log.info("koreaBorderAreas.size() = " + koreaBorderAreas.size());
+        log.info("koreaBorderAreaMap = " + koreaBorderAreaMap);
 
         return new StepBuilder("first step", jobRepository)
                 .tasklet((stepContribution, chunkContext) -> {
                     log.info("Hello World");
+                    log.info("*****************************************************************************");
+                    log.info("HelloWorld!");
+                    log.info("In Batch!!!");
+                    log.info("In Progress!!!");
+                    log.info("*****************************************************************************");
+
+                    log.info("totalMemberCnt = " + totalMemberCnt);
+                    log.info("curRank = " + curRank);
+                    log.info("curRank.get(RegionType.KOREA) = " + curRank.get(RegionType.KOREA));
+                    log.info("curRank.size = " + curRank.values().size());
+                    log.info("koreaBorderAreas.size() = " + koreaBorderAreas.size());
+                    log.info("koreaBorderAreaMap = " + koreaBorderAreaMap);
                     return RepeatStatus.FINISHED;
-                }, batchTransactionManager).build();
+                }, batchTransactionManager)
+                .allowStartIfComplete(true)
+                .build();
     }
 
-//    @Bean
+    @Bean
     public Step getRegionMapAreaStep() {
         log.info("[ STEP 01 ] 지역별 사용자 면적 계산");
 
         return new StepBuilder("region_map_area_step", jobRepository)
+                .allowStartIfComplete(true)
                 .<String, String>chunk(BATCH_SIZE, batchTransactionManager)
                 .reader(regionMapAreaReader())
                 .processor(memberMapAreaProcessor())
@@ -148,11 +165,12 @@ public class BatchConfig {
 
 
 
-//    @Bean
+    @Bean
     public Step getMemberRankingStep(){
         log.info("[ STEP 02 ] 랭킹 계산");
 
         return new StepBuilder("member_ranking_step", jobRepository)
+                .allowStartIfComplete(true)
                 .<String, String>chunk(BATCH_SIZE, batchTransactionManager)
                 .reader(regionMapAreaReaderForRanking())
                 .processor(rankMapAreaProcessor())
@@ -165,13 +183,14 @@ public class BatchConfig {
 //    public Step postFCMStep(){
 //        log.info("[ STEP 03 ] FCM 메시지 발송");
 //        return new StepBuilder("post_fcm_step", jobRepository)
+//                .allowStartIfComplete(true)
 //                .<String, String>chunk(BATCH_SIZE, batchTransactionManager)
 //                .reader(reader())
 //                .writer(writer())
 //                .build();
 //    }
 
-//    @Bean
+    @Bean
     public JpaPagingItemReader regionMapAreaReader() {
         log.info("[ STPE 01 - READER ] mapArea 데이터 읽는 중... ");
         LocalDate today = LocalDate.now();
@@ -187,7 +206,7 @@ public class BatchConfig {
                 .build();
     }
 
-//    @Bean
+    @Bean
     public ItemProcessor<List<MemberMapArea>, List<MemberMapArea>> memberMapAreaProcessor() {
         log.info("[ STPE 01 - PROCESSOR ] mapArea 데이터 가공 중... ");
         LocalDateTime yesterday = LocalDateTime.now().minusDays(1); // 어제 날짜를 구함
@@ -217,7 +236,7 @@ public class BatchConfig {
 
 
 
-//    @Bean
+    @Bean
     public ItemWriter<List<MemberMapArea>> memberMapAreaWriter() {
         log.info("[ STPE 01 - WRITER ] mapArea 데이터 저장 중... ");
         return itemLists -> {
@@ -270,7 +289,7 @@ public class BatchConfig {
         }
     }
 
-//    @Bean
+    @Bean
     public JpaPagingItemReader regionMapAreaReaderForRanking() {
         log.info("[ STPE 02 - READER ] mapArea 데이터 읽는 중... ");
         LocalDate today = LocalDate.now();
@@ -285,7 +304,7 @@ public class BatchConfig {
                 .build();
     }
     
-//    @Bean
+    @Bean
     public ItemProcessor<List<MemberMapArea>, List<Ranking>> rankMapAreaProcessor(){
         log.info("[ STPE 02 - PROCESSOR ] mapArea 데이터를 등수 매기는 중... ");
 
@@ -308,7 +327,7 @@ public class BatchConfig {
         };
     }
 
-//    @Bean
+    @Bean
     public ItemWriter<List<Ranking>> rankingWriter(){
         log.info("[ STPE 02 - WRITER ] 등수 데이터 저장 중... ");
         return itemLists  -> {

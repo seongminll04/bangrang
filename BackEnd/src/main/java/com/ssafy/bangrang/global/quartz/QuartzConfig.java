@@ -6,20 +6,37 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class QuartzConfig {
+//    @Bean
+//    public JobDetail helloWorldJobDetail() {
+//        return JobBuilder.newJob(HelloWorldJob.class)
+//                .withIdentity("helloWorldJob")
+//                .storeDurably()
+//                .build();
+//    }
+//
+//    @Bean
+//    public Trigger helloWorldTrigger() {
+//        return TriggerBuilder.newTrigger()
+//                .forJob(helloWorldJobDetail())
+//                .withIdentity("helloWorldTrigger")
+//                .withSchedule(CronScheduleBuilder.cronSchedule("*/10 * * * * ?")) // 매 10초마다
+//                .build();
+//    }
+
     @Bean
-    public JobDetail helloWorldJobDetail() {
-        return JobBuilder.newJob(HelloWorldJob.class)
-                .withIdentity("helloWorldJob")
+    public JobDetail batchExecuteJobDetail(){
+        return JobBuilder.newJob(BatchExecuteJob.class)
+                .withIdentity("batchExecuteJob")
                 .storeDurably()
                 .build();
     }
 
     @Bean
-    public Trigger helloWorldTrigger() {
+    public Trigger batchExecuteTrigger() {
         return TriggerBuilder.newTrigger()
-                .forJob(helloWorldJobDetail())
-                .withIdentity("helloWorldTrigger")
-                .withSchedule(CronScheduleBuilder.cronSchedule("*/10 * * * * ?")) // 매 10초마다
+                .forJob(batchExecuteJobDetail())
+                .withIdentity("batchExecuteTrigger")
+                .withSchedule(CronScheduleBuilder.cronSchedule("0 0 0 * * ?")) // 매 1분 마다
                 .build();
     }
 }
