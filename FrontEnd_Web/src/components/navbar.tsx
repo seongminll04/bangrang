@@ -56,7 +56,7 @@ const Navbar: React.FC = () => {
               <Link className={styles.navbtn} to="/login">
                 관리자 페이지
               </Link>
-              <button className={`${styles.navbtn} ${styles.appdown}`} onClick={()=>{window.open("https://drive.google.com/file/d/19-hTUug92FdA_HqgOl28bpzcjTZeUVlF/view", '_blank')}}>다운로드</button>
+              <button className={`${styles.navbtn} ${styles.appdown}`} onClick={()=>{window.open("https://drive.google.com/file/d/1oEZEqtPBqrU7Xs1YlM1BHwtllAhJBZnd/view", '_blank')}}>다운로드</button>
               {/* <Link
                 className={`${styles.navbtn} ${styles.appdown}`}
                 to="https://play.google.com/store">
@@ -74,7 +74,7 @@ const Navbar: React.FC = () => {
                   <Link to="/">서비스 소개</Link>
                   <Link to="/login">관리자 페이지</Link>
                   {/* <Link to="https://play.google.com/store">다운로드</Link> */}
-                  <a href="https://drive.google.com/file/d/19-hTUug92FdA_HqgOl28bpzcjTZeUVlF/view">다운로드</a>
+                  <a href="https://drive.google.com/file/d/1oEZEqtPBqrU7Xs1YlM1BHwtllAhJBZnd/view">다운로드</a>
                 </div>
               )}
             </div>
