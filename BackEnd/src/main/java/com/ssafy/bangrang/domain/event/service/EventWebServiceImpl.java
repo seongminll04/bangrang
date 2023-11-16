@@ -247,8 +247,8 @@ public class EventWebServiceImpl implements EventWebService{
         Event event = eventRepository.findByIdx(eventIdx)
                 .orElseThrow(() -> new EmptyResultDataAccessException("해당 이벤트는 존재하지 않습니다.", 1));
 
-        Stamp stamp = event.getStamp();
-        stamp.EventDeleteStamp();
+//        Stamp stamp = event.getStamp();
+//        stamp.EventDeleteStamp();
 
         if (event.getWebMember().equals(user))
             eventRepository.delete(event);
