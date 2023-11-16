@@ -54,6 +54,7 @@ public class EventServiceImpl implements EventService{
                         .likeCount((long) e.getLikes().size())
                         .isLiked(e.getLikes().stream()
                                 .anyMatch(likes -> likes.getAppMember().equals(user)))
+                        .isStamp(appMemberStampRepository.findByAppMemberAndStamp(user,e.getStamp()).isPresent())
                         .build())
                 .collect(Collectors.toList());
 
