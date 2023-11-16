@@ -253,6 +253,9 @@ public class EventWebServiceImpl implements EventWebService{
             Stamp stamp = event.getStamp();
             if (appMemberStampRepository.findAllByStamp(stamp).isEmpty()) {
                 stampRepository.delete(stamp);
+            } else {
+                stamp.EventDeleteStamp(null);
+                stampRepository.save(stamp);
             }
             eventRepository.delete(event);
         }
