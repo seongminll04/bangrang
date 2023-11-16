@@ -32,12 +32,14 @@ const Navbar: React.FC = () => {
     })
       .then((res) => {
         console.log(res);
+        navigate("/");
+        localStorage.clear();
       })
       .catch((err) => {
         console.log(err);
+        navigate("/");
+        localStorage.clear();
       });
-    localStorage.clear();
-    navigate("/");
   };
   return (
     <>

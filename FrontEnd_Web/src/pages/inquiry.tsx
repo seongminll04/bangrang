@@ -130,20 +130,11 @@ const Inquiry: React.FC = () => {
         ...prev!,
         comment: null
       }));
+      loaddata();
     }).catch(err=>{
       console.log(err)
       alert('삭제실패')
     })
-      .then((res) => {
-        setDetail((prev) => ({
-          ...prev!,
-          comment: null,
-        }));
-      })
-      .catch((err) => {
-        console.log(err);
-        alert("삭제실패");
-      });
   };
 
   const commentregist = () => {
@@ -160,18 +151,11 @@ const Inquiry: React.FC = () => {
     }).then(res=>{
       detaildata(isDetail?.inquiryIdx!);
       setComment('');
+      loaddata();
     }).catch(err=>{
       console.log(err)
       alert('등록실패')
     })
-      .then((res) => {
-        detaildata(isDetail?.inquiryIdx!);
-        setComment("");
-      })
-      .catch((err) => {
-        console.log(err);
-        alert("등록실패");
-      });
   };
 
   const commentrefuse = () => {
@@ -188,14 +172,6 @@ const Inquiry: React.FC = () => {
       console.log(err)
       alert('답변 거절 실패')
     })
-      .then((res) => {
-        setDetail(null);
-        loaddata();
-      })
-      .catch((err) => {
-        console.log(err);
-        alert("답변 거절 실패");
-      });
   };
   return (
     <div className={styles.homebox}
