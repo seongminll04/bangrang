@@ -75,7 +75,7 @@ public class Event extends CommonEntity {
     @OneToMany(mappedBy = "event")
     private List<Likes> likes = new ArrayList<>();
 
-    @OneToOne(mappedBy = "event")
+    @OneToOne(mappedBy = "event", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     private Stamp stamp;
 
     @Builder

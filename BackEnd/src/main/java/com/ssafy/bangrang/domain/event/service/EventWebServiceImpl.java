@@ -173,7 +173,7 @@ public class EventWebServiceImpl implements EventWebService{
 
         eventRepository.save(event);
 
-        Event saveEvent = eventRepository.findByTitle(createEventRequestDto.getTitle())
+        Event saveEvent = eventRepository.findByIdx(event.getIdx())
                 .orElseThrow();
 
         Stamp stamp = Stamp.builder()
@@ -253,9 +253,6 @@ public class EventWebServiceImpl implements EventWebService{
             Stamp stamp = event.getStamp();
             if (appMemberStampRepository.findAllByStamp(stamp).isEmpty()) {
                 stampRepository.delete(stamp);
-            } else {
-                stamp.EventDeleteStamp(null);
-                stampRepository.save(stamp);
             }
             eventRepository.delete(event);
         }

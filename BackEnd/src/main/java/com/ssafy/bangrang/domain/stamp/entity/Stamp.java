@@ -19,8 +19,8 @@ public class Stamp{
     @Column(name = "stamp_idx")
     private Long idx;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "event_idx",nullable = true)
+    @OneToOne
+    @JoinColumn(name = "event_idx")
     private Event event;
 
     @JoinColumn(name = "stamp_name")
