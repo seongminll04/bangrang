@@ -215,14 +215,11 @@ public class BatchConfig {
     }
 
     @Bean
-    public ItemProcessor<List<MemberMapArea>, List<MemberMapArea>> memberMapAreaProcessor() {
+    public ItemProcessor<MemberMapArea, List<MemberMapArea>> memberMapAreaProcessor() {
         log.info("[ STPE 01 - PROCESSOR ] mapArea 데이터 가공 중... ");
         LocalDateTime yesterday = LocalDateTime.now().minusDays(1); // 어제 날짜를 구함
 
-        return items ->
-                items
-                        .stream()
-                        .map(memberMapArea ->
+        return memberMapArea ->
                                 koreaBorderAreas.stream().map(koreaBorderArea -> {
                                     // 교집합이 없는 경우 getArea -> 0.0을 반환
                                     Geometry shape = koreaBorderArea.getShape().intersection(memberMapArea.getShape());
@@ -234,10 +231,8 @@ public class BatchConfig {
                                             .customDate(yesterday)
                                             .build();
 
-                                }).collect(Collectors.toList())
-                        )
-                        .flatMap(List::stream)
-                        .collect(Collectors.toList());
+                                }).collect(Collectors.toList());
+
     }
 
 
@@ -312,11 +307,10 @@ public class BatchConfig {
     }
 
     @Bean
-    public ItemProcessor<List<MemberMapArea>, List<Ranking>> rankMapAreaProcessor() {
+    public ItemProcessor<MemberMapArea, Ranking> rankMapAreaProcessor() {
         log.info("[ STPE 02 - PROCESSOR ] mapArea 데이터를 등수 매기는 중... ");
 
-        return items -> {
-            return items.stream().map(memberMapArea -> {
+        return memberMapArea -> {
                 Long rank = curRank.getOrDefault(memberMapArea.getRegionType(), (long) 1);
                 curRank.put(memberMapArea.getRegionType(), rank + 1);
 
@@ -330,20 +324,27 @@ public class BatchConfig {
                         .percent(percent)
                         .appMember(memberMapArea.getAppMember())
                         .build();
-            }).collect(Collectors.toList());
-        };
+            };
     }
 
     @Bean
     @Transactional
-    public ItemWriter<List<Ranking>> rankingWriter() {
+    public ItemWriter<Ranking> rankingWriter() {
         log.info("[ STPE 02 - WRITER ] 등수 데이터 저장 중... ");
-        return itemLists -> {
-            for (List<Ranking> itemList : itemLists) {
-                itemList.forEach(ranking -> {
-                    log.info("[ STEP 02 - WRITER ] 등수 데이터 "+ranking);
-                    rankingRepository.save(ranking);
-                });
+//        return itemLists -> {
+//            for (List<Ranking> itemList : itemLists) {
+//                itemList.forEach(ranking -> {
+//                    log.info("[ STEP 02 - WRITER ] 등수 데이터 "+ranking);
+//                    rankingRepository.save(ranking);
+//                });
+//            }
+//        };
+        return chunk -> {
+            List<? extends Ranking> items = chunk.getItems();
+
+            for(Ranking ranking : items){
+                log.info("[ STEP 02 - WRITER ] 등수 데이터 "+ranking);
+                rankingRepository.save(ranking);
             }
         };
     }
