@@ -68,8 +68,8 @@ public class WebMemberServiceImpl implements WebMemberService {
             throw new Exception("이미 존재하는 아이디입니다.");
 
         // 아이디 유효성 검사  (영문,숫자 5자 이상)
-        if (!Pattern.matches("^[a-zA-Z0-9]{5,}$", webMemberSignUpRequestDto.getId())) {
-            throw new IllegalStateException("이메일 형식을 다시 맞춰주세요.");
+        if (!Pattern.matches("^[a-zA-Z0-9_]{5,}$", webMemberSignUpRequestDto.getId())) {
+            throw new IllegalStateException("아이디 형식을 다시 맞춰주세요.");
         }
 
         // 비밀번호 유효성 검사
