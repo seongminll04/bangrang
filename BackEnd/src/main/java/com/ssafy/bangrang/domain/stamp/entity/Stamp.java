@@ -31,4 +31,7 @@ public class Stamp{
         this.event = event;
         this.name = name;
     }
+    public void EventDeleteStamp(Event changeEvent) {
+        this.event=changeEvent;
+    }
 }

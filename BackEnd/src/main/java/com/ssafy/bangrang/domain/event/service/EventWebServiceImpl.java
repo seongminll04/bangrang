@@ -251,11 +251,13 @@ public class EventWebServiceImpl implements EventWebService{
 
         if (event.getWebMember().equals(user)) {
             Stamp stamp = event.getStamp();
-
-            eventRepository.delete(event);
             if (appMemberStampRepository.findAllByStamp(stamp).isEmpty()) {
                 stampRepository.delete(stamp);
+            } else {
+                stamp.EventDeleteStamp(null);
+                stampRepository.save(stamp);
             }
+            eventRepository.delete(event);
         }
         else
             throw new Exception("이벤트 작성자가 당신이 아닙니다");
