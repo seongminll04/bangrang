@@ -40,6 +40,7 @@ fun NaverMapDarkMode(
     userViewModel: UserViewModel,
     ) {
 
+    // 추가
     // 위치데이터
     val historicalLocations by locationViewModel.boundaryPoints.collectAsState()
     val currentLocation by userViewModel.currentLocation.collectAsState()
