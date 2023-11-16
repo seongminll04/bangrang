@@ -249,7 +249,7 @@ public class EventWebServiceImpl implements EventWebService{
 
         Stamp stamp = event.getStamp();
         stamp.EventDeleteStamp();
-        
+
         if (event.getWebMember().equals(user))
             eventRepository.delete(event);
         else

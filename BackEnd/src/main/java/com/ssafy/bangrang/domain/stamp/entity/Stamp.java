@@ -20,7 +20,7 @@ public class Stamp{
     private Long idx;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "event_idx", nullable = false)
+    @JoinColumn(name = "event_idx")
     private Event event;
 
     @JoinColumn(name = "stamp_name")
