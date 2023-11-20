@@ -42,6 +42,7 @@
 
 ###  ⚙️프로그램 시퀀스⚙️
 ![Alt text](readmeImg/programSequence.png)
+![Alt text](readmeImg/programSequence2.png)
 
 ## 📅프로젝트 기간
 
