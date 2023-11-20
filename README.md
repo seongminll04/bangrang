@@ -104,18 +104,29 @@
 
 
 <details>
-<summary>5. 랭킹</summary>
-![Alt text](readmeImg/ranking.gif)
+<summary>4. 랭킹</summary>
+![Alt text](readmeImg/ranking/ranking1.png)
+![Alt text](readmeImg/ranking/ranking2.png)
+![Alt text](readmeImg/ranking/ranking3.png)
+ - 유저들의 전체 지도 혹은 각 지역별 방랑도를 측정하여 랭킹을 매기고, 아래로 드래그해서 다른 유저들도 확인할 수 있습니다.
+ - 친구들의 랭킹도 함께 확인 할 수 있습니다.
+![Alt text](readmeImg/ranking/ranking.gif)
 </details></br>
 
 <details>
-<summary>6. SSAFY-TOWN</summary>
-![Alt text](readme사진/image-15.png)
-![Alt text](readme사진/image-20.png)
-![Alt text](readme사진/image-16.png)
-![Alt text](readme사진/image-17.png)
-![Alt text](readme사진/image-18.png)
-![Alt text](readme사진/image-19.png)
+<summary>6. 부가</summary>
+![Alt text](readmeImg/etc/etc1.jpg)
+![Alt text](readmeImg/etc/etc2.jpg)
+![Alt text](readmeImg/etc/etc3.jpg)
+![Alt text](readmeImg/etc/etc4.jpg)
+![Alt text](readmeImg/etc/etc5.jpg)
+![Alt text](readmeImg/etc/etc6.jpg)
+![Alt text](readmeImg/etc/etc7.jpg)
+![Alt text](readmeImg/etc/etc8.jpg)
+![Alt text](readmeImg/etc/etc9.jpg)
+![Alt text](readmeImg/etc/etc10.jpg)
+![Alt text](readmeImg/etc/etc11.jpg)
+
 </details></br>
 
 ## 🖥️ 개발 환경
@@ -176,7 +187,7 @@ https://www.notion.so/API-4d4cb48404974a1cbf8c855438c90e29?pvs=4
 
 ## ✨ERD
 
-![Alt text](readme사진/image.png)
+![Alt text](readmeImg/erd_image.png)
 
 ## 📚 커밋 컨벤션 규칙
 
