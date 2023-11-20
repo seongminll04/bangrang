@@ -90,13 +90,18 @@
 </details></br>
 
 <details>
-<summary>5. SSAFY-TOWN</summary>
-![Alt text](readme사진/image-15.png)
-![Alt text](readme사진/image-20.png)
-![Alt text](readme사진/image-16.png)
-![Alt text](readme사진/image-17.png)
-![Alt text](readme사진/image-18.png)
-![Alt text](readme사진/image-19.png)
+<summary>5. 부가</summary>
+![Alt text](readmeImg/부가/부가1.png)
+![Alt text](readmeImg/부가/부가2.png)
+![Alt text](readmeImg/부가/부가3.png)
+![Alt text](readmeImg/부가/부가4.png)
+![Alt text](readmeImg/부가/부가5.png)
+![Alt text](readmeImg/부가/부가6.png)
+![Alt text](readmeImg/부가/부가7.png)
+![Alt text](readmeImg/부가/부가8.png)
+![Alt text](readmeImg/부가/부가9.png)
+![Alt text](readmeImg/부가/부가10.png)
+![Alt text](readmeImg/부가/부가11.png)
 </details></br>
 
 ## 🖥️ 개발 환경
@@ -157,7 +162,7 @@ https://www.notion.so/API-4d4cb48404974a1cbf8c855438c90e29?pvs=4
 
 ## ✨ERD
 
-![Alt text](readme사진/image.png)
+![Alt text](readmeImg/erd_image.png)
 
 ## 📚 커밋 컨벤션 규칙
 
