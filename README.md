@@ -75,12 +75,12 @@
 <details>
 <summary>2. 메인화면</summary>
 
-![Alt text](readmeImg/main/메인1.jpg)
-![Alt text](readmeImg/main/메인2.jpg)
-![Alt text](readmeImg/main/메인3.jpg)
-![Alt text](readmeImg/main/메인4.jpg)
-![Alt text](readmeImg/main/메인5.jpg)
-![Alt text](readmeImg/main/메인6.jpg)
+![Alt text](readmeImg/main/main1.png)
+![Alt text](readmeImg/main/main2.png)
+![Alt text](readmeImg/main/main3.png)
+![Alt text](readmeImg/main/main4.png)
+![Alt text](readmeImg/main/main5.png)
+![Alt text](readmeImg/main/main6.png)
 </details></br>
 
 <details>
