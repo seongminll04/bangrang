@@ -3,6 +3,9 @@
 ** 바로가기 : https://k9b109.p.ssafy.io (웹 소개 페이지)** 
 <br>
 
+![Alt text](readmeImg/bangrangicon.png)
+![Alt text](readmeImg/main/main1.png)
+
 ### ⬇️⬇️ 방랑 소개 ⬇️⬇️
 
 
