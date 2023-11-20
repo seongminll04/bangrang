@@ -60,15 +60,31 @@
 ## 🛠️주요 기능
 
 <details>
-<summary>1. 메인화면</summary>
+<summary>1. 접속</summary>
 
-![Alt text](readme사진/image-3.png)
-![Alt text](readme사진/image-21.png)
-![Alt text](readme사진/image-22.png)
+![Alt text](readmeImg/접속1.jpg)
+![Alt text](readmeImg/접속2.jpg)
+![Alt text](readmeImg/접속3.jpg)
+![Alt text](readmeImg/접속4.jpg)
+![Alt text](readmeImg/접속5.jpg)
+![Alt text](readmeImg/접속6.jpg)
+![Alt text](readmeImg/접속7.jpg)
+![Alt text](readmeImg/접속8.jpg)
 </details></br>
 
 <details>
-<summary>2. 방랑 지도</summary>
+<summary>2. 메인화면</summary>
+
+![Alt text](readmeImg/메인1.jpg)
+![Alt text](readmeImg/메인2.jpg)
+![Alt text](readmeImg/메인3.jpg)
+![Alt text](readmeImg/메인4.jpg)
+![Alt text](readmeImg/메인5.jpg)
+![Alt text](readmeImg/메인6.jpg)
+</details></br>
+
+<details>
+<summary>3. 방랑 지도</summary>
 
 ![Alt text](readme사진/image-4.png)
 ![Alt text](readme사진/image-7.png)
@@ -76,7 +92,7 @@
 </details></br>
 
 <details>
-<summary>3. 방랑 도장</summary>
+<summary>4. 방랑 도장</summary>
 ![Alt text](readme사진/image-8.png)
 ![Alt text](readme사진/image-9.png)
 ![Alt text](readme사진/image-10.png)
@@ -85,12 +101,12 @@
 
 
 <details>
-<summary>4. 랭킹</summary>
+<summary>5. 랭킹</summary>
 ![Alt text](readmeImg/ranking.gif)
 </details></br>
 
 <details>
-<summary>5. 부가</summary>
+<summary>6. 부가</summary>
 ![Alt text](readmeImg/부가/부가1.png)
 ![Alt text](readmeImg/부가/부가2.png)
 ![Alt text](readmeImg/부가/부가3.png)
@@ -102,6 +118,7 @@
 ![Alt text](readmeImg/부가/부가9.png)
 ![Alt text](readmeImg/부가/부가10.png)
 ![Alt text](readmeImg/부가/부가11.png)
+
 </details></br>
 
 ## 🖥️ 개발 환경
