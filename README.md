@@ -95,16 +95,9 @@
 </details></br>
 
 <details>
-<summary>4. 방랑 도장</summary>
-![Alt text](readme사진/image-8.png)
-![Alt text](readme사진/image-9.png)
-![Alt text](readme사진/image-10.png)
-![Alt text](readme사진/image-11.png)
-</details></br>
-
 
 <details>
-<summary>5. 랭킹</summary>
+<summary>4. 랭킹</summary>
 ![Alt text](readmeImg/ranking/ranking1.png)
 ![Alt text](readmeImg/ranking/ranking2.png)
 ![Alt text](readmeImg/ranking/ranking3.png)
@@ -112,7 +105,7 @@
 </details></br>
 
 <details>
-<summary>6. 부가</summary>
+<summary>5. 부가</summary>
 ![Alt text](readmeImg/etc/etc1.jpg)
 ![Alt text](readmeImg/etc/etc2.jpg)
 ![Alt text](readmeImg/etc/etc3.jpg)
@@ -157,7 +150,17 @@
 - mui material : 5.14.17
 
 🖱**Frontend_Moblie**
-
+- Android Studio
+- Kotlin 1.8.10
+- Compose(bom:23.03 / 1.4~)
+- Retrofit2 2.9.0 
+- Hilt 2.44 , hilt compose 1.0.0
+- Coroutine 1.7.1
+- Coil 2.4.0
+- Room
+- Google service location 16.0.0
+- Naver Map 1.4.0 => https://github.com/fornewid/naver-map-compose
+- FMC 32.3.1
 
 
 🖱**CI/CD**
