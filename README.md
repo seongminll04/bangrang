@@ -105,8 +105,8 @@
 ![Alt text](readmeImg/ranking/ranking1.png)
 ![Alt text](readmeImg/ranking/ranking2.png)
 ![Alt text](readmeImg/ranking/ranking3.png)
- - 유저들의 전체 지도 혹은 각 지역별 방랑도를 측정하여 랭킹을 매기고, 아래로 드래그해서 다른 유저들도 확인할 수 있습니다.
- - 친구들의 랭킹도 함께 확인 할 수 있습니다.
+- 유저들의 전체 지도 혹은 각 지역별 방랑도를 측정하여 랭킹을 매기고, 아래로 드래그해서 다른 유저들도 확인할 수 있습니다.
+- 친구들의 랭킹도 함께 확인 할 수 있습니다.
 ![Alt text](readmeImg/ranking/ranking.gif)
 </details></br>
 
