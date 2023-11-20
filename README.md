@@ -147,10 +147,12 @@
 
 ## 📑 API 명세서
 
-![Alt text](readme사진/image-2.png)
+![Alt text](readmeImg/api1.png)
+![Alt text](readmeImg/api2.png)
+
 
 **바로가기 :**
-https://twilight-toast-bbe.notion.site/API-4d4cb48404974a1cbf8c855438c90e29?pvs=4
+https://www.notion.so/API-4d4cb48404974a1cbf8c855438c90e29?pvs=4
 <br><br>
 
 ## ✨ERD
@@ -196,7 +198,3 @@ https://twilight-toast-bbe.notion.site/API-4d4cb48404974a1cbf8c855438c90e29?pvs=
 | Jenkins             | 9090  |
 
 
-📑 API 명세서
-
-
-바로가기 : https://www.notion.so/API-4d4cb48404974a1cbf8c855438c90e29?pvs=4
