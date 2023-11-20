@@ -110,7 +110,7 @@
 </details></br>
 
 <details>
-<summary>5. 부가</summary>
+<summary>5. 부가 기능</summary>
 ![Alt text](readmeImg/etc/etc1.png)
 ![Alt text](readmeImg/etc/etc2.png)
 ![Alt text](readmeImg/etc/etc3.png)
