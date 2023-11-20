@@ -62,14 +62,14 @@
 <details>
 <summary>1. 접속</summary>
 
-![Alt text](readmeImg/connect/접속1.jpg)
-![Alt text](readmeImg/connect/접속2.jpg)
-![Alt text](readmeImg/connect/접속3.jpg)
-![Alt text](readmeImg/connect/접속4.jpg)
-![Alt text](readmeImg/connect/접속5.jpg)
-![Alt text](readmeImg/connect/접속6.jpg)
-![Alt text](readmeImg/connect/접속7.jpg)
-![Alt text](readmeImg/connect/접속8.jpg)
+![Alt text](readmeImg/connect/connect1.png)
+![Alt text](readmeImg/connect/connect2.png)
+![Alt text](readmeImg/connect/connect3.png)
+![Alt text](readmeImg/connect/connect4.png)
+![Alt text](readmeImg/connect/connect5.png)
+![Alt text](readmeImg/connect/connect6.png)
+![Alt text](readmeImg/connect/connect7.png)
+![Alt text](readmeImg/connect/connect8.png)
 </details></br>
 
 <details>
@@ -94,7 +94,6 @@
 ![Alt text](readmeImg/map/지도6.jpg)
 </details></br>
 
-<details>
 
 <details>
 <summary>4. 랭킹</summary>
