@@ -1,6 +1,6 @@
- # 방 랑  ![Alt text](readmeImg/bangrangicon.png)
+ # 방 랑  
 
-** 어디에도 없던 탐험형 지도 서비스 ☁️방랑☁️**<br><br>
+** 어디에도 없던 탐험형 지도 서비스 ![Alt text](readmeImg/bangrangicon.png)**</br>
 ** 바로가기 : https://k9b109.p.ssafy.io (웹 소개 페이지)** 
 </br>
 
