@@ -2,7 +2,8 @@
 
 ** 어디에도 없던 탐험형 지도 서비스 ☁️방랑☁️**<br><br>
 ** 바로가기 : https://k9b109.p.ssafy.io (웹 소개 페이지)** 
-<br>
+</br>
+
 ![Alt text](readmeImg/main/main1.png)
 
 ### ⬇️⬇️ 방랑 소개 ⬇️⬇️
