@@ -101,7 +101,7 @@
 
 
 <details>
-<summary>4. 랭킹</summary>
+<summary>5. 랭킹</summary>
 ![Alt text](readmeImg/ranking/ranking1.png)
 ![Alt text](readmeImg/ranking/ranking2.png)
 ![Alt text](readmeImg/ranking/ranking3.png)
