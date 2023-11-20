@@ -46,7 +46,7 @@
 | **팀원** | 최미은 (BE, Design) |
 |          | 이도형 (FE_Web, Design) |
 |          | 김동우 (BE,FE_Web) |
-|          | OOO () |
+|          | 박해종 (FE_App) |
 
 ## 👨‍👩‍👧협업 툴
 
